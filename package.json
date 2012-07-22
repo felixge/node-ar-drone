@@ -1,0 +1,23 @@
+{
+  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "name": "ar-drone",
+  "description": "A node.js client for controlling Parrot AR Drone 2.0 quad-copters.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/felixge/node-ar-drone",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/felixge/node-ar-drone.git"
+  },
+  "main": "./index",
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {
+    "utest": "0.0.6"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
