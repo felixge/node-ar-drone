@@ -6,6 +6,7 @@
 * Join your drone's wifi network with your computer
 * Write your first script, `lookaround.js`:
 -
+
 ```js
 var drone = require('ar-drone').createClient();
 drone.connect(function(err) {
