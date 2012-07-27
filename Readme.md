@@ -4,7 +4,7 @@
 
 * Turn on your 2.0 AR Drone (1.0 is not supported)
 * Join your drone's wifi network with your computer
-* Write your first script, `lookaround.js`:
+* Write your first script, `lookaround.js`
 -
 
 ```js
