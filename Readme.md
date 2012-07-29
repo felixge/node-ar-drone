@@ -57,6 +57,8 @@ other.
 ## Todo
 
 * More docs
-* Video streaming
+* Remaining sensor data
+* Video streaming to browser
 * Object tracking
 * Improve code quality
+* Rethink event names
