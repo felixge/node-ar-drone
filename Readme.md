@@ -2,7 +2,7 @@
 
 ## Getting started
 
-* Turn on your 2.0 AR Drone (1.0 is not supported)
+* Turn on your [2.0 AR Drone](http://ardrone2.parrot.com/) (1.0 is not supported)
 * Join your drone's wifi network with your computer
 * Write your first script, lookaround.js:
 
