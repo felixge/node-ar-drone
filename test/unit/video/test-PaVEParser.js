@@ -1,0 +1,50 @@
+var common     = require('../../common');
+var assert     = require('assert');
+var test       = require('utest');
+var PaVEParser = require(common.lib + '/video/PaVEParser');
+var fs         = require('fs');
+var fixture    = fs.readFileSync(common.fixtures + '/pave.bin');
+
+test('PaVEParser', {
+  'parses fixture properly': function() {
+    var parser = new PaVEParser();
+
+    var frames = [];
+    parser.on('data', function(frame) {
+      frames.push(frame);
+    });
+
+    parser.write(fixture);
+
+    assert.equal(frames.length, 20);
+
+    var first = frames[0];
+
+    assert.equal(first.signature, 'PaVE');
+    assert.equal(first.version, 2);
+    assert.equal(first.video_codec, 4);
+    assert.equal(first.header_size, 64);
+    assert.equal(first.payload_size, 2632);
+    assert.equal(first.encoded_stream_width, 640);
+    assert.equal(first.encoded_stream_height, 368);
+    assert.equal(first.display_width, 640);
+    assert.equal(first.display_height, 360);
+    assert.equal(first.frame_number, 17368);
+    assert.equal(first.timestamp, 1792570814);
+    assert.equal(first.total_chunks, 1);
+    assert.equal(first.chunk_index, 0);
+    assert.equal(first.frame_type, 3);
+    assert.equal(first.control, 0);
+    assert.equal(first.stream_byte_position_lw, 72366960);
+    assert.equal(first.stream_byte_position_uw, 0);
+    assert.equal(first.stream_id, 5);
+    assert.equal(first.total_slices, 1);
+    assert.equal(first.slice_index, 0);
+    assert.equal(first.header1_size, 0);
+    assert.equal(first.header2_size, 0);
+    assert.equal(first.reserved2.length, 2);
+    assert.equal(first.advertised_size, 2632);
+    assert.equal(first.reserved3.length, 12);
+    assert.equal(first.payload.length, 2632);
+  },
+});
