@@ -13,7 +13,8 @@
     "test": "make test"
   },
   "dependencies": {
-    "utest": "0.0.6"
+    "utest": "0.0.6",
+    "buffy": "0.0.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
