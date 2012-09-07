@@ -26,4 +26,13 @@ test('AtCommandCreator', {
     var cmd = writer.ref({emergency: true});
     assert.ok(cmd.args[0] & (1 << 8));
   },
+
+  'pcmd': function() {
+    var writer = new AtCommandCreator();
+
+    var cmd = writer.pcmd();
+    assert.equal(cmd.type, 'PCMD');
+    assert.equal(cmd.args.length, 5);
+    assert.deepEqual(cmd.args, [0, 0, 0, 0, 0]);
+  },
 });
