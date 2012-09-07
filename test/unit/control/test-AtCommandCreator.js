@@ -1,11 +1,11 @@
 var common          = require('../../common');
 var assert          = require('assert');
 var test            = require('utest');
-var AtCommandWriter = require(common.lib + '/control/AtCommandWriter');
+var AtCommandCreator = require(common.lib + '/control/AtCommandCreator');
 
-test('AtCommandWriter', {
+test('AtCommandCreator', {
   'command.number keeps incrementing': function() {
-    var writer = new AtCommandWriter();
+    var writer = new AtCommandCreator();
 
     assert.equal(writer.ref().number, 0);
     assert.equal(writer.ref().number, 1);
@@ -13,7 +13,7 @@ test('AtCommandWriter', {
   },
 
   'ref': function() {
-    var writer = new AtCommandWriter();
+    var writer = new AtCommandCreator();
 
     var cmd = writer.ref();
     assert.equal(cmd.type, 'REF');
