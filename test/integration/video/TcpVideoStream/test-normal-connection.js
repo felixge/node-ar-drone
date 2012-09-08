@@ -10,7 +10,7 @@ var server = net.createServer(function(connection) {
 
 var events = [];
 server.listen(common.TCP_PORT, function() {
-  var video = new TcpVideoStream({port: common.TCP_PORT});
+  var video = new TcpVideoStream({ip: 'localhost', port: common.TCP_PORT});
 
   video.connect(function(err) {
     if (err) throw err;

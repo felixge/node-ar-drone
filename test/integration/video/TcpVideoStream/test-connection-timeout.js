@@ -8,7 +8,7 @@ var server = net.createServer(function(connection) {
 
 var events = [];
 server.listen(common.TCP_PORT, function() {
-  var video = new TcpVideoStream({port: common.TCP_PORT, timeout: 10});
+  var video = new TcpVideoStream({ip: 'localhost', port: common.TCP_PORT, timeout: 100});
 
   video.connect(function(err) {
     if (err) throw err;
