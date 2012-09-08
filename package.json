@@ -17,7 +17,8 @@
   },
   "devDependencies": {
     "utest": "0.0.6",
-    "urun": "0.0.6"
+    "urun": "0.0.6",
+    "sinon": "1.4.2"
   },
   "optionalDependencies": {},
   "engines": {
