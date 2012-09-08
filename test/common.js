@@ -1,7 +1,8 @@
 var common = exports;
 var path   = require('path');
 
-common.lib      = path.join(__dirname, '../lib');
+common.root     = path.join(__dirname, '..');
+common.lib      = path.join(common.root, 'lib');
 common.fixtures = path.join(__dirname, 'fixtures');
 
 common.UDP_PORT = 13571;
