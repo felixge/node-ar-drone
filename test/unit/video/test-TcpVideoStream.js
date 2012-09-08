@@ -7,17 +7,21 @@ var TcpVideoStream = require(common.lib + '/video/TcpVideoStream');
 
 test('TcpVideoStream', {
   before: function() {
-    this.fakeSocket         = new EventEmitter();
-    this.fakeSocket.connect = sinon.spy();
-    this.fakeSocket.end     = sinon.spy();
+    this.fakeSocket            = new EventEmitter();
+    this.fakeSocket.connect    = sinon.spy();
+    this.fakeSocket.setTimeout = sinon.spy();
+    this.fakeSocket.end        = sinon.spy();
+    this.fakeSocket.destroy    = sinon.spy();
 
-    this.fakePort = 93321;
-    this.fakeIp   = '255.0.124.24';
+    this.fakePort    = 93321;
+    this.fakeIp      = '255.0.124.24';
+    this.fakeTimeout = 23 * 1000;
 
     this.stream = new TcpVideoStream({
-      ip     : this.fakeIp,
-      port   : this.fakePort,
-      socket : this.fakeSocket
+      ip      : this.fakeIp,
+      port    : this.fakePort,
+      timeout : this.fakeTimeout,
+      socket  : this.fakeSocket
     });
   },
 
@@ -33,6 +37,34 @@ test('TcpVideoStream', {
     var args = this.fakeSocket.connect.getCall(0).args;
     assert.equal(args.shift(), this.fakePort);
     assert.equal(args.shift(), this.fakeIp);
+  },
+
+  'connect() calls socket.setTimeout': function() {
+    this.stream.connect();
+
+    var setTimeout = this.fakeSocket.setTimeout;
+    assert.equal(setTimeout.callCount, 1);
+    assert.equal(setTimeout.getCall(0).args[0], this.fakeTimeout);
+  },
+
+  'socket "timeout" events trigger "error", "close" and destroy()': function() {
+    var errorSpy = sinon.spy();
+    var closeSpy = sinon.spy();
+    this.stream.on('error', errorSpy);
+    this.stream.on('close', closeSpy);
+
+    this.stream.connect();
+    this.fakeSocket.emit('timeout');
+
+    assert.equal(errorSpy.callCount, 1);
+    var err = errorSpy.getCall(0).args[0];
+    assert.equal(err instanceof Error, true);
+    assert.equal(/timeout/i.test(err), true);
+
+    assert.equal(closeSpy.callCount, 1);
+    assert.strictEqual(closeSpy.getCall(0).args[0], err);
+
+    assert.equal(this.fakeSocket.destroy.callCount, 1);
   },
 
   'connect() calls back on success': function() {
