@@ -9,8 +9,12 @@ var EventEmitter = require('events').EventEmitter;
 test('PngEncoder', {
   before: function() {
     this.fakeFfmpeg = new EventEmitter();
-    this.fakeFfmpeg.stdin = {write: sinon.stub()};
+    this.fakeFfmpeg.stdin = {
+      write : sinon.stub(),
+      end   : sinon.spy(),
+    };
     this.fakeFfmpeg.stdout = {pipe: sinon.spy()};
+    this.fakeFfmpeg.stderr = {pipe: sinon.spy()};
 
     this.fakeSpawn = sinon.stub();
     this.fakeSpawn.returns(this.fakeFfmpeg);
@@ -22,10 +26,13 @@ test('PngEncoder', {
     this.fakeBuffer1 = new Buffer('123');
     this.fakeBuffer2 = new Buffer('456');
 
+    this.fakeLog = {};
+
     this.encoder = new PngEncoder({
       spawn       : this.fakeSpawn,
       frameRate   : this.fakeFrameRate,
-      pngSplitter : this.fakePngSplitter
+      pngSplitter : this.fakePngSplitter,
+      log         : this.fakeLog,
     });
   },
 
@@ -78,13 +85,12 @@ test('PngEncoder', {
   'write() pipes ffmpeg.stdout into PngSplitter': function() {
     this.encoder.write(new Buffer('foo'));
 
-    var pipe = this.fakeFfmpeg.stdout.pipe;
-    assert.equal(pipe.callCount, 1);
-    assert.strictEqual(pipe.getCall(0).args[0], this.fakePngSplitter);
+    var stdoutPipe = this.fakeFfmpeg.stdout.pipe;
+    assert.equal(stdoutPipe.callCount, 1);
+    assert.strictEqual(stdoutPipe.getCall(0).args[0], this.fakePngSplitter);
   },
 
   'write() proxies all pngSplitter "data"': function() {
-
     var dataSpy = sinon.spy();
     this.encoder.on('data', dataSpy);
 
@@ -111,9 +117,31 @@ test('PngEncoder', {
     assert.strictEqual(stdin.write.getCall(1).args[0], this.fakeBuffer2);
   },
 
-  'write() handles ffmpeg backpressure': function() {
+  'write() does not handle ffmpeg backpressure for now': function() {
     this.fakeFfmpeg.stdin.write.returns(true);
     var r = this.encoder.write(new Buffer('abc'));
-    assert.equal(r, true);
+    assert.equal(r, undefined);
+  },
+
+  'write() pipes ffmpeg stderr to log': function() {
+    this.encoder.write(new Buffer('abc'));
+
+    var stderrPipe = this.fakeFfmpeg.stderr.pipe;
+    assert.equal(stderrPipe.callCount, 1);
+    assert.strictEqual(stderrPipe.getCall(0).args[0], this.fakeLog);
+  },
+
+  'write() does not pipe to log if not set': function() {
+    this.encoder = new PngEncoder({spawn: this.fakeSpawn});
+
+    this.encoder.write(new Buffer('abc'));
+    assert.equal(this.fakeFfmpeg.stderr.pipe.callCount, 0);
+  },
+
+  'end() closes ffmpeg.stdin': function() {
+    this.encoder.write(new Buffer('abc'));
+    this.encoder.end();
+
+    assert.equal(this.fakeFfmpeg.stdin.end.callCount, 1);
   },
 });
