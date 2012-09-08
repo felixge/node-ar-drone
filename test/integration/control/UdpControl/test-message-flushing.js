@@ -1,4 +1,4 @@
-var common     = require('../../common');
+var common     = require('../../../common');
 var UdpControl = require(common.lib + '/control/UdpControl');
 var dgram      = require('dgram');
 var assert     = require('assert');
