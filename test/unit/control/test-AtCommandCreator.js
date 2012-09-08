@@ -2,6 +2,7 @@ var common           = require('../../common');
 var assert           = require('assert');
 var test             = require('utest');
 var AtCommandCreator = require(common.lib + '/control/AtCommandCreator');
+var at               = require(common.lib + '/control/at');
 
 test('AtCommandCreator', {
   'command.number keeps incrementing': function() {
@@ -34,5 +35,13 @@ test('AtCommandCreator', {
     assert.equal(cmd.type, 'PCMD');
     assert.equal(cmd.args.length, 5);
     assert.deepEqual(cmd.args, [0, 0, 0, 0, 0]);
+
+    var cmd = writer.pcmd({upDown: 0.9, leftRight: 0.8, frontBack: 0.7, clockWise: -0.5});
+    assert.ok(cmd.args.shift() & (1 << 0));
+
+    assert.equal(cmd.args.shift(), at.floatString(0.8));
+    assert.equal(cmd.args.shift(), at.floatString(0.7));
+    assert.equal(cmd.args.shift(), at.floatString(0.9));
+    assert.equal(cmd.args.shift(), at.floatString(-0.5));
   },
 });
