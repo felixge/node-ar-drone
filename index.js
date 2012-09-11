@@ -12,7 +12,9 @@ exports.createClient = function(options) {
 };
 
 exports.createPngStream = function(options) {
-  return new arDrone.PngStream(options);
+  var stream = new arDrone.PngStream(options);
+  stream.start();
+  return stream;
 };
 
 exports.createUdpControl = function(options) {

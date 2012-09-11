@@ -4,8 +4,6 @@ var http    = require('http');
 console.log('Connecting png stream ...');
 
 var pngStream = arDrone.createPngStream();
-pngStream.start();
-
 
 var lastPng;
 pngStream
