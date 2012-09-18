@@ -34,7 +34,7 @@ test('AtCommandCreator', {
     assert.equal(cmd.args.length, 1);
     assert.equal(cmd.args[0], 0);
 
-    var cmd = creator.ref({takeoff: true});
+    var cmd = creator.ref({fly: true});
     assert.ok(cmd.args[0] & (1 << 9));
 
     var cmd = creator.ref({emergency: true});
@@ -64,5 +64,13 @@ test('AtCommandCreator', {
     var cmd = creator.pcmd({left: 0.1, clockwise: 0.3});
     assert.equal(cmd.args[1], at.floatString(-0.1));
     assert.equal(cmd.args[4], at.floatString(0.3));
+
+    // test progressive bit being unset when no aliases are provided
+    var cmd = creator.pcmd();
+    assert.equal(cmd.args[0] & (1 << 0), false);
+
+    // test progressive bit being set automatically
+    var cmd = creator.pcmd({left: 0.1});
+    assert.ok(cmd.args[0] & (1 << 0));
   },
 });
