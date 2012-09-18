@@ -19,6 +19,11 @@ test('AtCommandCreator', {
     var cmd = creator.raw('FOO', 1, 2, 3);
     assert.equal(cmd.type, 'FOO');
     assert.deepEqual(cmd.args, [1, 2, 3]);
+
+    // An array can be given as well
+    var cmd = creator.raw('FOO', [1, 2, 3]);
+    assert.equal(cmd.type, 'FOO');
+    assert.deepEqual(cmd.args, [1, 2, 3]);
   },
 
   'ref': function() {
@@ -44,12 +49,20 @@ test('AtCommandCreator', {
     assert.equal(cmd.args.length, 5);
     assert.deepEqual(cmd.args, [0, 0, 0, 0, 0]);
 
-    var cmd = creator.pcmd({upDown: 0.9, leftRight: 0.8, frontBack: 0.7, clockWise: -0.5});
-    assert.ok(cmd.args.shift() & (1 << 0));
+    // test all the aliases mapping to pcmd args
+    var val = 0.75;
+    assert.equal(creator.pcmd({left: val}).args[1], at.floatString(-val));
+    assert.equal(creator.pcmd({right: val}).args[1], at.floatString(val));
+    assert.equal(creator.pcmd({front: val}).args[2], at.floatString(-val));
+    assert.equal(creator.pcmd({back: val}).args[2], at.floatString(val));
+    assert.equal(creator.pcmd({up: val}).args[3], at.floatString(val));
+    assert.equal(creator.pcmd({down: val}).args[3], at.floatString(-val));
+    assert.equal(creator.pcmd({clockwise: val}).args[4], at.floatString(val));
+    assert.equal(creator.pcmd({counterclockwise: val}).args[4], at.floatString(-val));
 
-    assert.equal(cmd.args.shift(), at.floatString(0.8));
-    assert.equal(cmd.args.shift(), at.floatString(0.7));
-    assert.equal(cmd.args.shift(), at.floatString(0.9));
-    assert.equal(cmd.args.shift(), at.floatString(-0.5));
+    // test multiple aliases togeter
+    var cmd = creator.pcmd({left: 0.1, clockwise: 0.3});
+    assert.equal(cmd.args[1], at.floatString(-0.1));
+    assert.equal(cmd.args[4], at.floatString(0.3));
   },
 });
