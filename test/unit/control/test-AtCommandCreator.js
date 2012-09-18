@@ -13,6 +13,14 @@ test('AtCommandCreator', {
     assert.equal(writer.ref().number, 2);
   },
 
+  'raw': function() {
+    var writer = new AtCommandCreator();
+
+    var cmd = writer.raw('FOO', 1, 2, 3);
+    assert.equal(cmd.type, 'FOO');
+    assert.deepEqual(cmd.args, [1, 2, 3]);
+  },
+
   'ref': function() {
     var writer = new AtCommandCreator();
 
