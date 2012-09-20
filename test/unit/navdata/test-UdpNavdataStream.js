@@ -7,8 +7,9 @@ var EventEmitter     = require('events').EventEmitter;
 
 test('UdpNavdataStream', {
   before: function() {
-    this.fakePort = 18943;
-    this.fakeIp   = '23.42.1776.20';
+    this.fakePort    = 18943;
+    this.fakeIp      = '23.42.1776.20';
+    this.fakeTimeout = 100;
 
     this.fakeSocket       = new EventEmitter();
     this.fakeSocket.bind  = sinon.stub();
@@ -18,11 +19,18 @@ test('UdpNavdataStream', {
     this.fakeParser = sinon.stub();
 
     this.stream = new UdpNavdataStream({
-      socket : this.fakeSocket,
-      port   : this.fakePort,
-      ip     : this.fakeIp,
-      parser : this.fakeParser,
+      socket  : this.fakeSocket,
+      port    : this.fakePort,
+      ip      : this.fakeIp,
+      parser  : this.fakeParser,
+      timeout : this.fakeTimeout,
     });
+
+    this.clock = sinon.useFakeTimers();
+  },
+
+  after: function() {
+    this.clock.restore();
   },
 
   'is a readable stream': function() {
@@ -53,13 +61,39 @@ test('UdpNavdataStream', {
     assert.equal(ip, this.fakeIp);
   },
 
-  'calling resume() twice does nothing': function() {
+  'calling resume() does not rebind socket, but requests navdata again': function() {
     this.stream.resume();
     this.stream.resume();
 
     assert.equal(this.fakeSocket.bind.callCount, 1);
-    assert.equal(this.fakeSocket.send.callCount, 1);
+    assert.equal(this.fakeSocket.send.callCount, 2);
   },
+
+  'navdata is requested again after timeout': function() {
+    this.stream.resume();
+    assert.equal(this.fakeSocket.send.callCount, 1);
+
+    this.clock.tick(this.fakeTimeout - 1);
+    assert.equal(this.fakeSocket.send.callCount, 1);
+
+    this.clock.tick(1);
+    assert.equal(this.fakeSocket.send.callCount, 2);
+  },
+
+  'timeout is reset by navdata arriving': function() {
+    this.stream.resume();
+
+    this.clock.tick(this.fakeTimeout - 1);
+
+    this.fakeSocket.emit('message', new Buffer(0));
+
+    this.clock.tick(1);
+    assert.equal(this.fakeSocket.send.callCount, 1);
+
+    this.clock.tick(this.fakeTimeout);
+    assert.equal(this.fakeSocket.send.callCount, 2);
+  },
+
 
   'incoming messages are parsed': function() {
     var fakeBuffer  = new Buffer([1, 2, 3]);
