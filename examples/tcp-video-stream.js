@@ -1,3 +1,5 @@
+// Run this to receive the raw video stream from your drone as buffers.
+
 var TcpVideoStream = require('../lib/video/TcpVideoStream');
 
 var video = new TcpVideoStream();

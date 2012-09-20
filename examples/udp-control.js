@@ -1,31 +1,23 @@
+// Run this to make your drone take off for 5 seconds and then land itself
+// again.
+
 var UdpControl = require('../lib/control/UdpControl');
 
-var control = new UdpControl();
-var takeoff = 0;
+var control   = new UdpControl();
+var fly       = true;
+var emergency = true;
 
 setInterval(function() {
-  control.ref({takeoff: takeoff, emergency: true});
+  control.ref({fly: fly, emergency: emergency});
   control.pcmd();
   control.flush();
 }, 30);
 
-var count = 0;
-process.on('SIGINT', function() {
-  count++;
+// For the first second, disable emergency if there was one
+setTimeout(function() {
+  emergency = false;
+}, 1000);
 
-  if (count === 1) {
-    console.log('takeoff');
-    takeoff = 1;
-    return;
-  }
-
-  if (count === 2) {
-    console.log('land');
-    takeoff = 0;
-    return;
-  }
-
-  setTimeout(function() {
-    process.exit(1);
-  }, 100);
-});
+setTimeout(function() {
+  fly = false;
+}, 5000);
