@@ -6,6 +6,8 @@ var assert           = require('assert');
 var receivedData = false;
 var stream       = new UdpNavdataStream();
 
+stream.resume();
+
 stream.on('data', function(navdata) {
   receivedData = true;
 
