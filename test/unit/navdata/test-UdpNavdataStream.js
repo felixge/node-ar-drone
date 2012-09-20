@@ -10,9 +10,10 @@ test('UdpNavdataStream', {
     this.fakePort = 18943;
     this.fakeIp   = '23.42.1776.20';
 
-    this.fakeSocket      = new EventEmitter();
-    this.fakeSocket.bind = sinon.stub();
-    this.fakeSocket.send = sinon.stub();
+    this.fakeSocket       = new EventEmitter();
+    this.fakeSocket.bind  = sinon.stub();
+    this.fakeSocket.send  = sinon.stub();
+    this.fakeSocket.close = sinon.stub();
 
     this.fakeParser = sinon.stub();
 
@@ -77,5 +78,10 @@ test('UdpNavdataStream', {
 
     assert.equal(dataSpy.callCount, 1);
     assert.strictEqual(dataSpy.getCall(0).args[0], fakeNavdata);
+  },
+
+  'destroy() cleans up': function() {
+    this.stream.destroy();
+    assert.equal(this.fakeSocket.close.callCount, 1);
   },
 });
