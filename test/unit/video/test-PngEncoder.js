@@ -9,10 +9,11 @@ var EventEmitter = require('events').EventEmitter;
 test('PngEncoder', {
   before: function() {
     this.fakeFfmpeg = new EventEmitter();
-    this.fakeFfmpeg.stdin = {
-      write : sinon.stub(),
-      end   : sinon.spy(),
-    };
+
+    this.fakeFfmpeg.stdin       = new EventEmitter();
+    this.fakeFfmpeg.stdin.write = sinon.stub();
+    this.fakeFfmpeg.stdin.end   = sinon.stub();
+
     this.fakeFfmpeg.stdout = {pipe: sinon.spy()};
     this.fakeFfmpeg.stderr = {pipe: sinon.spy()};
 
@@ -90,7 +91,7 @@ test('PngEncoder', {
     assert.strictEqual(stdoutPipe.getCall(0).args[0], this.fakePngSplitter);
   },
 
-  'write() proxies all pngSplitter "data"': function() {
+  'proxies all pngSplitter "data"': function() {
     var dataSpy = sinon.spy();
     this.encoder.on('data', dataSpy);
 
@@ -103,6 +104,55 @@ test('PngEncoder', {
     this.fakePngSplitter.emit('data', this.fakeBuffer2);
     assert.equal(dataSpy.callCount, 2);
     assert.strictEqual(dataSpy.getCall(1).args[0], this.fakeBuffer2);
+  },
+
+  'handles ffmpeg not existing': function() {
+    var errorSpy = sinon.spy();
+    this.encoder.on('error', errorSpy);
+
+    this.encoder.write(new Buffer('foo'));
+
+    // simulate ffmpeg not existing
+    this.fakeFfmpeg.stdin.emit('error', new Error('EPIPE'));
+    this.fakeFfmpeg.emit('exit', 127);
+
+    assert.equal(errorSpy.callCount, 1);
+    assert.equal(/ffmpeg.*not found/i.test(errorSpy.getCall(0).args[0]), true);
+  },
+
+  'handles ffmpeg exit code > 0': function() {
+    var errorSpy = sinon.spy();
+    this.encoder.on('error', errorSpy);
+
+    this.encoder.write(new Buffer('foo'));
+
+    // simulate an ffmpeg error
+    this.fakeFfmpeg.emit('exit', 1);
+
+    assert.equal(errorSpy.callCount, 1);
+    assert.equal(/ffmpeg.*error/i.test(errorSpy.getCall(0).args[0]), true);
+  },
+
+  'handles expected ffmpeg shutdown': function() {
+    var endSpy = sinon.spy();
+    this.encoder.on('end', endSpy);
+
+    this.encoder.write(new Buffer('foo'));
+    this.encoder.end();
+    this.fakeFfmpeg.emit('exit', 0);
+
+    assert.equal(endSpy.callCount, 1);
+  },
+
+  'handles unexpected ffmpeg shutdown with exit code 0': function() {
+    var errorSpy = sinon.spy();
+    this.encoder.on('error', errorSpy);
+
+    this.encoder.write(new Buffer('foo'));
+    this.fakeFfmpeg.emit('exit', 0);
+
+    assert.equal(errorSpy.callCount, 1);
+    assert.equal(/unexpected.*ffmpeg/i.test(errorSpy.getCall(0).args[0].message), true);
   },
 
   'write() passes all data into ffmpeg.stdin': function() {
