@@ -1,4 +1,3 @@
-before_script: "sudo aptitude -y -q install ffmpeg"
 language: node_js
 node_js:
   - 0.6

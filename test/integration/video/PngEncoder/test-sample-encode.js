@@ -3,6 +3,11 @@ var fs         = require('fs');
 var assert     = require('assert');
 var PngEncoder = require(common.lib + '/video/PngEncoder');
 
+if (common.isTravisCi()) {
+  console.log('Skipping - travis does not have ffmpeg / apt-get ffmpeg seems to fail this test.');
+  return;
+}
+
 var encoder = new PngEncoder();
 var fixture = fs.createReadStream(common.fixtures + '/pave.bin');
 
