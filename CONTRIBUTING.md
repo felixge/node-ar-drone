@@ -92,6 +92,11 @@ which could probably be modified for this.
 So, if you're looking for a very difficult but interesting problem, let me know
 and I'll try to help you on this as much as I can.
 
+### AR Drone 1.0
+
+I don't have a 1.0 AR Drone, but if you have one, I'd be open for patches
+to ensure compatibility.
+
 ### Fixing bugs
 
 Bug fixes are always welcome. Please add a test!
