@@ -158,7 +158,7 @@ Enqueues a `AT*PCMD` (progressive) command, options are:
 
 The values for each option are the speed to use for the operation and can range
 from 0 to 1. You can also use negative values like `{front: -0.5}`, which is
-the same as `{back: 0.5`}.
+the same as `{back: 0.5}`.
 
 #### udpControl.flush()
 
