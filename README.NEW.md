@@ -1,5 +1,7 @@
 # ar-drone
 
+[![Build Status](https://secure.travis-ci.org/felixge/node-ar-drone.png)](http://travis-ci.org/felixge/node-ar-drone)
+
 An implementation of the networking protocols used by the
 [Parrot AR Drone 2.0](http://ardrone2.parrot.com/).
 
