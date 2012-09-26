@@ -79,8 +79,8 @@ client.takeoff();
 
 client
   .after(5000, function() {
-    this.up = 0.5;
-    this.clockwise = 1;
+    this.up(0.5);
+    this.clockwise(1);
   })
   .after(5000, function() {
     this.hover();
