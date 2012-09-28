@@ -10,6 +10,7 @@ test('Client', {
     this.fakeUdpControl.ref         = sinon.stub();
     this.fakeUdpControl.pcmd        = sinon.stub();
     this.fakeUdpControl.animateLeds = sinon.stub();
+    this.fakeUdpControl.animate     = sinon.stub();
     this.fakeUdpControl.flush       = sinon.stub();
 
     this.client = new Client({
@@ -130,7 +131,7 @@ test('Client', {
     assert.deepEqual(this.client._pcmd, {});
   },
 
-  'animateLeds(): included in next 10 udp packets': function() {
+  'animateLeds(): sends config command 10 times': function() {
     this.client.resume();
     this.client.animateLeds('blinkGreen', 2, 5);
 
@@ -149,5 +150,25 @@ test('Client', {
     assert.equal(args[0], 'blinkGreen');
     assert.equal(args[1], 2);
     assert.equal(args[2], 5);
+  },
+
+  'animate(): sends config 10 times': function() {
+    this.client.resume();
+    this.client.animate('yawShake', 2000);
+
+    for (var i = 1; i <= 10; i++) {
+      this.clock.tick(30);
+      assert.equal(this.fakeUdpControl.animate.callCount, i);
+    }
+
+    // Stop repeating after 10 intervals
+    this.clock.tick(30);
+    assert.equal(this.fakeUdpControl.animate.callCount, 10);
+
+    // Check that the arguments were right
+    var args = this.fakeUdpControl.animate.getCall(0).args;
+    assert.equal(args.length, 2);
+    assert.equal(args[0], 'yawShake');
+    assert.equal(args[1], 2000);
   },
 });

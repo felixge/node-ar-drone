@@ -103,4 +103,22 @@ test('AtCommandCreator', {
       self.creator.animateLeds('does not exist');
     },/animation/);
   },
+
+  'animate() works as expected': function() {
+    var duration = 2000;
+    var cmd      = this.creator.animate('yawShake', duration);
+    var expected = '8,' + duration;
+
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"control:flight_anim"');
+    assert.equal(cmd.args[1], '"' + expected + '"');
+  },
+
+  'animate() throws an error for unknown animations': function() {
+    var self = this;
+    assert.throws(function() {
+      self.creator.animate('does not exist');
+    },/animation/);
+  },
 });
