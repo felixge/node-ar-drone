@@ -91,6 +91,12 @@ test('AtCommandCreator', {
     assert.equal(cmd.args[1], '"' + expected + '"');
   },
 
+  'animateLeds() does a red snake at 2 hz for 3s by default': function() {
+    var cmd      = this.creator.animateLeds();
+    var expected = '9,' + at.floatString(2) + ',' + 3;
+    assert.equal(cmd.args[1], '"' + expected + '"');
+  },
+
   'animateLeds() throws an error for unknown animations': function() {
     var self = this;
     assert.throws(function() {

@@ -6,10 +6,11 @@ var Client = require(common.lib + '/Client');
 
 test('Client', {
   before: function() {
-    this.fakeUdpControl       = {};
-    this.fakeUdpControl.ref   = sinon.stub();
-    this.fakeUdpControl.pcmd  = sinon.stub();
-    this.fakeUdpControl.flush = sinon.stub();
+    this.fakeUdpControl             = {};
+    this.fakeUdpControl.ref         = sinon.stub();
+    this.fakeUdpControl.pcmd        = sinon.stub();
+    this.fakeUdpControl.animateLeds = sinon.stub();
+    this.fakeUdpControl.flush       = sinon.stub();
 
     this.client = new Client({
       udpControl: this.fakeUdpControl,
@@ -129,6 +130,24 @@ test('Client', {
     assert.deepEqual(this.client._pcmd, {});
   },
 
-  'flip sends a flip config instruction for 200ms': function() {
+  'animateLeds(): included in next 10 udp packets': function() {
+    this.client.resume();
+    this.client.animateLeds('blinkGreen', 2, 5);
+
+    for (var i = 1; i <= 10; i++) {
+      this.clock.tick(30);
+      assert.equal(this.fakeUdpControl.animateLeds.callCount, i);
+    }
+
+    // Stop repeating after 10 intervals
+    this.clock.tick(30);
+    assert.equal(this.fakeUdpControl.animateLeds.callCount, 10);
+
+    // Check that the arguments were right
+    var args = this.fakeUdpControl.animateLeds.getCall(0).args;
+    assert.equal(args.length, 3);
+    assert.equal(args[0], 'blinkGreen');
+    assert.equal(args[1], 2);
+    assert.equal(args[2], 5);
   },
 });
