@@ -77,4 +77,24 @@ test('AtCommandCreator', {
     assert.equal(cmd.args[0], '"foo"');
     assert.equal(cmd.args[1], '"bar"');
   },
+
+  'animateLeds() works as expected': function() {
+    var hz = 3;
+    var duration = 3;
+
+    var cmd      = this.creator.animateLeds('blinkGreen', hz, duration);
+    var expected = '1,' + at.floatString(hz) + ',' + duration;
+
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"leds:leds_anim"');
+    assert.equal(cmd.args[1], '"' + expected + '"');
+  },
+
+  'animateLeds() throws an error for unknown animations': function() {
+    var self = this;
+    assert.throws(function() {
+      self.creator.animateLeds('does not exist');
+    },/animation/);
+  },
 });
