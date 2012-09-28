@@ -46,7 +46,7 @@ cause your drone to takeoff and hover in place.
 
 ```js
 var arDrone = require('ar-drone');
-var control = drone.createUdpControl();
+var control = arDrone.createUdpControl();
 
 setInterval(function() {
   // The emergency: true option recovers your drone from emergency mode that can
@@ -81,7 +81,7 @@ like this:
 
 ```js
 var arDrone = require('ar-drone');
-var control = drone.createUdpControl();
+var control = arDrone.createUdpControl();
 var start   = Date.now();
 
 var ref  = {};
