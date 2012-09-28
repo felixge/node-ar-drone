@@ -7,7 +7,7 @@ exports.UdpNavdataStream = require('./lib/navdata/UdpNavdataStream');
 
 exports.createClient = function(options) {
   var client = new arDrone.Client(options);
-  client.setInterval();
+  client.resume();
   return client;
 };
 

@@ -22,6 +22,14 @@ test('Client', {
     this.clock.restore();
   },
 
+  'resume calls _setInterval': function() {
+    sinon.spy(this.client, '_setInterval');
+    this.client.resume();
+
+    assert.equal(this.client._setInterval.callCount, 1);
+    assert.equal(this.client._setInterval.getCall(0).args[0], 30);
+  },
+
   'options are passed to internal UdpControl': function() {
     var options = {fake: 'options'};
 
@@ -34,29 +42,27 @@ test('Client', {
     assert.strictEqual(gotOptions, options);
   },
 
-  'setInterval caused period ref / pcmd commands': function() {
-    var defaultInterval = 30;
-
-    this.client.setInterval();
+  '_setInterval caused period ref / pcmd commands': function() {
+    this.client._setInterval(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 0);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 0);
     assert.equal(this.fakeUdpControl.flush.callCount, 0);
 
-    this.clock.tick(defaultInterval);
+    this.clock.tick(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 1);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 1);
     assert.equal(this.fakeUdpControl.flush.callCount, 1);
     assert.strictEqual(this.client._pcmd, this.fakeUdpControl.pcmd.getCall(0).args[0]);
     assert.strictEqual(this.client._ref, this.fakeUdpControl.ref.getCall(0).args[0]);
 
-    this.clock.tick(defaultInterval);
+    this.clock.tick(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 2);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 2);
   },
 
-  'setInterval clears previous interval if set': function() {
-    this.client.setInterval(30);
-    this.client.setInterval(20);
+  '_setInterval clears previous interval if set': function() {
+    this.client._setInterval(30);
+    this.client._setInterval(20);
 
     this.clock.tick(20);
     assert.equal(this.fakeUdpControl.ref.callCount, 1);
@@ -121,5 +127,8 @@ test('Client', {
 
     this.client.stop();
     assert.deepEqual(this.client._pcmd, {});
+  },
+
+  'flip sends a flip config instruction for 200ms': function() {
   },
 });
