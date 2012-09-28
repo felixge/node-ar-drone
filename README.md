@@ -154,7 +154,7 @@ Enqueues a `AT*PCMD` (progressive) command, options are:
 * `front` or `back`: Fly towards or away from front camera direction.
 * `left` or/ `right`: Fly towards the left or right of the front camera.
 * `up` or `down`: Gain or reduce altitude.
-* `clockwise` or `counterclockwise`: Rotate around the center axis.
+* `clockwise` or `counterClockwise`: Rotate around the center axis.
 
 The values for each option are the speed to use for the operation and can range
 from 0 to 1. You can also use negative values like `{front: -0.5}`, which is

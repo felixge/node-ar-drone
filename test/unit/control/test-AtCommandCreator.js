@@ -58,7 +58,7 @@ test('AtCommandCreator', {
     assert.equal(creator.pcmd({up: val}).args[3], at.floatString(val));
     assert.equal(creator.pcmd({down: val}).args[3], at.floatString(-val));
     assert.equal(creator.pcmd({clockwise: val}).args[4], at.floatString(val));
-    assert.equal(creator.pcmd({counterclockwise: val}).args[4], at.floatString(-val));
+    assert.equal(creator.pcmd({counterClockwise: val}).args[4], at.floatString(-val));
 
     // test multiple aliases togeter
     var cmd = creator.pcmd({left: 0.1, clockwise: 0.3});
