@@ -17,7 +17,7 @@ exports.createUdpControl = function(options) {
 
 exports.createPngStream = function(options) {
   var stream = new arDrone.PngStream(options);
-  stream.start();
+  stream.resume();
   return stream;
 };
 
