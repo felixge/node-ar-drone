@@ -85,6 +85,7 @@ test('UdpNavdataStream', {
 
     this.clock.tick(this.fakeTimeout - 1);
 
+    this.fakeParser.returns({});
     this.fakeSocket.emit('message', new Buffer(0));
 
     this.clock.tick(1);
@@ -94,10 +95,9 @@ test('UdpNavdataStream', {
     assert.equal(this.fakeSocket.send.callCount, 2);
   },
 
-
   'incoming messages are parsed': function() {
     var fakeBuffer  = new Buffer([1, 2, 3]);
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {fake: 'navdata', sequenceNumber: 1};
     var dataSpy     = sinon.spy();
 
     this.fakeParser.returns(fakeNavdata);
@@ -112,6 +112,62 @@ test('UdpNavdataStream', {
 
     assert.equal(dataSpy.callCount, 1);
     assert.strictEqual(dataSpy.getCall(0).args[0], fakeNavdata);
+  },
+
+  'old navdata messages are ignored': function() {
+    var fakeNavdataA = {sequenceNumber: 1};
+    var fakeNavdataB = {sequenceNumber: 2};
+    var fakeNavdataC = {sequenceNumber: 3};
+
+    this.fakeParser.withArgs(1).returns(fakeNavdataA);
+    this.fakeParser.withArgs(2).returns(fakeNavdataB);
+    this.fakeParser.withArgs(3).returns(fakeNavdataC);
+
+    var dataSpy = sinon.spy();
+    this.stream.on('data', dataSpy);
+
+    this.stream.resume();
+    this.fakeSocket.emit('message', 1);
+    this.fakeSocket.emit('message', 3);
+    this.fakeSocket.emit('message', 2);
+
+    assert.equal(this.fakeParser.callCount, 3);
+    assert.equal(dataSpy.callCount, 2);
+
+    assert.equal(dataSpy.getCall(0).args[0].sequenceNumber, 1);
+    assert.equal(dataSpy.getCall(1).args[0].sequenceNumber, 3);
+  },
+
+  'navdata errors are ignored by default': function() {
+    this.fakeParser.throws(new Error('bad'));
+
+    var dataSpy = sinon.spy();
+    this.stream.on('data', dataSpy);
+
+    this.stream.resume();
+    this.fakeSocket.emit('message', 1);
+
+    assert.equal(this.fakeParser.callCount, 1);
+    assert.equal(dataSpy.callCount, 0);
+  },
+
+  'navdata errors are emitted if there is an error handler': function() {
+    var fakeErr = new Error('bad');
+    this.fakeParser.throws(fakeErr);
+
+    var dataSpy = sinon.spy();
+    var errorSpy = sinon.spy();
+
+    this.stream.on('data', dataSpy);
+    this.stream.on('error', errorSpy);
+
+    this.stream.resume();
+    this.fakeSocket.emit('message', 1);
+
+    assert.equal(this.fakeParser.callCount, 1);
+    assert.equal(dataSpy.callCount, 0);
+    assert.equal(errorSpy.callCount, 1);
+    assert.strictEqual(errorSpy.getCall(0).args[0], fakeErr);
   },
 
   'destroy() cleans up': function() {

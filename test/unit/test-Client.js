@@ -1,8 +1,9 @@
-var common = require('../common');
-var assert = require('assert');
-var test   = require('utest');
-var sinon  = require('sinon');
-var Client = require(common.lib + '/Client');
+var common       = require('../common');
+var assert       = require('assert');
+var test         = require('utest');
+var sinon        = require('sinon');
+var Client       = require(common.lib + '/Client');
+var EventEmitter = require('events').EventEmitter;
 
 test('Client', {
   before: function() {
@@ -13,8 +14,12 @@ test('Client', {
     this.fakeUdpControl.animate     = sinon.stub();
     this.fakeUdpControl.flush       = sinon.stub();
 
+    this.fakeUdpNavdataStream        = new EventEmitter;
+    this.fakeUdpNavdataStream.resume = sinon.stub();
+
     this.client = new Client({
-      udpControl: this.fakeUdpControl,
+      udpControl       : this.fakeUdpControl,
+      udpNavdataStream : this.fakeUdpNavdataStream,
     });
 
     this.clock = sinon.useFakeTimers();
@@ -24,12 +29,43 @@ test('Client', {
     this.clock.restore();
   },
 
-  'resume calls _setInterval': function() {
+  'resume() calls _setInterval': function() {
     sinon.spy(this.client, '_setInterval');
     this.client.resume();
 
     assert.equal(this.client._setInterval.callCount, 1);
     assert.equal(this.client._setInterval.getCall(0).args[0], 30);
+  },
+
+  'navdata events are proxied': function() {
+    var fakeNavdata = {fake: 'navdata'};
+    this.client.resume();
+
+    assert.equal(this.fakeUdpNavdataStream.resume.callCount, 1);
+
+    var gotNavdata;
+    this.client.on('navdata', function(navdata) {
+      gotNavdata = navdata;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+
+    assert.strictEqual(gotNavdata, fakeNavdata);
+  },
+
+  'resume() is idempotent': function() {
+    var fakeNavdata = {fake: 'navdata'};
+    this.client.resume();
+    this.client.resume();
+
+    var eventCount = 0;
+    this.client.on('navdata', function(navdata) {
+      eventCount++;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+
+    assert.strictEqual(eventCount, 1);
   },
 
   'options are passed to internal UdpControl': function() {
