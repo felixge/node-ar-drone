@@ -3,18 +3,21 @@ var assert     = require('assert');
 var test       = require('utest');
 var PaVEParser = require(common.lib + '/video/PaVEParser');
 var fs         = require('fs');
+var sinon      = require('sinon');
 var fixture    = fs.readFileSync(common.fixtures + '/pave.bin');
 
 test('PaVEParser', {
-  'parses fixture properly': function() {
-    var parser = new PaVEParser();
+  before: function() {
+    this.parser = new PaVEParser();
+  },
 
+  'parses fixture properly': function() {
     var frames = [];
-    parser.on('data', function(frame) {
+    this.parser.on('data', function(frame) {
       frames.push(frame);
     });
 
-    parser.write(fixture);
+    this.parser.write(fixture);
 
     assert.equal(frames.length, 20);
 
@@ -46,5 +49,24 @@ test('PaVEParser', {
     assert.equal(first.advertised_size, 2632);
     assert.equal(first.reserved3.length, 12);
     assert.equal(first.payload.length, 2632);
+  },
+
+  'emits error on bad signature': function() {
+    var buffer = new Buffer(64);
+
+    // should be PaVE, not fuck
+    buffer.write('fuck');
+
+    var errorStub = sinon.stub();
+    this.parser.on('error', errorStub);
+
+    this.parser.write(buffer);
+
+    assert.equal(errorStub.callCount, 1);
+    assert.equal(/signature/i.test(errorStub.getCall(0).args[0]), true);
+  },
+
+  'end method exists, but does nothing': function() {
+    this.parser.end();
   },
 });
