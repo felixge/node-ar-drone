@@ -37,7 +37,7 @@ test('Client', {
     assert.equal(this.client._setInterval.getCall(0).args[0], 30);
   },
 
-  'navdata events are proxied': function() {
+  'navdata "data" events are proxied': function() {
     var fakeNavdata = {fake: 'navdata'};
     this.client.resume();
 
@@ -51,6 +51,24 @@ test('Client', {
     this.fakeUdpNavdataStream.emit('data', fakeNavdata);
 
     assert.strictEqual(gotNavdata, fakeNavdata);
+  },
+
+  'navdata "error" events are ignored by default': function() {
+    this.client.resume();
+
+    this.fakeUdpNavdataStream.emit('error', new Error('bad'));
+  },
+
+  'navdata "error" events are proxied if there is an error listener': function() {
+    var errorStub = sinon.stub();
+    this.client.on('error', errorStub);
+    this.client.resume();
+
+    var fakeErr = new Error('bad');
+    this.fakeUdpNavdataStream.emit('error', fakeErr);
+
+    assert.equal(errorStub.callCount, 1);
+    assert.strictEqual(errorStub.getCall(0).args[0], fakeErr);
   },
 
   'resume() is idempotent': function() {
