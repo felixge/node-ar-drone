@@ -3,6 +3,7 @@ var assert       = require('assert');
 var test         = require('utest');
 var sinon        = require('sinon');
 var Client       = require(common.lib + '/Client');
+var PngStream    = Client.PngStream;
 var EventEmitter = require('events').EventEmitter;
 
 test('Client', {
@@ -17,10 +18,16 @@ test('Client', {
     this.fakeUdpNavdataStream        = new EventEmitter;
     this.fakeUdpNavdataStream.resume = sinon.stub();
 
-    this.client = new Client({
+    this.pngStream   = new PngStream();
+    Client.PngStream = sinon.stub();
+    Client.PngStream.returns(this.pngStream);
+
+    this.options = {
       udpControl       : this.fakeUdpControl,
       udpNavdataStream : this.fakeUdpNavdataStream,
-    });
+    };
+
+    this.client = new Client(this.options);
 
     this.clock = sinon.useFakeTimers();
   },
@@ -224,5 +231,17 @@ test('Client', {
     assert.equal(args.length, 2);
     assert.equal(args[0], 'yawShake');
     assert.equal(args[1], 2000);
+  },
+
+  'createPngStream resumes and returns internal pngStream': function() {
+    // check that the PngStream was constructed properly
+    assert.equal(Client.PngStream.callCount, 1);
+    assert.strictEqual(Client.PngStream.getCall(0).args[0], this.options);
+
+    sinon.stub(this.pngStream, 'resume');
+
+    var pngStream = this.client.createPngStream();
+    assert.equal(this.pngStream.resume.callCount, 1);
+    assert.strictEqual(pngStream, this.pngStream);
   },
 });
