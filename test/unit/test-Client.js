@@ -244,4 +244,53 @@ test('Client', {
     assert.equal(this.pngStream.resume.callCount, 1);
     assert.strictEqual(pngStream, this.pngStream);
   },
+
+  'after methods are called in client context': function() {
+    var after = sinon.spy();
+
+    this.client.after(1000, after);
+
+    this.clock.tick(1000);
+    assert.equal(after.callCount, 1);
+    assert.equal(after.getCall(0).thisValue, this.client);
+  },
+
+  'after enqueues methods to run after each other': function() {
+    var after1 = sinon.spy();
+    var after2 = sinon.spy();
+    var after3 = sinon.spy();
+
+    this.client
+      .after(1000, after1)
+      .after(2000, after2)
+      .after(3000, after3);
+
+    assert.equal(after1.callCount, 0);
+    assert.equal(after2.callCount, 0);
+    assert.equal(after3.callCount, 0);
+
+    // Nothing should be triggered yet
+    this.clock.tick(500);
+    assert.equal(after1.callCount, 0);
+    assert.equal(after2.callCount, 0);
+    assert.equal(after3.callCount, 0);
+
+    // First after callback should trigger
+    this.clock.tick(500);
+    assert.equal(after1.callCount, 1);
+    assert.equal(after2.callCount, 0);
+    assert.equal(after3.callCount, 0);
+
+    // Second after callback should trigger
+    this.clock.tick(2000);
+    assert.equal(after1.callCount, 1);
+    assert.equal(after2.callCount, 1);
+    assert.equal(after3.callCount, 0);
+
+    // Third after callback should trigger
+    this.clock.tick(3000);
+    assert.equal(after1.callCount, 1);
+    assert.equal(after2.callCount, 1);
+    assert.equal(after3.callCount, 1);
+  },
 });
