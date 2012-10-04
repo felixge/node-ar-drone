@@ -35,7 +35,167 @@ However, the documented parts are tested and should work well for most parts.
 
 ## Client
 
-Test
+This module exposes a high level Client API that tries to support all drone
+features, while making them easy to use.
+
+The best way to get started is to create a `repl.js` file like this:
+
+```js
+var arDrone = require('ar-drone');
+var client  = arDrone.createClient();
+client.createRepl();
+```
+
+Using this REPL, you should be able to have some fun:
+
+```js
+$ node repl.js
+// Make the drone takeoff
+drone> takeoff()
+true
+// Wait for the drone to takeoff
+drone> clockwise(0.5)
+0.5
+// Let the drone spin for a while
+drone> land()
+true
+// Wait for the drone to land
+```
+
+Now you could write an autonomous program that does the same:
+
+```js
+var arDrone = require('ar-drone');
+var client  = arDrone.createClient();
+
+client.takeoff();
+
+client
+  .after(5000, function() {
+    this.clockwise(0.5);
+  })
+  .after(3000, function() {
+    this.stop();
+    this.land();
+  });
+```
+
+Ok, but what if you want to make your drone to interact with something? Well,
+you could start by looking at the sensor data:
+
+```js
+client.on('navdata', console.log);
+```
+
+Not all of this is handled by the Client library yet, but you should at the
+very least be able to receive `droneState` and `demo` data.
+
+A good initial challenge might be to try flying to a certain altitude based
+on the `navdata.demo.altitudeMeters` property.
+
+Once you have manged this, you may want to try looking at the camera image. Here
+is a simple way to get this as PngBuffers (requires a recent ffmpeg version to
+be found in your `$PATH`):
+
+```js
+var pngStream = client.createPngStream();
+pngStream.on('data', console.log);
+```
+
+Your first challenge might be to expose these png images as a node http web
+server. Once you have done that, you should try feeding them into the
+[opencv](https://npmjs.org/package/opencv) module.
+
+### Client API
+
+#### arDrone.createClient([options])
+
+Returns a new `Client` object. `options` include:
+
+* `ip`: The IP of the drone. Defaults to `'192.168.1.1'`.
+
+#### client.createREPL()
+
+Launches an interactive interface with all client methods available in the
+active scope. Additionally `client` resolves to the `client` instance itself.
+
+#### client.createPngStream()
+
+Returns a `PngStream` object that emits individual png image buffers as `'data'`
+events.
+
+#### client.takeoff()
+
+Sets the internal `fly` state to `true`.
+
+#### client.land()
+
+Sets the internal `fly` state to `false`.
+
+#### client.up(speed) / client.down(speed)
+
+Makes the drone gain or reduce altitude. `speed` can be a value from `0` to `1`.
+
+#### client.clockwise(speed) / client.counterClockwise(speed)
+
+Causes the drone to spin. `speed` can be a value from `0` to `1`.
+
+#### client.front(speed) / client.back(speed)
+
+Controls the pitch, which a horizontal movement using the camera
+as a reference point.  `speed` can be a value from `0` to `1`.
+
+#### client.left(speed) / client.right(speed)
+
+Controls the roll, which is a horizontal movement using the camera
+as a reference point.  `speed` can be a value from `0` to `1`.
+
+#### client.stop()
+
+Sets all drone movement commands to `0`, making it effectively hover in place.
+
+#### client.animate(animation, duration)
+
+Performs a pre-programmed flight sequence for a given `duration` (in ms).
+`animation` can be one of the following:
+
+
+```js
+['phiM30Deg', 'phi30Deg', 'thetaM30Deg', 'theta30Deg', 'theta20degYaw200deg',
+'theta20degYawM200deg', 'turnaround', 'turnaroundGodown', 'yawShake',
+'yawDance', 'phiDance', 'thetaDance', 'vzDance', 'wave', 'phiThetaMixed',
+'doublePhiThetaMixed', 'flipAhead', 'flipBehind', 'flipLeft', 'flipRight']
+```
+
+Example:
+
+```js
+client.animate('flipLeft', 15);
+```
+
+Please note that the drone will need a good amount of altitude and headroom
+to perform a flip. So be careful!
+
+#### client.animateLeds(animation, hz, duration)
+
+Performs a pre-programmed led sequence at given `hz` frequency and `duration`
+(in sec!). `animation` can be one of the following:
+
+```js
+['blinkGreenRed', 'blinkGreen', 'blinkRed', 'blinkOrange', 'snakeGreenRed',
+'fire', 'standard', 'red', 'green', 'redSnake', 'blank', 'rightMissile',
+'leftMissile', 'doubleMissile', 'frontLeftGreenOthersRed',
+'frontRightGreenOthersRed', 'rearRightGreenOthersRed',
+'rearLeftGreenOthersRed', 'leftGreenRightRed', 'leftRedRightGreen',
+'blinkStandard']
+```
+
+Example:
+
+```js
+client.animateLeds('blinkRed', 5, 2)
+```
+
 
 ## UdpControl
 
@@ -180,8 +340,8 @@ Sends all enqueued commands as an UDP packet to the drone.
 
 ## Video
 
-Documentation to be written ...
+@TODO Document the low level video API.
 
 ## Navdata
 
-Documentation to be written ...
+@TODO Document the low level navdata API.
