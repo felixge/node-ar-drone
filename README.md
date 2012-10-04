@@ -26,7 +26,21 @@ SDK to create games and other apps for people to have more fun with their drones
 However, the protocol can also be used to receive video and sensor data, enabling
 developers to write autonomous programs for the upcoming robot revolution.
 
-## Control
+## Status
+
+This module is still under [heavy development](./node-ar-drone/CONTRIBUTING.md), so please don't be suprised if
+you find some functionality missing or undocumented.
+
+However, the documented parts are tested and should work well for most parts.
+
+## Client
+
+Test
+
+## UdpControl
+
+This is a low level API. If you prefer something simpler, check out the Client
+docs.
 
 The drone is controlled by sending UDP packets on port 5556. Because UDP
 does not guarantee message ordering or delivery, clients must repeatedly send
