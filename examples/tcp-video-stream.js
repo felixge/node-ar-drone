@@ -11,6 +11,4 @@ video.connect(function(err) {
   console.log('Connected');
 });
 
-video.on('data', function(buffer) {
-  console.log(buffer);
-});
+video.on('data', console.log);

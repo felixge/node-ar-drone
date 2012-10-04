@@ -9,20 +9,15 @@ var pngStream = arDrone.createPngStream();
 
 var lastPng;
 pngStream
-  .on('connect', function() {
-    console.log('Connected');
-  })
-  .on('disconnect', function(err) {
-    console.log('Disconnected: ' + err);
-  })
+  .on('error', console.log)
   .on('data', function(pngBuffer) {
     lastPng = pngBuffer;
   });
 
 var server = http.createServer(function(req, res) {
-  if (!pngStream.connected) {
+  if (!lastPng) {
     res.writeHead(503);
-    res.end('PngStream is currently not connected.');
+    res.end('Did not receive any png data yet.');
     return;
   }
 

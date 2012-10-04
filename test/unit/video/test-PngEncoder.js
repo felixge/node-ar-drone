@@ -194,4 +194,8 @@ test('PngEncoder', {
 
     assert.equal(this.fakeFfmpeg.stdin.end.callCount, 1);
   },
+
+  'end() does not do anything if there is no ffmpeg yet': function() {
+    this.encoder.end();
+  },
 });
