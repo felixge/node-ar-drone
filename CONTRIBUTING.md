@@ -56,55 +56,15 @@ So if you have ideas for this / want to work on it, let me know. My favorite
 module for generating the CSV output would be:
 [ya-csv](https://github.com/koles/ya-csv).
 
-### High level API
+### Client API
 
-In my first version of this library I included a high-level `Client` class
-that unified access to control, video and navdata. IMO the new separation is
-better, but there may still be room for a unified class that adds some sugar
-and makes sure certain config values are shared (like the drone IP).
+The Client API is still lacking a few important features:
 
-I could imagine an API like this:
-
-```js
-var client = arDrone.createClient();
-
-// Send UDP commands to drone every 30ms
-client.setInterval(30);
-
-// Sets the 'emergency' bit in AT*REF for 1 second
-client.resetEmergency();
-
-// Takeoff
-client.takeoff();
-
-client
-  .after(5000, function() {
-    this.up(0.5);
-    this.clockwise(1);
-  })
-  .after(5000, function() {
-    this.hover();
-  })
-  .after(2000, function() {
-    this.land();
-  });
-```
-
-Navdata example:
-
-```js
-client.on('navdata', function(navdata) {
-  if (this.navdata.lowBattery) {
-    console.log('Low battery!');
-  }
-});
-```
-
-And video:
-
-```js
-var stream = client.createPngStream();
-```
+* `client.disableEmergency()` - this recovers a drone that is in emergency mode
+  by setting the REF emergency bit for a short moment. This should probably also
+  be done implicitly when a new client is created.
+* `client.config()` - allow sending custom config values to a client. This is
+  needed to configure things like the 'navdata' and 'camera' settings.
 
 ### Parse remaining navdata options
 
