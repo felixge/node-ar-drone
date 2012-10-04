@@ -196,6 +196,12 @@ Example:
 client.animateLeds('blinkRed', 5, 2)
 ```
 
+#### client.disableEmergency()
+
+Causes the emergency REF bit to be set to 1 until
+`navdata.droneState.emergencyLanding` is 0. This recovers a drone that has
+flipped over and is showing red lights to be flyable again and show green
+lights.  It is also done implicitly when creating a new high level client.
 
 ## UdpControl
 

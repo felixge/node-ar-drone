@@ -44,6 +44,13 @@ test('Client', {
     assert.equal(this.client._setInterval.getCall(0).args[0], 30);
   },
 
+  'resume() calls disableEmergency': function() {
+    sinon.spy(this.client, 'disableEmergency');
+    this.client.resume();
+
+    assert.equal(this.client.disableEmergency.callCount, 1);
+  },
+
   'navdata "data" events are proxied': function() {
     var fakeNavdata = {fake: 'navdata'};
     this.client.resume();
@@ -76,6 +83,21 @@ test('Client', {
 
     assert.equal(errorStub.callCount, 1);
     assert.strictEqual(errorStub.getCall(0).args[0], fakeErr);
+  },
+
+  'resume() is idempotent': function() {
+    var fakeNavdata = {fake: 'navdata'};
+    this.client.resume();
+    this.client.resume();
+
+    var eventCount = 0;
+    this.client.on('navdata', function(navdata) {
+      eventCount++;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+
+    assert.strictEqual(eventCount, 1);
   },
 
   'resume() is idempotent': function() {
@@ -292,5 +314,36 @@ test('Client', {
     assert.equal(after1.callCount, 1);
     assert.equal(after2.callCount, 1);
     assert.equal(after3.callCount, 1);
+  },
+
+  'disableEmergency sets emergency bit to true until navdata confirms': function() {
+    // disable implicit disableEmergency for this test
+    sinon.stub(this.client, 'disableEmergency');
+    this.client.resume();
+    this.client.disableEmergency.restore();
+
+    // Initially emergency bit should be set to false
+    var navdata = {droneState: {emergencyLanding: true}};
+    this.fakeUdpNavdataStream.emit('data', navdata);
+    assert.equal(this.client._ref.emergency, false);
+
+    // But calling disableEmergency should flip it on
+    this.client.disableEmergency();
+    this.fakeUdpNavdataStream.emit('data', navdata);
+    assert.equal(this.client._ref.emergency, true);
+
+    // And make it stay on
+    this.fakeUdpNavdataStream.emit('data', navdata);
+    assert.equal(this.client._ref.emergency, true);
+
+    // Until the emergencyLanding status goes to false
+    navdata.droneState.emergencyLanding = false;
+    this.fakeUdpNavdataStream.emit('data', navdata);
+    assert.equal(this.client._ref.emergency, false);
+
+    // But this should only happen once
+    navdata.droneState.emergencyLanding = true;
+    this.fakeUdpNavdataStream.emit('data', navdata);
+    assert.equal(this.client._ref.emergency, false);
   },
 });
