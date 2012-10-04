@@ -5,7 +5,13 @@
 An implementation of the networking protocols used by the
 [Parrot AR Drone 2.0](http://ardrone2.parrot.com/).
 
-Install via npm:
+Install via Github to get the *latest* version:
+
+```bash
+npm install git://github.com/felixge/node-ar-drone.git
+```
+
+Or, if you're fine with missing some cutting edge stuff, go for npm:
 
 ```bash
 npm install ar-drone
