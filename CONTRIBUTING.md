@@ -6,7 +6,7 @@
 $ git clone <git url>
 $ cd <clone dir>
 $ npm install
-$ make test
+$ npm test
 ```
 
 ## Running an individual test
@@ -58,11 +58,8 @@ module for generating the CSV output would be:
 
 ### Client API
 
-The Client API is still lacking a few important features:
+The Client API is still lacking an important feature:
 
-* `client.disableEmergency()` - this recovers a drone that is in emergency mode
-  by setting the REF emergency bit for a short moment. This should probably also
-  be done implicitly when a new client is created.
 * `client.config()` - allow sending custom config values to a client. This is
   needed to configure things like the 'navdata' and 'camera' settings.
 
