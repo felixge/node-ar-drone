@@ -160,6 +160,18 @@ as a reference point.  `speed` can be a value from `0` to `1`.
 
 Sets all drone movement commands to `0`, making it effectively hover in place.
 
+#### client.config(key, value)
+
+Sends a config command to the drone. You will need to download the drone
+[SDK](https://projects.ardrone.org/projects/show/ardrone-ap) to find a full list of commands in the `ARDrone_Developer_Guide.pdf`.
+
+For example, this command can be used to instruct the drone to send all navdata.
+
+```js`
+client.config('general:navdata_demo', 'FALSE');
+```
+
+
 #### client.animate(animation, duration)
 
 Performs a pre-programmed flight sequence for a given `duration` (in ms).
