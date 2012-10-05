@@ -10,7 +10,7 @@
   },
   "main": "./index",
   "scripts": {
-    "test": "make test"
+    "test": "node test/run.js"
   },
   "dependencies": {
     "buffy": "0.0.2"

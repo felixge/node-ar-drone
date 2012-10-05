@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
 test:
-	node test/run.js
+	npm test
 
 .PHONY: test
