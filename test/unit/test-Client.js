@@ -53,7 +53,8 @@ test('Client', {
   },
 
   'navdata "data" events are proxied': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {droneState: {lowBattery: 0}};
+
     this.client.resume();
 
     assert.equal(this.fakeUdpNavdataStream.resume.callCount, 1);
@@ -87,7 +88,7 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {droneState: {lowBattery: 0}};
     this.client.resume();
     this.client.resume();
 
@@ -102,7 +103,7 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {droneState: {lowBattery: 0}};
     this.client.resume();
     this.client.resume();
 
