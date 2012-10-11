@@ -112,6 +112,24 @@ Your first challenge might be to expose these png images as a node http web
 server. Once you have done that, you should try feeding them into the
 [opencv](https://npmjs.org/package/opencv) module.
 
+### Battery Status
+If the AR Drone battery drops beyond 20%, two things can happen: 1) If it's on the air, it will stay there but won't do any flips and 2) If it's not in the air, it won't take off. 
+
+To address these two issues you can do:
+
+```js
+//At some point here should be an Error that says low battery.
+client.on('error', function(err){
+  console.log(err);
+});
+
+//Listen for this event just once. It will fire after the battery has dropped to 10%
+client.once('lowbattery', function(){
+  client.stop();
+  client.land();
+})
+```
+
 ### Client API
 
 #### arDrone.createClient([options])
