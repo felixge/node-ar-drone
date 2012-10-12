@@ -94,7 +94,7 @@ test('PaVEParser', {
 
 
   'emits error on bad signature': function() {
-    var buffer = new Buffer(64);
+    var buffer = new Buffer(68);
 
     // should be PaVE, not fuck
     buffer.write('fuck');
