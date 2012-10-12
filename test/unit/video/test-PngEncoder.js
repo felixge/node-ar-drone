@@ -167,10 +167,21 @@ test('PngEncoder', {
     assert.strictEqual(stdin.write.getCall(1).args[0], this.fakeBuffer2);
   },
 
-  'write() does not handle ffmpeg backpressure for now': function() {
+  'write() handles ffmpeg backpressure': function() {
     this.fakeFfmpeg.stdin.write.returns(true);
     var r = this.encoder.write(new Buffer('abc'));
-    assert.equal(r, undefined);
+    assert.equal(r, true);
+
+    this.fakeFfmpeg.stdin.write.returns(false);
+    r = this.encoder.write(new Buffer('abc'));
+    assert.equal(r, false);
+
+    var drainCalled = false;
+    this.encoder.on('drain', function () {
+        drainCalled = true;
+    });
+    this.fakeFfmpeg.stdin.emit('drain');
+    assert.ok(drainCalled);
   },
 
   'write() pipes ffmpeg stderr to log': function() {
