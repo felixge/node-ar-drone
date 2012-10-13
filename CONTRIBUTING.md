@@ -101,8 +101,8 @@ and I'll try to help you on this as much as I can.
 
 ### AR Drone 1.0
 
-I don't have a 1.0 AR Drone, but if you have one, I'd be open for patches
-to ensure compatibility.
+It [appears](https://github.com/felixge/node-ar-drone/issues/11#issuecomment-9402270) that this library is compatible with 1.0 drones as well,
+but feel free to submit bugs / patches if you find any problems.
 
 ### Fixing bugs
 
