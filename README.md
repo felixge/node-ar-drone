@@ -133,6 +133,7 @@ events.
 #### client.takeoff()
 
 Sets the internal `fly` state to `true`.
+If the battery is lower than 20% will trhow an error.
 
 #### client.land()
 

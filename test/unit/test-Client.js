@@ -25,7 +25,7 @@ test('Client', {
 
     this.options = {
       udpControl       : this.fakeUdpControl,
-      udpNavdataStream : this.fakeUdpNavdataStream,
+      udpNavdataStream : this.fakeUdpNavdataStream
     };
 
     this.client = new Client(this.options);
@@ -53,7 +53,8 @@ test('Client', {
   },
 
   'navdata "data" events are proxied': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {droneState: {lowBattery: 0}};
+
     this.client.resume();
 
     assert.equal(this.fakeUdpNavdataStream.resume.callCount, 1);
@@ -87,22 +88,7 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
-    this.client.resume();
-    this.client.resume();
-
-    var eventCount = 0;
-    this.client.on('navdata', function(navdata) {
-      eventCount++;
-    });
-
-    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
-
-    assert.strictEqual(eventCount, 1);
-  },
-
-  'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {droneState: {lowBattery: 0}};
     this.client.resume();
     this.client.resume();
 
@@ -368,4 +354,26 @@ test('Client', {
     this.fakeUdpNavdataStream.emit('data', navdata);
     assert.equal(this.client._ref.emergency, false);
   },
+
+  'check battery state': function(){
+    assert.equal(this.client._lowBattery, false);
+  },
+
+  'trying to takeoff with low battery throws an error': function(){
+    var fakeNavdata = {droneState: {lowBattery: 1}},
+        self = this;
+
+    this.client.resume();
+
+    this.client.on('navdata', function(navdata) {
+      try{
+        self.client.takeoff();
+      }catch(e){
+        //If the error was true, should be this message.
+        assert.equal(e.message, "Low Battery (under 20%)");
+      }
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+  }
 });
