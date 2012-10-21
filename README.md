@@ -369,3 +369,9 @@ Sends all enqueued commands as an UDP packet to the drone.
 ## Navdata
 
 @TODO Document the low level navdata API.
+
+## Environment variables
+
+* DEFAULT_DRONE_IP 
+
+
