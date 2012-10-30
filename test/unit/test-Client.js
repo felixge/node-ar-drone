@@ -84,10 +84,24 @@ test('Client', {
     this.fakeUdpNavdataStream.emit('data', fakeNavdataTakeoff);
     assert.equal(gotEventTakeoff, true);
 
+    // hovering event
+    var fakeNavdataHovering = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_HOVERING'}
+    };
+
+    var gotEventHovering;
+    this.client.on('hovering', function() {
+      gotEventHovering = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataHovering);
+    assert.equal(gotEventHovering, true);
+
     // flying event
     var fakeNavdataFlying = {
       droneState: 'navdata',
-      demo: {controlState: 'CTRL_HOVERING'}
+      demo: {controlState: 'CTRL_FLYING'}
     };
 
     var gotEventFlying;
