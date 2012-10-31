@@ -163,7 +163,7 @@ Sets all drone movement commands to `0`, making it effectively hover in place.
 #### client.config(key, value)
 
 Sends a config command to the drone. You will need to download the drone
-[SDK](https://projects.ardrone.org/projects/show/ardrone-ap) to find a full list of commands in the `ARDrone_Developer_Guide.pdf`.
+[SDK](https://projects.ardrone.org/projects/show/ardrone-api) to find a full list of commands in the `ARDrone_Developer_Guide.pdf`.
 
 For example, this command can be used to instruct the drone to send all navdata.
 
