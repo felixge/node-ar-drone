@@ -43,7 +43,6 @@ test('UdpNavdataStream', {
 
     // verify socket.bind()
     assert.equal(this.fakeSocket.bind.callCount, 1);
-    assert.equal(this.fakeSocket.bind.getCall(0).args[0], this.fakePort);
 
     // verify socket.send()
     assert.equal(this.fakeSocket.send.callCount, 1);
