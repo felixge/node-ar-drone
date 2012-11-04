@@ -68,6 +68,122 @@ test('Client', {
     assert.strictEqual(gotNavdata, fakeNavdata);
   },
 
+  'navdata custom controlState events are triggered': function() {
+    // takeoff event
+    var fakeNavdataTakeoff = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_TRANS_TAKEOFF'}
+    };
+    this.client.resume();
+
+    var gotEventTakeoff;
+    this.client.on('takeoff', function() {
+      gotEventTakeoff = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataTakeoff);
+    assert.equal(gotEventTakeoff, true);
+
+    // hovering event
+    var fakeNavdataHovering = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_HOVERING'}
+    };
+
+    var gotEventHovering;
+    this.client.on('hovering', function() {
+      gotEventHovering = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataHovering);
+    assert.equal(gotEventHovering, true);
+
+    // flying event
+    var fakeNavdataFlying = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_FLYING'}
+    };
+
+    var gotEventFlying;
+    this.client.on('flying', function() {
+      gotEventFlying = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataFlying);
+    assert.equal(gotEventFlying, true);
+
+    // landing event
+    var fakeNavdataLanding = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_TRANS_LANDING'}
+    };
+
+    var gotEventLanding;
+    this.client.on('landing', function() {
+      gotEventLanding = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataLanding);
+    assert.equal(gotEventLanding, true);
+
+    // landed event
+    var fakeNavdataLanded = {
+      droneState: 'navdata',
+      demo: {controlState: 'CTRL_LANDED'}
+    };
+
+    var gotEventLanded;
+    this.client.on('landed', function() {
+      gotEventLanded = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdataLanded);
+    assert.equal(gotEventLanded, true);
+  },
+
+  'navdata custom battery events are triggered': function() {
+    // takeoff event
+    var fakeNavdata = {
+      droneState: {lowBattery:1},
+      demo: {batteryPercentage: 23}
+    };
+    this.client.resume();
+
+    var gotEventLow;
+    this.client.on('lowBattery', function(level) {
+      assert.equal(level, fakeNavdata.demo.batteryPercentage);
+      gotEventLow = true;
+    });
+
+    var gotEventLevel;
+    this.client.on('batteryChange', function(level) {
+      assert.equal(level, fakeNavdata.demo.batteryPercentage);
+      gotEventLevel = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+    assert.equal(gotEventLow, true);
+    assert.equal(gotEventLevel, true);
+  },
+
+  'navdata custom altitude events are triggered': function() {
+    // takeoff event
+    var fakeNavdata = {
+      droneState: 'navdata',
+      demo: {altitudeMeters: 23.5}
+    };
+    this.client.resume();
+
+    var gotEvent;
+    this.client.on('altitudeChange', function(level) {
+      assert.equal(level, fakeNavdata.demo.altitudeMeters);
+      gotEvent = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+    assert.equal(gotEvent, true);
+  },
+
   'navdata "error" events are ignored by default': function() {
     this.client.resume();
 
