@@ -223,7 +223,7 @@ lights.  It is also done implicitly when creating a new high level client.
 
 #### Events
 
-A client will emit landed, hovering, flying, and landing events as long as demo navdata.
+A client will emit landed, hovering, flying, landing, batteryChange, and altitudeChange events as long as demo navdata is enabled.
 
 To enable demo navdata use
 
