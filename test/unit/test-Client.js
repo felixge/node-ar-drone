@@ -270,8 +270,8 @@ test('Client', {
     assert.strictEqual(pcmd.clockSpin, this.client.clockSpin);
 
     var ref = this.fakeUdpControl.ref.getCall(0).args[0];
-    assert.strictEqual(ref.fly, this.client.flyBit);
-    assert.strictEqual(ref.emergency, this.client.emergencyBit);
+    assert.strictEqual(ref.flyBit, this.client.flyBit);
+    assert.strictEqual(ref.emergencyBit, this.client.emergencyBit);
 
     this.clock.tick(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 2);

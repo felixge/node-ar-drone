@@ -32,10 +32,10 @@ test('AtCommandCreator', {
     assert.equal(cmd.args.length, 1);
     assert.equal(cmd.args[0], 0);
 
-    var cmd = this.creator.ref({fly: true});
+    var cmd = this.creator.ref({flyBit: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.takeoff);
 
-    var cmd = this.creator.ref({emergency: true});
+    var cmd = this.creator.ref({emergencyBit: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.emergency);
   },
 
