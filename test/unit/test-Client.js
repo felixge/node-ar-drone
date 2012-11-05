@@ -491,4 +491,12 @@ test('Client', {
     this.fakeUdpNavdataStream.emit('data', navdata);
     assert.equal(this.client.emergencyBit, false);
   },
+
+  'toJSON returns public properties': function() {
+    var json = this.client.toJSON();
+
+    // just check a few properties, assume the rest to be ok
+    assert.strictEqual(json.flyBit, this.client.flyBit);
+    assert.strictEqual(json.upDown, this.client.upDown);
+  },
 });
