@@ -140,25 +140,33 @@ Sets `client.flyBit = false`.
 
 #### client.up(speed) / client.down(speed)
 
-Makes the drone gain or reduce altitude. `speed` can be a value from `0` to `1`.
+Controls the vertical movement of the drone.
 
-#### client.clockwise(speed) / client.counterClockwise(speed)
-
-Causes the drone to spin. `speed` can be a value from `0` to `1`.
+Sets `client.upDown` to `speed` or `-speed`. `speed` can be be from `0` to `1`.
 
 #### client.front(speed) / client.back(speed)
 
 Controls the pitch, which a horizontal movement using the camera
-as a reference point.  `speed` can be a value from `0` to `1`.
+as a reference point.
+
+Sets `client.frontBack` to `speed` or `-speed`. `speed` can be be from `0` to `1`.
 
 #### client.left(speed) / client.right(speed)
 
 Controls the roll, which is a horizontal movement using the camera
-as a reference point.  `speed` can be a value from `0` to `1`.
+as a reference point.
+
+Sets `client.leftRight` to `speed` or `-speed`. `speed` can be be from `0` to `1`.
+
+#### client.clockwise(speed) / client.counterClockwise(speed)
+
+Controls the rotation of the drone.
+
+Sets client.clockSpin to `speed` or `-speed`. `speed` can be be from `0` to `1`.
 
 #### client.stop()
 
-Sets all drone movement commands to `0`, making it effectively hover in place.
+Sets all drone movement properties to `0`, making it effectively hover in place.
 
 #### client.config(key, value)
 
