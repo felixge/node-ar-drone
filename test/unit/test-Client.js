@@ -52,8 +52,27 @@ test('Client', {
     assert.equal(this.client.disableEmergency.callCount, 1);
   },
 
-  'navdata "data" events are proxied': function() {
+  'more navdata is requested if "demo" option is not included, events are not proxied': function() {
     var fakeNavdata = {fake: 'navdata'};
+    this.client.resume();
+
+    var gotNavdata = false;
+    this.client.on('navdata', function(navdata) {
+      gotNavdata = true;
+    });
+
+    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
+
+    assert.strictEqual(gotNavdata, false);
+    assert.equal(this.fakeUdpControl.config.callCount, 1);
+
+    var args = this.fakeUdpControl.config.getCall(0).args;
+    assert.strictEqual(args[0], 'general:navdata_demo');
+    assert.strictEqual(args[1], 'TRUE');
+  },
+
+  'navdata "data" events are proxied if "demo" option is set': function() {
+    var fakeNavdata = {demo: 'fake navdata'};
     this.client.resume();
 
     assert.equal(this.fakeUdpNavdataStream.resume.callCount, 1);
@@ -218,7 +237,7 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
+    var fakeNavdata = {demo: 'navdata'};
     this.client.resume();
     this.client.resume();
 
