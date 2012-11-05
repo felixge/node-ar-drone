@@ -245,6 +245,14 @@ test('Client', {
   },
 
   '_setInterval triggers periodic ref / pcmd commands': function() {
+    // set some non-default values
+    this.client.flyBit       = true;
+    this.client.emergencyBit = true;
+    this.client.leftRight    = 0.1;
+    this.client.frontBack    = 0.2;
+    this.client.upDown       = 0.3;
+    this.client.clockSpin    = 0.4;
+
     this.client._setInterval(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 0);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 0);
@@ -255,7 +263,11 @@ test('Client', {
     assert.equal(this.fakeUdpControl.pcmd.callCount, 1);
     assert.equal(this.fakeUdpControl.flush.callCount, 1);
 
-    assert.strictEqual(this.client._pcmd, this.fakeUdpControl.pcmd.getCall(0).args[0]);
+    var pcmd = this.fakeUdpControl.pcmd.getCall(0).args[0];
+    assert.strictEqual(pcmd.leftRight, this.client.leftRight);
+    assert.strictEqual(pcmd.frontBack, this.client.frontBack);
+    assert.strictEqual(pcmd.upDown, this.client.upDown);
+    assert.strictEqual(pcmd.clockSpin, this.client.clockSpin);
 
     var ref = this.fakeUdpControl.ref.getCall(0).args[0];
     assert.strictEqual(ref.fly, this.client.flyBit);
@@ -286,53 +298,44 @@ test('Client', {
     assert.equal(this.client.flyBit, false);
   },
 
-  'pcmd options are exposed as methods': function() {
+  'there are functions aliases for the movement properties': function() {
     this.client.up(0.5);
-    assert.equal(this.client._pcmd.up, 0.5);
-    assert.equal(this.client._pcmd.down, undefined);
+    assert.equal(this.client.upDown, 0.5);
 
     this.client.down(0.5);
-    assert.equal(this.client._pcmd.down, 0.5);
-    assert.equal(this.client._pcmd.up, undefined);
+    assert.equal(this.client.upDown, -0.5);
 
     this.client.left(0.5);
-    assert.equal(this.client._pcmd.left, 0.5);
-    assert.equal(this.client._pcmd.right, undefined);
+    assert.equal(this.client.leftRight, 0.5);
 
     this.client.right(0.5);
-    assert.equal(this.client._pcmd.right, 0.5);
-    assert.equal(this.client._pcmd.left, undefined);
+    assert.equal(this.client.leftRight, -0.5);
 
     this.client.front(0.5);
-    assert.equal(this.client._pcmd.front, 0.5);
-    assert.equal(this.client._pcmd.back, undefined);
+    assert.equal(this.client.frontBack, 0.5);
 
     this.client.back(0.5);
-    assert.equal(this.client._pcmd.back, 0.5);
-    assert.equal(this.client._pcmd.front, undefined);
+    assert.equal(this.client.frontBack, -0.5);
 
     this.client.clockwise(0.5);
-    assert.equal(this.client._pcmd.clockwise, 0.5);
-    assert.equal(this.client._pcmd.counterClockwise, undefined);
+    assert.equal(this.client.clockSpin, 0.5);
 
     this.client.counterClockwise(0.5);
-    assert.equal(this.client._pcmd.counterClockwise, 0.5);
-    assert.equal(this.client._pcmd.clockwise, undefined);
+    assert.equal(this.client.clockSpin, -0.5);
   },
 
-  'pcmd methods conver strings to floats': function() {
-    this.client.up('-0.5');
-    assert.strictEqual(this.client._pcmd.up, -0.5);
-
-    this.client.down('-0.5');
-    assert.strictEqual(this.client._pcmd.down, -0.5);
-  },
-
-  'stop resets pcmd commands': function() {
-    this.client.up(0.5);
+  'stop resets movement properties': function() {
+    this.client.leftRight = 0.1;
+    this.client.frontBack = 0.2;
+    this.client.upDown    = 0.3;
+    this.client.clockSpin = 0.4;
 
     this.client.stop();
-    assert.deepEqual(this.client._pcmd, {});
+
+    assert.strictEqual(this.client.leftRight, 0);
+    assert.strictEqual(this.client.frontBack, 0);
+    assert.strictEqual(this.client.upDown, 0);
+    assert.strictEqual(this.client.clockSpin, 0);
   },
 
   'config(): sends config command 10 times': function() {

@@ -47,17 +47,13 @@ test('AtCommandCreator', {
 
     // test all the aliases mapping to pcmd args
     var val = 0.75;
-    assert.equal(this.creator.pcmd({left: val}).args[1], at.floatString(-val));
-    assert.equal(this.creator.pcmd({right: val}).args[1], at.floatString(val));
-    assert.equal(this.creator.pcmd({front: val}).args[2], at.floatString(-val));
-    assert.equal(this.creator.pcmd({back: val}).args[2], at.floatString(val));
-    assert.equal(this.creator.pcmd({up: val}).args[3], at.floatString(val));
-    assert.equal(this.creator.pcmd({down: val}).args[3], at.floatString(-val));
-    assert.equal(this.creator.pcmd({clockwise: val}).args[4], at.floatString(val));
-    assert.equal(this.creator.pcmd({counterClockwise: val}).args[4], at.floatString(-val));
+    assert.equal(this.creator.pcmd({leftRight: val}).args[1], at.floatString(val));
+    assert.equal(this.creator.pcmd({frontBack: val}).args[2], at.floatString(val));
+    assert.equal(this.creator.pcmd({upDown: val}).args[3], at.floatString(val));
+    assert.equal(this.creator.pcmd({clockSpin: val}).args[4], at.floatString(val));
 
     // test multiple aliases togeter
-    var cmd = this.creator.pcmd({left: 0.1, clockwise: 0.3});
+    var cmd = this.creator.pcmd({leftRight: -0.1, clockSpin: 0.3});
     assert.equal(cmd.args[1], at.floatString(-0.1));
     assert.equal(cmd.args[4], at.floatString(0.3));
 
@@ -66,7 +62,7 @@ test('AtCommandCreator', {
     assert.equal(cmd.args[0] & AtCommandCreator.PCMD_FLAGS.progressive, false);
 
     // test progressive bit being set automatically
-    var cmd = this.creator.pcmd({left: 0.1});
+    var cmd = this.creator.pcmd({leftRight: 0.1});
     assert.ok(cmd.args[0] & (1 << 0));
   },
 
