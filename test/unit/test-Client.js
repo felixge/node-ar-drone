@@ -244,7 +244,7 @@ test('Client', {
     assert.strictEqual(gotOptions, options);
   },
 
-  '_setInterval caused period ref / pcmd commands': function() {
+  '_setInterval triggers periodic ref / pcmd commands': function() {
     this.client._setInterval(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 0);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 0);
@@ -254,8 +254,12 @@ test('Client', {
     assert.equal(this.fakeUdpControl.ref.callCount, 1);
     assert.equal(this.fakeUdpControl.pcmd.callCount, 1);
     assert.equal(this.fakeUdpControl.flush.callCount, 1);
+
     assert.strictEqual(this.client._pcmd, this.fakeUdpControl.pcmd.getCall(0).args[0]);
-    assert.strictEqual(this.client._ref, this.fakeUdpControl.ref.getCall(0).args[0]);
+
+    var ref = this.fakeUdpControl.ref.getCall(0).args[0];
+    assert.strictEqual(ref.fly, this.client.flyBit);
+    assert.strictEqual(ref.emergency, this.client.emergencyBit);
 
     this.clock.tick(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 2);
@@ -274,12 +278,12 @@ test('Client', {
   },
 
 
-  'ref options are exposed as methods': function() {
+  'takeoff / land toggle the "flyBit" property': function() {
     this.client.takeoff();
-    assert.equal(this.client._ref.fly, true);
+    assert.equal(this.client.flyBit, true);
 
     this.client.land();
-    assert.equal(this.client._ref.fly, false);
+    assert.equal(this.client.flyBit, false);
   },
 
   'pcmd options are exposed as methods': function() {
@@ -463,25 +467,25 @@ test('Client', {
     // Initially emergency bit should be set to false
     var navdata = {droneState: {emergencyLanding: true}};
     this.fakeUdpNavdataStream.emit('data', navdata);
-    assert.equal(this.client._ref.emergency, false);
+    assert.equal(this.client.emergencyBit, false);
 
     // But calling disableEmergency should flip it on
     this.client.disableEmergency();
     this.fakeUdpNavdataStream.emit('data', navdata);
-    assert.equal(this.client._ref.emergency, true);
+    assert.equal(this.client.emergencyBit, true);
 
     // And make it stay on
     this.fakeUdpNavdataStream.emit('data', navdata);
-    assert.equal(this.client._ref.emergency, true);
+    assert.equal(this.client.emergencyBit, true);
 
     // Until the emergencyLanding status goes to false
     navdata.droneState.emergencyLanding = false;
     this.fakeUdpNavdataStream.emit('data', navdata);
-    assert.equal(this.client._ref.emergency, false);
+    assert.equal(this.client.emergencyBit, false);
 
     // But this should only happen once
     navdata.droneState.emergencyLanding = true;
     this.fakeUdpNavdataStream.emit('data', navdata);
-    assert.equal(this.client._ref.emergency, false);
+    assert.equal(this.client.emergencyBit, false);
   },
 });

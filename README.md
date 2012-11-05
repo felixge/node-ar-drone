@@ -132,11 +132,11 @@ events.
 
 #### client.takeoff()
 
-Sets the internal `fly` state to `true`.
+Sets `client.flyBit = true`.
 
 #### client.land()
 
-Sets the internal `fly` state to `false`.
+Sets `client.flyBit = false`.
 
 #### client.up(speed) / client.down(speed)
 
