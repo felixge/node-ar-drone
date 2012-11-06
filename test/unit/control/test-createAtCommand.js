@@ -1,7 +1,7 @@
-var common          = require('../../../common');
+var common          = require('../../common');
 var assert          = require('assert');
 var test            = require('utest');
-var createAtCommand = require(common.lib + '/control/commands/createAtCommand');
+var createAtCommand = require(common.lib + '/control/createAtCommand');
 
 test('createAtCommand', {
   'creates an object with: type, args, number': function() {

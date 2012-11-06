@@ -11,8 +11,8 @@ test('createAtRefCommand', {
     assert.strictEqual(cmd.args[0], 0);
   },
 
-  'passes number property': function() {
-    var cmd = createAtRefCommand({number: 5});
+  'passes number argument': function() {
+    var cmd = createAtRefCommand(undefined, 5);
     assert.strictEqual(cmd.number, 5);
   },
 

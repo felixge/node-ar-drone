@@ -12,8 +12,8 @@ test('createAtConfigCommand', {
     assert.strictEqual(cmd.args[1], '""');
   },
 
-  'passes number property': function() {
-    var cmd = createAtConfigCommand({number: 5});
+  'passes number argument': function() {
+    var cmd = createAtConfigCommand(undefined, 5);
     assert.strictEqual(cmd.number, 5);
   },
 

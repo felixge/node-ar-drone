@@ -2,17 +2,15 @@ var common              = require('../../common');
 var assert              = require('assert');
 var test                = require('utest');
 var createClientControl = require(common.lib + '/client/createClientControl');
-var UdpControl = require(common.lib + '/control/UdpControl');
 
 test('createClientControl', {
   before: function() {
-    this.udpControl = new UdpControl();
-    this.control = createClientControl({
-      udpControl: this.udpControl,
-    });
+    this.control = createClientControl();
   },
 
   'constructor': function() {
+    assert.equal(this.control.fly, false);
+    assert.equal(this.control.emergency, false);
     assert.equal(this.control.leftRight, 0);
     assert.equal(this.control.frontBack, 0);
     assert.equal(this.control.upDown, 0);

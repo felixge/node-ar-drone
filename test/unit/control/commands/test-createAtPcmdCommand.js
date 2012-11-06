@@ -16,8 +16,8 @@ test('createAtPcmdCommand', {
     assert.strictEqual(cmd.args[4], 0);
   },
 
-  'passes number property': function() {
-    var cmd = createAtPcmdCommand({number: 5});
+  'passes number argument': function() {
+    var cmd = createAtPcmdCommand(undefined, 5);
     assert.strictEqual(cmd.number, 5);
   },
 
