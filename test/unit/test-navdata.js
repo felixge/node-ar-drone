@@ -2,7 +2,7 @@ var common = require('../common');
 var assert = require('assert');
 var test = require('utest');
 var createNavdata = require(common.lib + '/navdata');
-var createData = require(common.lib + '/navdata/data');
+var createMessage = require(common.lib + '/navdata/message');
 
 test('navdata', {
   before: function() {
@@ -10,10 +10,10 @@ test('navdata', {
   },
 
   'has all sensor data properties': function() {
-    var data = createData();
+    var message = createMessage();
 
     // do a shallow check
-    for (var key in data) {
+    for (var key in message) {
       assert.ok(key in this.navdata, key);
     }
   },

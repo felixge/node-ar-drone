@@ -4,7 +4,6 @@ var sinon = require('sinon');
 var test = require('utest');
 var createUdpNavdataStream = require(common.lib + '/navdata/udpNavdataStream');
 
-// not testing anything yet, Data is just a structure
 test('udpNavdataStream', {
   before: function() {
     this.stream = createUdpNavdataStream({paused: true});
