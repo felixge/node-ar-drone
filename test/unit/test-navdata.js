@@ -1,12 +1,12 @@
 var common = require('../common');
 var assert = require('assert');
 var test = require('utest');
-var createSensors = require(common.lib + '/navdata');
+var createNavdata = require(common.lib + '/navdata');
 var createData = require(common.lib + '/navdata/data');
 
 test('navdata', {
   before: function() {
-    this.navdata = createSensors();
+    this.navdata = createNavdata();
   },
 
   'has all sensor data properties': function() {
