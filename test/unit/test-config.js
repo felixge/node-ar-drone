@@ -22,4 +22,10 @@ test('config', {
     assert.equal(this.config.printfPort, 5558);
     assert.equal(this.config.controlPort, 5557);
   },
+
+  'custom properties': function() {
+    // just testing it for one
+    this.config = config({ip: 'something'});
+    assert.equal(this.config.ip, 'something');
+  },
 });
