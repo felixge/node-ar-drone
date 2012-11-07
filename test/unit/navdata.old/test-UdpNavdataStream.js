@@ -2,7 +2,7 @@ var common = require('../../common');
 var assert = require('assert');
 var test = require('utest');
 var sinon = require('sinon');
-var UdpNavdataStream = require(common.lib + '/navdata/UdpNavdataStream');
+var UdpNavdataStream = require(common.lib + '/navdata.old/UdpNavdataStream');
 var EventEmitter = require('events').EventEmitter;
 
 test('UdpNavdataStream', {

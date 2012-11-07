@@ -1,7 +1,7 @@
 var common = require('../../common');
 var assert = require('assert');
 var test = require('utest');
-var parseNavdata = require(common.lib + '/navdata/parseNavdata');
+var parseNavdata = require(common.lib + '/navdata.old/parseNavdata');
 var fs = require('fs');
 var fixture = fs.readFileSync(common.fixtures + '/navdata.bin');
 

@@ -3,7 +3,7 @@ var arDrone = exports;
 exports.Client           = require('./lib/client');
 exports.UdpControl       = require('./lib/control/UdpControl');
 exports.PngStream        = require('./lib/video/PngStream');
-exports.UdpNavdataStream = require('./lib/navdata/UdpNavdataStream');
+exports.UdpNavdataStream = require('./lib/navdata.old/UdpNavdataStream');
 
 exports.createClient = function(options) {
   var client = new arDrone.Client(options);
