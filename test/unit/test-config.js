@@ -1,11 +1,11 @@
 var common       = require('../common');
 var assert       = require('assert');
 var test         = require('utest');
-var createConfig = require(common.lib + '/createConfig');
+var config = require(common.lib + '/config');
 
-test('createConfig', {
+test('config', {
   before: function() {
-    this.config = createConfig();
+    this.config = config();
   },
 
   'default properties': function() {

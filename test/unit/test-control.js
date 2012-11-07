@@ -2,13 +2,13 @@ var common          = require('../common');
 var assert          = require('assert');
 var test            = require('utest');
 var sinon           = require('sinon');
-var createControl   = require(common.lib + '/createControl');
+var control   = require(common.lib + '/control');
 var message = require(common.lib + '/control/message');
 
-test('createControl', {
+test('control', {
   before: function() {
     this.clock                  = sinon.useFakeTimers();
-    this.control                = createControl();
+    this.control                = control();
     this.config                 = this.control.config;
     this.atMessageUdpStream     = this.control.atMessageUdpStream;
     this.controlMessageSequence = this.control.controlMessageSequence;

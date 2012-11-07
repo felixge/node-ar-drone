@@ -2,13 +2,13 @@ var common                       = require('../../common');
 var assert                       = require('assert');
 var test                         = require('utest');
 var sinon                        = require('sinon');
-var createControl                = require(common.lib + '/createControl');
+var control                = require(common.lib + '/control');
 var controlMessageSequence = require(common.lib + '/control/controlMessageSequence');
 var message              = require(common.lib + '/control/message');
 
-test('createControl', {
+test('control', {
   before: function() {
-    this.control         = createControl({paused: true});
+    this.control         = control({paused: true});
     this.sequence        = controlMessageSequence();
     this.messageSequence = this.sequence.messageSequence;
     this.commandSequence = this.sequence.commandSequence;
