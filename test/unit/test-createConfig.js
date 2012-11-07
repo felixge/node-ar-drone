@@ -10,6 +10,8 @@ test('createConfig', {
 
   'default properties': function() {
     assert.equal(this.config.ip, '192.168.1.1');
+    assert.equal(this.config.controlInterval, 30);
+
     assert.equal(this.config.ftpPort, 5551);
     assert.equal(this.config.authPort, 5552);
     assert.equal(this.config.videoRecorderPort, 5553);

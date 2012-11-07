@@ -7,8 +7,15 @@ var createAtMessage = require(common.lib + '/control/createAtMessage');
 
 test('createControl', {
   before: function() {
-    this.control         = createControl();
-    this.messageSequence = this.control.messageSequence;
+    this.clock                  = sinon.useFakeTimers();
+    this.control                = createControl();
+    this.config                 = this.control.config;
+    this.atMessageUdpStream     = this.control.atMessageUdpStream;
+    this.controlMessageSequence = this.control.controlMessageSequence;
+  },
+
+  after: function() {
+    this.clock.restore();
   },
 
   'constructor': function() {
@@ -20,32 +27,18 @@ test('createControl', {
     assert.equal(this.control.clockSpin, 0);
   },
 
-  'nextMessage: returns the next message in the sequence': function() {
+  'sends next message to udp stream every config.timeout': function() {
     var message = createAtMessage();
-    sinon.stub(this.messageSequence, 'next').returns(message);
 
-    var returned = this.control.nextMessage();
-    assert.strictEqual(returned, message);
-  },
+    sinon.stub(this.atMessageUdpStream, 'write');
+    sinon.stub(this.controlMessageSequence, 'next').returns(message);
 
-  'nextMessage: includes the right ref command': function() {
-    this.control.fly = true;
+    this.clock.tick(this.config.controlInterval);
 
-    var message    = this.control.nextMessage();
-    var refCommand = message.commands[0];
-
-    assert.equal(refCommand.type, 'REF');
-    assert.ok(refCommand.args[0]);
-  },
-
-  'nextMessage: includes the right pcmd command': function() {
-    this.control.upDown = 1;
-
-    var message    = this.control.nextMessage();
-    var refCommand = message.commands[1];
-
-    assert.equal(refCommand.type, 'PCMD');
-    assert.ok(refCommand.args[0]);
+    assert.equal(this.atMessageUdpStream.write.callCount, 1);
+    var args = this.atMessageUdpStream.write.getCall(0).args;
+    assert.strictEqual(args.length, 1);
+    assert.strictEqual(args[0], message);
   },
 
   'toJSON: returns a copy of just the data': function() {
