@@ -1,11 +1,11 @@
 var common          = require('../../common');
 var assert          = require('assert');
 var test            = require('utest');
-var createMessage = require(common.lib + '/control/createMessage');
+var message = require(common.lib + '/control/message');
 
-test('createMessage', {
+test('message', {
   'default properties': function() {
-    var msg = createMessage();
+    var msg = message();
     assert.strictEqual(msg.number, undefined);
     assert.strictEqual(Array.isArray(msg.commands), true);
     assert.strictEqual(msg.commands.length, 0);
@@ -13,7 +13,7 @@ test('createMessage', {
 
   'commands are deep cloned': function() {
     var commands = [{foo: 'bar'}];
-    var msg      = createMessage(commands);
+    var msg      = message(commands);
 
     assert.deepEqual(commands, msg.commands);
     assert.ok(msg.commands !== commands);
@@ -22,6 +22,6 @@ test('createMessage', {
 
   'toString: concatinated all commands': function() {
     var commands = ['foo', {toString: function() { return 'bar'}}];
-    assert.equal(createMessage(commands).toString(), 'foobar');
+    assert.equal(message(commands).toString(), 'foobar');
   },
 });

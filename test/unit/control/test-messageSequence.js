@@ -1,11 +1,11 @@
 var common                  = require('../../common');
 var assert                  = require('assert');
 var test                    = require('utest');
-var createMessageSequence = require(common.lib + '/control/createMessageSequence');
+var messageSequence = require(common.lib + '/control/messageSequence');
 
-test('createMessageSequence', {
+test('messageSequence', {
   before: function() {
-    this.sequence = createMessageSequence();
+    this.sequence = messageSequence();
   },
 
   'next(): message numbers are incrementing': function() {

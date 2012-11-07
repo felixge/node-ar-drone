@@ -3,7 +3,7 @@ var assert          = require('assert');
 var test            = require('utest');
 var sinon           = require('sinon');
 var createControl   = require(common.lib + '/createControl');
-var createMessage = require(common.lib + '/control/createMessage');
+var message = require(common.lib + '/control/message');
 
 test('createControl', {
   before: function() {
@@ -28,17 +28,17 @@ test('createControl', {
   },
 
   'sends next message to udp stream every config.timeout': function() {
-    var message = createMessage();
+    var msg = message();
 
     sinon.stub(this.atMessageUdpStream, 'write');
-    sinon.stub(this.controlMessageSequence, 'next').returns(message);
+    sinon.stub(this.controlMessageSequence, 'next').returns(msg);
 
     this.clock.tick(this.config.controlInterval);
 
     assert.equal(this.atMessageUdpStream.write.callCount, 1);
     var args = this.atMessageUdpStream.write.getCall(0).args;
     assert.strictEqual(args.length, 1);
-    assert.strictEqual(args[0], message);
+    assert.strictEqual(args[0], msg);
   },
 
   'toJSON: returns a copy of just the data': function() {

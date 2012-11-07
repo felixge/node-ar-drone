@@ -1,20 +1,20 @@
-var common                   = require('../../common');
-var assert                   = require('assert');
-var test                     = require('utest');
-var sinon                    = require('sinon');
-var createUdpMessageStream = require(common.lib + '/control/createUdpMessageStream');
-var createMessage          = require(common.lib + '/control/createMessage');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
+var udpMessageStream = require(common.lib + '/control/udpMessageStream');
+var message = require(common.lib + '/control/message');
 
-test('createUdpMessageStream', {
+test('udpMessageStream', {
   before: function() {
-    this.stream = createUdpMessageStream();
+    this.stream = udpMessageStream();
     this.config = this.stream.config;
     this.socket = this.stream.socket;
   },
 
   'write(): takes an AtMessage and sends it via udp': function() {
     var fakeString = 'foobar';
-    var message = createMessage();
+    var msg = message();
 
     sinon.stub(this.socket, 'send');
     sinon.stub(message, 'toString').returns(fakeString);
