@@ -3,7 +3,7 @@ var assert          = require('assert');
 var test            = require('utest');
 var sinon           = require('sinon');
 var createControl   = require(common.lib + '/createControl');
-var createAtMessage = require(common.lib + '/control/createAtMessage');
+var createMessage = require(common.lib + '/control/createMessage');
 
 test('createControl', {
   before: function() {
@@ -28,7 +28,7 @@ test('createControl', {
   },
 
   'sends next message to udp stream every config.timeout': function() {
-    var message = createAtMessage();
+    var message = createMessage();
 
     sinon.stub(this.atMessageUdpStream, 'write');
     sinon.stub(this.controlMessageSequence, 'next').returns(message);

@@ -1,11 +1,11 @@
 var common                  = require('../../common');
 var assert                  = require('assert');
 var test                    = require('utest');
-var createAtCommandSequence = require(common.lib + '/control/createAtCommandSequence');
+var createCommandSequence = require(common.lib + '/control/createCommandSequence');
 
-test('createAtCommandSequence', {
+test('createCommandSequence', {
   before: function() {
-    this.sequence = createAtCommandSequence();
+    this.sequence = createCommandSequence();
   },
 
   'functions are aliased and incrementing numbers injected': function() {

@@ -4,7 +4,7 @@ var test                         = require('utest');
 var sinon                        = require('sinon');
 var createControl                = require(common.lib + '/createControl');
 var createControlMessageSequence = require(common.lib + '/control/createControlMessageSequence');
-var createAtMessage              = require(common.lib + '/control/createAtMessage');
+var createMessage              = require(common.lib + '/control/createMessage');
 
 test('createControl', {
   before: function() {
@@ -15,7 +15,7 @@ test('createControl', {
   },
 
   'next: returns the next message in the sequence': function() {
-    var message = createAtMessage();
+    var message = createMessage();
     sinon.stub(this.messageSequence, 'next').returns(message);
 
     var returned = this.sequence.next(this.control);
