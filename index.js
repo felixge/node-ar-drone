@@ -1,6 +1,6 @@
 var arDrone = exports;
 
-exports.Client           = require('./lib/Client');
+exports.Client           = require('./lib/client');
 exports.UdpControl       = require('./lib/control/UdpControl');
 exports.PngStream        = require('./lib/video/PngStream');
 exports.UdpNavdataStream = require('./lib/navdata/UdpNavdataStream');

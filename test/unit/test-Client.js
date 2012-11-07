@@ -2,7 +2,7 @@ var common = require('../common');
 var assert = require('assert');
 var test = require('utest');
 var sinon = require('sinon');
-var Client = require(common.lib + '/Client');
+var Client = require(common.lib + '/client');
 var PngStream = Client.PngStream;
 var EventEmitter = require('events').EventEmitter;
 
