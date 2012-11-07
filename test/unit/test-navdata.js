@@ -1,12 +1,12 @@
 var common = require('../common');
 var assert = require('assert');
 var test = require('utest');
-var createSensors = require(common.lib + '/sensors');
-var createData = require(common.lib + '/sensors/data');
+var createSensors = require(common.lib + '/navdata');
+var createData = require(common.lib + '/navdata/data');
 
-test('sensors', {
+test('navdata', {
   before: function() {
-    this.sensors = createSensors();
+    this.navdata = createSensors();
   },
 
   'has all sensor data properties': function() {
@@ -14,12 +14,12 @@ test('sensors', {
 
     // do a shallow check
     for (var key in data) {
-      assert.ok(key in this.sensors, key);
+      assert.ok(key in this.navdata, key);
     }
   },
 
   'readable stream interface': function() {
-    assert.strictEqual(this.sensors.readable, true);
-    assert.strictEqual(typeof this.sensors.pipe, 'function');
+    assert.strictEqual(this.navdata.readable, true);
+    assert.strictEqual(typeof this.navdata.pipe, 'function');
   },
 });

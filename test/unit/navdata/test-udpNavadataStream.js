@@ -2,7 +2,7 @@ var common = require('../../common');
 var assert = require('assert');
 var sinon = require('sinon');
 var test = require('utest');
-var createUdpNavdataStream = require(common.lib + '/sensors/udpNavdataStream');
+var createUdpNavdataStream = require(common.lib + '/navdata/udpNavdataStream');
 
 // not testing anything yet, Data is just a structure
 test('udpNavdataStream', {
