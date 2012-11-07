@@ -10,7 +10,7 @@ test('control', {
     this.clock = sinon.useFakeTimers();
     this.control = control();
     this.config = this.control.config;
-    this.atMessageUdpStream = this.control.atMessageUdpStream;
+    this.udpMessageStream = this.control.udpMessageStream;
     this.controlMessageSequence = this.control.controlMessageSequence;
   },
 
@@ -30,15 +30,18 @@ test('control', {
   'sends next message to udp stream every config.timeout': function() {
     var msg = message();
 
-    sinon.stub(this.atMessageUdpStream, 'write');
+    sinon.stub(this.udpMessageStream, 'write');
     sinon.stub(this.controlMessageSequence, 'next').returns(msg);
 
-    this.clock.tick(this.config.controlInterval);
+    this.clock.tick(this.config.udpInterval);
 
-    assert.equal(this.atMessageUdpStream.write.callCount, 1);
-    var args = this.atMessageUdpStream.write.getCall(0).args;
+    assert.equal(this.udpMessageStream.write.callCount, 1);
+    var args = this.udpMessageStream.write.getCall(0).args;
     assert.strictEqual(args.length, 1);
     assert.strictEqual(args[0], msg);
+
+    var nextArgs = this.controlMessageSequence.next.getCall(0).args;
+    assert.strictEqual(nextArgs[0], this.control);
   },
 
   'toJSON: returns a copy of just the data': function() {
@@ -53,5 +56,11 @@ test('control', {
 
     // also make sure functions were not copied
     assert.strictEqual(json.toJSON, undefined);
+
+    // and out objects are not copied either
+    assert.strictEqual(json.config, undefined);
+
+    // and filters out private stuff
+    assert.strictEqual(json._interval, undefined);
   },
 });
