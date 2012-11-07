@@ -1,8 +1,8 @@
-var common           = require('../../common');
-var assert           = require('assert');
-var test             = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var AtCommandCreator = require(common.lib + '/control/AtCommandCreator');
-var at               = require(common.lib + '/control/at');
+var at = require(common.lib + '/control/at');
 
 test('AtCommandCreator', {
   before: function() {
@@ -78,7 +78,7 @@ test('AtCommandCreator', {
     var hz = 3;
     var duration = 3;
 
-    var cmd      = this.creator.animateLeds('blinkGreen', hz, duration);
+    var cmd = this.creator.animateLeds('blinkGreen', hz, duration);
     var expected = '1,' + at.floatString(hz) + ',' + duration;
 
     assert.equal(cmd.type, 'CONFIG');
@@ -88,7 +88,7 @@ test('AtCommandCreator', {
   },
 
   'animateLeds() does a red snake at 2 hz for 3s by default': function() {
-    var cmd      = this.creator.animateLeds();
+    var cmd = this.creator.animateLeds();
     var expected = '9,' + at.floatString(2) + ',' + 3;
     assert.equal(cmd.args[1], '"' + expected + '"');
   },
@@ -102,7 +102,7 @@ test('AtCommandCreator', {
 
   'animate() works as expected': function() {
     var duration = 2000;
-    var cmd      = this.creator.animate('yawShake', duration);
+    var cmd = this.creator.animate('yawShake', duration);
     var expected = '8,' + duration;
 
     assert.equal(cmd.type, 'CONFIG');

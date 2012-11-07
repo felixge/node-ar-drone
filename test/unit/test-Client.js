@@ -1,25 +1,25 @@
-var common       = require('../common');
-var assert       = require('assert');
-var test         = require('utest');
-var sinon        = require('sinon');
-var Client       = require(common.lib + '/Client');
-var PngStream    = Client.PngStream;
+var common = require('../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
+var Client = require(common.lib + '/Client');
+var PngStream = Client.PngStream;
 var EventEmitter = require('events').EventEmitter;
 
 test('Client', {
   before: function() {
-    this.fakeUdpControl             = {};
-    this.fakeUdpControl.ref         = sinon.stub();
-    this.fakeUdpControl.pcmd        = sinon.stub();
+    this.fakeUdpControl = {};
+    this.fakeUdpControl.ref = sinon.stub();
+    this.fakeUdpControl.pcmd = sinon.stub();
     this.fakeUdpControl.animateLeds = sinon.stub();
-    this.fakeUdpControl.animate     = sinon.stub();
-    this.fakeUdpControl.config      = sinon.stub();
-    this.fakeUdpControl.flush       = sinon.stub();
+    this.fakeUdpControl.animate = sinon.stub();
+    this.fakeUdpControl.config = sinon.stub();
+    this.fakeUdpControl.flush = sinon.stub();
 
-    this.fakeUdpNavdataStream        = new EventEmitter;
+    this.fakeUdpNavdataStream = new EventEmitter;
     this.fakeUdpNavdataStream.resume = sinon.stub();
 
-    this.pngStream   = new PngStream();
+    this.pngStream = new PngStream();
     Client.PngStream = sinon.stub();
     Client.PngStream.returns(this.pngStream);
 
@@ -265,12 +265,12 @@ test('Client', {
 
   '_setInterval triggers periodic ref / pcmd commands': function() {
     // set some non-default values
-    this.client.flyBit       = true;
+    this.client.flyBit = true;
     this.client.emergencyBit = true;
-    this.client.leftRight    = 0.1;
-    this.client.frontBack    = 0.2;
-    this.client.upDown       = 0.3;
-    this.client.clockSpin    = 0.4;
+    this.client.leftRight = 0.1;
+    this.client.frontBack = 0.2;
+    this.client.upDown = 0.3;
+    this.client.clockSpin = 0.4;
 
     this.client._setInterval(30);
     assert.equal(this.fakeUdpControl.ref.callCount, 0);
@@ -346,7 +346,7 @@ test('Client', {
   'stop resets movement properties': function() {
     this.client.leftRight = 0.1;
     this.client.frontBack = 0.2;
-    this.client.upDown    = 0.3;
+    this.client.upDown = 0.3;
     this.client.clockSpin = 0.4;
 
     this.client.stop();

@@ -1,6 +1,6 @@
-var common                  = require('../../common');
-var assert                  = require('assert');
-var test                    = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var messageSequence = require(common.lib + '/control/messageSequence');
 
 test('messageSequence', {

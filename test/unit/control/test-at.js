@@ -1,7 +1,7 @@
 var common = require('../../common');
 var assert = require('assert');
-var test   = require('utest');
-var at     = require(common.lib + '/control/at');
+var test = require('utest');
+var at = require(common.lib + '/control/at');
 
 test('at', {
   'undefined returns 0': function() {

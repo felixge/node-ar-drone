@@ -1,8 +1,8 @@
-var common              = require('../../../common');
-var assert              = require('assert');
-var test                = require('utest');
+var common = require('../../../common');
+var assert = require('assert');
+var test = require('utest');
 var pcmdCommand = require(common.lib + '/control/commands/pcmdCommand');
-var atFloatToString     = require(common.lib + '/control/atFloatToString');
+var atFloatToString = require(common.lib + '/control/atFloatToString');
 
 test('pcmdCommand', {
   'default properties': function() {

@@ -1,9 +1,9 @@
-var common       = require('../../common');
-var assert       = require('assert');
-var test         = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var parseNavdata = require(common.lib + '/navdata/parseNavdata');
-var fs           = require('fs');
-var fixture      = fs.readFileSync(common.fixtures + '/navdata.bin');
+var fs = require('fs');
+var fixture = fs.readFileSync(common.fixtures + '/navdata.bin');
 
 test('parseNavdata', {
   'parses main payload': function() {

@@ -1,7 +1,7 @@
-var common  = require('../common');
-var assert  = require('assert');
-var utest   = require('utest');
-var sinon   = require('sinon');
+var common = require('../common');
+var assert = require('assert');
+var utest = require('utest');
+var sinon = require('sinon');
 var arDrone = require(common.root);
 
 utest('main api', {

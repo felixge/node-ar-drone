@@ -1,11 +1,11 @@
-var common     = require('../../common');
-var assert     = require('assert');
-var test       = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var PaVEParser = require(common.lib + '/video/PaVEParser');
-var fs         = require('fs');
-var sinon      = require('sinon');
-var fixture    = fs.readFileSync(common.fixtures + '/pave.bin');
-var fixture68  = fs.readFileSync(common.fixtures + '/pave-68.bin');
+var fs = require('fs');
+var sinon = require('sinon');
+var fixture = fs.readFileSync(common.fixtures + '/pave.bin');
+var fixture68 = fs.readFileSync(common.fixtures + '/pave-68.bin');
 
 test('PaVEParser', {
   before: function() {

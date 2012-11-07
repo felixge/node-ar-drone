@@ -1,19 +1,19 @@
-var common           = require('../../common');
-var assert           = require('assert');
-var test             = require('utest');
-var sinon            = require('sinon');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
 var UdpNavdataStream = require(common.lib + '/navdata/UdpNavdataStream');
-var EventEmitter     = require('events').EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 
 test('UdpNavdataStream', {
   before: function() {
-    this.fakePort    = 18943;
-    this.fakeIp      = '23.42.1776.20';
+    this.fakePort = 18943;
+    this.fakeIp = '23.42.1776.20';
     this.fakeTimeout = 100;
 
-    this.fakeSocket       = new EventEmitter();
-    this.fakeSocket.bind  = sinon.stub();
-    this.fakeSocket.send  = sinon.stub();
+    this.fakeSocket = new EventEmitter();
+    this.fakeSocket.bind = sinon.stub();
+    this.fakeSocket.send = sinon.stub();
     this.fakeSocket.close = sinon.stub();
 
     this.fakeParser = sinon.stub();
@@ -48,11 +48,11 @@ test('UdpNavdataStream', {
     // verify socket.send()
     assert.equal(this.fakeSocket.send.callCount, 1);
     var sendArgs = this.fakeSocket.send.getCall(0).args;
-    var buffer   = sendArgs.shift();
-    var offset   = sendArgs.shift();
-    var length   = sendArgs.shift();
-    var port     = sendArgs.shift();
-    var ip       = sendArgs.shift();
+    var buffer = sendArgs.shift();
+    var offset = sendArgs.shift();
+    var length = sendArgs.shift();
+    var port = sendArgs.shift();
+    var ip = sendArgs.shift();
     assert.equal(Buffer.isBuffer(buffer), true);
     assert.deepEqual(buffer, new Buffer([1]));
     assert.equal(offset, 0);
@@ -96,9 +96,9 @@ test('UdpNavdataStream', {
   },
 
   'incoming messages are parsed': function() {
-    var fakeBuffer  = new Buffer([1, 2, 3]);
+    var fakeBuffer = new Buffer([1, 2, 3]);
     var fakeNavdata = {fake: 'navdata', sequenceNumber: 1};
-    var dataSpy     = sinon.spy();
+    var dataSpy = sinon.spy();
 
     this.fakeParser.returns(fakeNavdata);
 

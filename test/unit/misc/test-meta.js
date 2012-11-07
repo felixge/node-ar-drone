@@ -1,7 +1,7 @@
 var common = require('../../common');
 var assert = require('assert');
-var test   = require('utest');
-var meta   = require(common.lib + '/misc/meta');
+var test = require('utest');
+var meta = require(common.lib + '/misc/meta');
 
 function SampleClass() {}
 SampleClass.prototype.a = function() {};

@@ -1,6 +1,6 @@
-var common          = require('../../../common');
-var assert          = require('assert');
-var test            = require('utest');
+var common = require('../../../common');
+var assert = require('assert');
+var test = require('utest');
 var refCommand = require(common.lib + '/control/commands/refCommand');
 
 test('refCommand', {

@@ -1,20 +1,20 @@
-var common         = require('../../common');
-var assert         = require('assert');
-var test           = require('utest');
-var sinon          = require('sinon');
-var EventEmitter   = require('events').EventEmitter;
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
+var EventEmitter = require('events').EventEmitter;
 var TcpVideoStream = require(common.lib + '/video/TcpVideoStream');
 
 test('TcpVideoStream', {
   before: function() {
-    this.fakeSocket            = new EventEmitter();
-    this.fakeSocket.connect    = sinon.spy();
+    this.fakeSocket = new EventEmitter();
+    this.fakeSocket.connect = sinon.spy();
     this.fakeSocket.setTimeout = sinon.spy();
-    this.fakeSocket.end        = sinon.spy();
-    this.fakeSocket.destroy    = sinon.spy();
+    this.fakeSocket.end = sinon.spy();
+    this.fakeSocket.destroy = sinon.spy();
 
-    this.fakePort    = 93321;
-    this.fakeIp      = '255.0.124.24';
+    this.fakePort = 93321;
+    this.fakeIp = '255.0.124.24';
     this.fakeTimeout = 23 * 1000;
 
     this.stream = new TcpVideoStream({

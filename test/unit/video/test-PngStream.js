@@ -1,18 +1,18 @@
-var common         = require('../../common');
-var assert         = require('assert');
-var test           = require('utest');
-var sinon          = require('sinon');
-var PngStream      = require(common.lib + '/video/PngStream');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
+var PngStream = require(common.lib + '/video/PngStream');
 var TcpVideoStream = PngStream.TcpVideoStream;
-var PngEncoder     = PngStream.PngEncoder;
+var PngEncoder = PngStream.PngEncoder;
 
 test('PngStream', {
   before: function() {
     PngStream.TcpVideoStream = sinon.stub();
-    PngStream.PngEncoder     = sinon.stub();
+    PngStream.PngEncoder = sinon.stub();
 
     this.tcpVideoStream = new TcpVideoStream();
-    this.pngEncoder     = new PngEncoder();
+    this.pngEncoder = new PngEncoder();
 
     PngStream.TcpVideoStream.returns(this.tcpVideoStream);
     PngStream.PngEncoder.returns(this.pngEncoder);

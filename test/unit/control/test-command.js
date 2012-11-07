@@ -1,12 +1,12 @@
-var common          = require('../../common');
-var assert          = require('assert');
-var test            = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var command = require(common.lib + '/control/command');
 
 test('command', {
   'creates an object with: type, args, number': function() {
-    var type   = 'SOMETHING';
-    var args   = [1, 2, 3];
+    var type = 'SOMETHING';
+    var args = [1, 2, 3];
     var number = 5;
 
     var atCommand = command(type, args, number);

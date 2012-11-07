@@ -1,7 +1,7 @@
-var common     = require('../../../common');
+var common = require('../../../common');
 var UdpControl = require(common.lib + '/control/UdpControl');
-var dgram      = require('dgram');
-var assert     = require('assert');
+var dgram = require('dgram');
+var assert = require('assert');
 
 var receiver = dgram.createSocket('udp4');
 receiver.bind(common.UDP_PORT);

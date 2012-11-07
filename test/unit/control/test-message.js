@@ -1,6 +1,6 @@
-var common          = require('../../common');
-var assert          = require('assert');
-var test            = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var message = require(common.lib + '/control/message');
 
 test('message', {
@@ -13,7 +13,7 @@ test('message', {
 
   'commands are deep cloned': function() {
     var commands = [{foo: 'bar'}];
-    var msg      = message(commands);
+    var msg = message(commands);
 
     assert.deepEqual(commands, msg.commands);
     assert.ok(msg.commands !== commands);

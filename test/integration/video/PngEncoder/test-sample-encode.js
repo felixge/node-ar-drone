@@ -1,6 +1,6 @@
-var common     = require('../../../common');
-var fs         = require('fs');
-var assert     = require('assert');
+var common = require('../../../common');
+var fs = require('fs');
+var assert = require('assert');
 var PngEncoder = require(common.lib + '/video/PngEncoder');
 
 if (common.isTravisCi()) {

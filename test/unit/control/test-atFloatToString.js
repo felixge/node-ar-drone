@@ -1,6 +1,6 @@
-var common          = require('../../common');
-var assert          = require('assert');
-var test            = require('utest');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
 var atFloatToString = require(common.lib + '/control/atFloatToString');
 
 test('atFloatToString', {

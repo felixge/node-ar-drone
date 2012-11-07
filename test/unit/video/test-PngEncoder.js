@@ -1,8 +1,8 @@
-var common       = require('../../common');
-var assert       = require('assert');
-var test         = require('utest');
-var sinon        = require('sinon');
-var PngEncoder   = require(common.lib + '/video/PngEncoder');
+var common = require('../../common');
+var assert = require('assert');
+var test = require('utest');
+var sinon = require('sinon');
+var PngEncoder = require(common.lib + '/video/PngEncoder');
 var EventEmitter = require('events').EventEmitter;
 
 
@@ -10,9 +10,9 @@ test('PngEncoder', {
   before: function() {
     this.fakeFfmpeg = new EventEmitter();
 
-    this.fakeFfmpeg.stdin       = new EventEmitter();
+    this.fakeFfmpeg.stdin = new EventEmitter();
     this.fakeFfmpeg.stdin.write = sinon.stub();
-    this.fakeFfmpeg.stdin.end   = sinon.stub();
+    this.fakeFfmpeg.stdin.end = sinon.stub();
 
     this.fakeFfmpeg.stdout = {pipe: sinon.spy()};
     this.fakeFfmpeg.stderr = {pipe: sinon.spy()};
