@@ -36,14 +36,17 @@ test('navdata', {
     assert.strictEqual(typeof this.navdata.write, 'function');
   },
 
-  'parses udpStream buffers': function() {
-    var dataSpy = sinon.spy();;
+  'parses udpStream buffers and emits "data"': function() {
+    var dataSpy = sinon.spy();
     this.navdata.on('data', dataSpy);
     this.udpStream.emit('data', fixture);
 
     assert.strictEqual(dataSpy.callCount, 1);
     var message = dataSpy.lastCall.args[0];
     assert.strictEqual(message.controlState, 'landed');
+
+    // also updates the navdata object itself
+    assert.strictEqual(this.navdata.controlState, message.controlState);
   },
 
   'write: logs unknown headers': function() {
