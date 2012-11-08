@@ -12,7 +12,7 @@ test('control', {
     this.control = createControl();
     this.config = this.control.config;
     this.udpMessageStream = this.control.udpMessageStream;
-    this.controlMessageSequence = this.control.controlMessageSequence;
+    this.commandStream = this.control.commandStream;
     this.log = this.control.log;
 
     sinon.stub(this.log, 'write');
@@ -33,24 +33,26 @@ test('control', {
 
   'writable stream interface': function() {
     assert.strictEqual(this.control.writable, true);
+    assert.strictEqual(typeof this.control.on, 'function');
     assert.strictEqual(typeof this.control.write, 'function');
   },
 
   'sends next message to udp stream every config.timeout': function() {
-    var msg = createMessage();
+    this.control.fly = true;
+    this.control.upDown = 1;
 
     sinon.stub(this.udpMessageStream, 'write');
-    sinon.stub(this.controlMessageSequence, 'next').returns(msg);
 
     this.clock.tick(this.config.udpInterval);
 
     assert.equal(this.udpMessageStream.write.callCount, 1);
-    var args = this.udpMessageStream.write.getCall(0).args;
-    assert.strictEqual(args.length, 1);
-    assert.strictEqual(args[0], msg);
+    var message = this.udpMessageStream.write.lastCall.args[0];
 
-    var nextArgs = this.controlMessageSequence.next.getCall(0).args;
-    assert.strictEqual(nextArgs[0], this.control);
+    // Check the commands
+    assert.strictEqual(message.commands[0].type, 'REF');
+    assert.ok(message.commands[0].args[0]);
+    assert.strictEqual(message.commands[1].type, 'PCMD');
+    assert.ok(message.commands[1].args[0]);
   },
 
   'toJSON: returns a copy of just the data': function() {
@@ -71,17 +73,32 @@ test('control', {
 
     // and filters out private stuff
     assert.strictEqual(json._interval, undefined);
+
+    // and filters out writable/readable
+    assert.strictEqual(json.readable, undefined);
+    assert.strictEqual(json.writable, undefined);
   },
 
   'write: missing "demo" options requests additional data': function() {
+    sinon.stub(this.commandStream, 'config')
+    sinon.stub(this.commandStream, 'flush')
+
     var navdata = createNavdata();
     this.control.write(navdata);
 
     assert.strictEqual(this.log.write.callCount, 1);
+    assert.strictEqual(this.commandStream.config.callCount, 1);
+    assert.strictEqual(this.commandStream.flush.callCount, 1);
+
+    var configOptions = this.commandStream.config.lastCall.args[0];
+    assert.strictEqual(configOptions.key, 'general:navdata_demo');
+    assert.strictEqual(configOptions.value, 'TRUE');
 
     // no log entry is made the second time
     this.control.write(navdata);
     assert.strictEqual(this.log.write.callCount, 1);
+    assert.strictEqual(this.commandStream.config.callCount, 2);
+    assert.strictEqual(this.commandStream.flush.callCount, 2);
 
     // one log entry is made once we receive demo options
     navdata.options.push('demo');

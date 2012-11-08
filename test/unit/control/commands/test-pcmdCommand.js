@@ -18,7 +18,7 @@ test('pcmdCommand', {
 
   'passes number argument': function() {
     var cmd = pcmdCommand(undefined, 5);
-    assert.strictEqual(cmd.number, 5);
+    assert.strictEqual(cmd.sequenceNumber, 5);
   },
 
   'turns movement options into atFloatString arguments': function() {

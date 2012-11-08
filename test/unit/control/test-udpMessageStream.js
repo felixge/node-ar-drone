@@ -12,6 +12,12 @@ test('udpMessageStream', {
     this.socket = this.stream.socket;
   },
 
+  'writable stream interface': function() {
+    assert.strictEqual(this.stream.writable, true);
+    assert.strictEqual(typeof this.stream.on, 'function');
+    assert.strictEqual(typeof this.stream.write, 'function');
+  },
+
   'write(): takes an AtMessage and sends it via udp': function() {
     var fakeString = 'foobar';
     var msg = message();

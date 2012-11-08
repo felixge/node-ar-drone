@@ -4,11 +4,13 @@ var test = require('utest');
 var sinon = require('sinon');
 var _ = require('underscore');
 var parseNavdata = require(common.lib + '/navdata/parse');
+var createLog = require(common.lib + '/log');
 var fs = require('fs');
 var fixture = fs.readFileSync(common.fixtures + '/navdata.bin');
 
 test('parse', {
   before: function() {
+    this.log = createLog();
     this.clock = sinon.useFakeTimers();
   },
 
@@ -84,12 +86,6 @@ test('parse', {
   'parses time option': function() {
     var message = parseNavdata(fixture);
     assert.equal(message.time, 362979.125);
-  },
-
-  'throws exception on invalid header': function() {
-    assert.throws(function() {
-      parseNavdata(new Buffer([1, 2, 3, 4]));
-    }, /header/i);
   },
 
   'detects bad checksum': function() {

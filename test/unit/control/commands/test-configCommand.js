@@ -14,7 +14,7 @@ test('configCommand', {
 
   'passes number argument': function() {
     var cmd = configCommand(undefined, 5);
-    assert.strictEqual(cmd.number, 5);
+    assert.strictEqual(cmd.sequenceNumber, 5);
   },
 
   'takes key, value options': function() {

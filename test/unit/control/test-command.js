@@ -4,15 +4,15 @@ var test = require('utest');
 var command = require(common.lib + '/control/command');
 
 test('command', {
-  'creates an object with: type, args, number': function() {
+  'creates an object with: type, args, sequenceNumber': function() {
     var type = 'SOMETHING';
     var args = [1, 2, 3];
-    var number = 5;
+    var sequenceNumber = 5;
 
-    var atCommand = command(type, args, number);
+    var atCommand = command(type, args, sequenceNumber);
     assert.strictEqual(atCommand.type, type);
     assert.deepEqual(atCommand.args, args);
-    assert.strictEqual(atCommand.number, number);
+    assert.strictEqual(atCommand.sequenceNumber, sequenceNumber);
   },
 
   'args is cloned, not referenced': function() {

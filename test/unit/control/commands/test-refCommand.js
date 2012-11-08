@@ -13,7 +13,7 @@ test('refCommand', {
 
   'passes number argument': function() {
     var cmd = refCommand(undefined, 5);
-    assert.strictEqual(cmd.number, 5);
+    assert.strictEqual(cmd.sequenceNumber, 5);
   },
 
   'emergency': function() {

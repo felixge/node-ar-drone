@@ -20,9 +20,9 @@ test('log', {
     assert.strictEqual(typeof this.log.pipe, 'function');
   },
 
-  'writing a string emits it as "data" + newline': function() {
+  'write: emits "data" with date and newline': function() {
     var string = 'foo';
-    var expected = iso8601Date() + '\t' + string + '\n';
+    var expected = iso8601Date() + ' ' + string + '\n';
 
     var dataSpy = sinon.spy();
     this.log.on('data', dataSpy);
@@ -30,16 +30,5 @@ test('log', {
 
     assert.strictEqual(dataSpy.callCount, 1);
     assert.strictEqual(dataSpy.lastCall.args[0], expected);
-  },
-
-  'newlines and tabs are escaped': function() {
-    var string = 'f\no\to';
-    var expected = 'f\\no\\to';
-
-    var dataSpy = sinon.spy();
-    this.log.on('data', dataSpy);
-    this.log.write(string);
-
-    assert.ok(dataSpy.lastCall.args[0].indexOf(expected) > -1);
   },
 });

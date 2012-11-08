@@ -46,10 +46,23 @@ test('navdata', {
     assert.strictEqual(message.controlState, 'landed');
   },
 
-  'write: logs parser exceptions': function() {
+  'write: logs unknown headers': function() {
+    var dataSpy = sinon.spy();;
+    this.navdata.on('data', dataSpy);
     var badNavdata = new Buffer([1,2,3,4]);
     this.udpStream.emit('data', badNavdata);
 
     assert.strictEqual(this.log.write.callCount, 1);
+    assert.strictEqual(dataSpy.callCount, 0);
+  },
+
+  'write: catches and logs exceptions': function() {
+    var dataSpy = sinon.spy();;
+    this.navdata.on('data', dataSpy);
+    var badNavdata = fixture.slice(0, 10);
+    this.udpStream.emit('data', badNavdata);
+
+    assert.strictEqual(this.log.write.callCount, 1);
+    assert.strictEqual(dataSpy.callCount, 0);
   },
 });
