@@ -2,6 +2,7 @@ var common = require('../../common');
 var assert = require('assert');
 var test = require('utest');
 var sinon = require('sinon');
+var _ = require('underscore');
 var parseNavdata = require(common.lib + '/navdata/parse');
 var fs = require('fs');
 var fixture = fs.readFileSync(common.fixtures + '/navdata.bin');
@@ -54,6 +55,9 @@ test('parse', {
     assert.strictEqual(status.adcWatchdogDelay, 0);
     assert.strictEqual(status.comWatchdogProblem, 1);
     assert.strictEqual(status.emergencyLanding, 0);
+
+    var expectedOptions = _.values(parseNavdata.OPTIONS).slice(0, -1);
+    assert.deepEqual(message.options, expectedOptions);
 
     assert.strictEqual(message.received.getTime(), Date.now());
   },

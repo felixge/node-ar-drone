@@ -2,16 +2,20 @@ var common = require('../common');
 var assert = require('assert');
 var test = require('utest');
 var sinon = require('sinon');
-var control = require(common.lib + '/control');
-var message = require(common.lib + '/control/message');
+var createControl = require(common.lib + '/control');
+var createMessage = require(common.lib + '/control/message');
+var createNavdata = require(common.lib + '/navdata/message');
 
 test('control', {
   before: function() {
     this.clock = sinon.useFakeTimers();
-    this.control = control();
+    this.control = createControl();
     this.config = this.control.config;
     this.udpMessageStream = this.control.udpMessageStream;
     this.controlMessageSequence = this.control.controlMessageSequence;
+    this.log = this.control.log;
+
+    sinon.stub(this.log, 'write');
   },
 
   after: function() {
@@ -27,8 +31,13 @@ test('control', {
     assert.equal(this.control.clockSpin, 0);
   },
 
+  'writable stream interface': function() {
+    assert.strictEqual(this.control.writable, true);
+    assert.strictEqual(typeof this.control.write, 'function');
+  },
+
   'sends next message to udp stream every config.timeout': function() {
-    var msg = message();
+    var msg = createMessage();
 
     sinon.stub(this.udpMessageStream, 'write');
     sinon.stub(this.controlMessageSequence, 'next').returns(msg);
@@ -62,5 +71,25 @@ test('control', {
 
     // and filters out private stuff
     assert.strictEqual(json._interval, undefined);
+  },
+
+  'write: missing "demo" options requests additional data': function() {
+    var navdata = createNavdata();
+    this.control.write(navdata);
+
+    assert.strictEqual(this.log.write.callCount, 1);
+
+    // no log entry is made the second time
+    this.control.write(navdata);
+    assert.strictEqual(this.log.write.callCount, 1);
+
+    // one log entry is made once we receive demo options
+    navdata.options.push('demo');
+    this.control.write(navdata);
+    assert.strictEqual(this.log.write.callCount, 2);
+
+    // second message won't trigger log again
+    this.control.write(navdata);
+    assert.strictEqual(this.log.write.callCount, 2);
   },
 });
