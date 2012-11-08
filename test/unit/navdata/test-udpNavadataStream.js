@@ -9,9 +9,14 @@ test('udpNavdataStream', {
     this.stream = createUdpNavdataStream({paused: true});
     this.socket = this.stream.socket;
     this.config = this.stream.config;
+    this.clock = sinon.useFakeTimers();
 
     sinon.stub(this.socket, 'send');
     sinon.stub(this.socket, 'bind');
+  },
+
+  after: function() {
+    this.clock.restore();
   },
 
   'readable stream interface': function() {
@@ -53,5 +58,15 @@ test('udpNavdataStream', {
     assert.strictEqual(args[2], args[0].length);
     assert.strictEqual(args[3], this.config.ip);
     assert.strictEqual(args[4], this.config.navdataPort);
+  },
+
+  'resume: re-requests navdata after timeout': function() {
+    this.stream.resume();
+
+    this.clock.tick(this.config.navdataTimeout);
+    assert.strictEqual(this.socket.send.callCount, 2);
+
+    this.clock.tick(this.config.navdataTimeout);
+    assert.strictEqual(this.socket.send.callCount, 3);
   },
 });

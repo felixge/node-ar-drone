@@ -3,10 +3,12 @@ var assert = require('assert');
 var test = require('utest');
 var createNavdata = require(common.lib + '/navdata');
 var createMessage = require(common.lib + '/navdata/message');
+var createUdpNavdataStream = require(common.lib + '/navdata/udpNavdataStream');
 
 test('navdata', {
   before: function() {
-    this.navdata = createNavdata();
+    this.udpStream = createUdpNavdataStream({paused: true});
+    this.navdata = createNavdata({udpStream: this.udpStream});
   },
 
   'has all sensor data properties': function() {
