@@ -56,8 +56,8 @@ test('udpNavdataStream', {
     assert.deepEqual(args[0], new Buffer([0x01]));
     assert.strictEqual(args[1], 0);
     assert.strictEqual(args[2], args[0].length);
-    assert.strictEqual(args[3], this.config.ip);
-    assert.strictEqual(args[4], this.config.navdataPort);
+    assert.strictEqual(args[3], this.config.navdataPort);
+    assert.strictEqual(args[4], this.config.ip);
   },
 
   'resume: re-requests navdata after timeout': function() {
