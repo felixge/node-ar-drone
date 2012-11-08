@@ -56,6 +56,47 @@ test('parse', {
     assert.strictEqual(status.emergencyLanding, 0);
 
     assert.strictEqual(message.received.getTime(), Date.now());
-    //console.log(message);
+  },
+
+  'parses demo option': function() {
+    var message = parseNavdata(fixture);
+    assert.equal(message.flyState, 'ok');
+    assert.equal(message.controlState, 'landed');
+    assert.equal(message.batteryLevel, 0.5);
+    assert.equal(message.altitude, 0);
+    assert.equal(message.orientation.frontBack, 2.974);
+    assert.equal(message.orientation.leftRight, 0.55);
+    assert.equal(message.orientation.clockSpin, 1.933);
+    assert.equal(message.speed.leftRight, 0.0585307739675045);
+    assert.equal(message.speed.frontBack, -0.8817979097366333);
+    assert.equal(message.speed.upDown, 0);
+  },
+
+  'parses wifi option': function() {
+    var message = parseNavdata(fixture);
+    assert.equal(message.wifiQuality, 1);
+  },
+
+  'parses time option': function() {
+    var message = parseNavdata(fixture);
+    assert.equal(message.time, 362979.125);
+  },
+
+  'throws exception on invalid header': function() {
+    assert.throws(function() {
+      parseNavdata(new Buffer([1, 2, 3, 4]));
+    }, /header/i);
+  },
+
+  'detects bad checksum': function() {
+    // hacky way to get a copy of our fixture
+    var fixtureCopy = Buffer.concat([new Buffer(0), fixture]);
+
+    // corrupt a byte inside our fixture
+    fixtureCopy[23] = fixtureCopy[23] + 1;
+
+    assert.throws(function() {
+      parseNavdata(fixtureCopy)
+    }, /checksum/i);
   },
 });
