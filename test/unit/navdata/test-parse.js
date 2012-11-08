@@ -18,7 +18,7 @@ test('parse', {
   'main payload': function() {
     var message = parseNavdata(fixture);
 
-    assert.strictEqual(message.number, 300711);
+    assert.strictEqual(message.sequenceNumber, 300711);
     assert.strictEqual(message.visionFlag, 1);
 
     var status = message.status;

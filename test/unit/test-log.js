@@ -31,4 +31,15 @@ test('log', {
     assert.strictEqual(dataSpy.callCount, 1);
     assert.strictEqual(dataSpy.lastCall.args[0], expected);
   },
+
+  'newlines and tabs are escaped': function() {
+    var string = 'f\no\to';
+    var expected = 'f\\no\\to';
+
+    var dataSpy = sinon.spy();
+    this.log.on('data', dataSpy);
+    this.log.write(string);
+
+    assert.ok(dataSpy.lastCall.args[0].indexOf(expected) > -1);
+  },
 });
