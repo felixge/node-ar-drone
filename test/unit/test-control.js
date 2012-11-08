@@ -38,6 +38,7 @@ test('control', {
   },
 
   'sends next message to udp stream every config.timeout': function() {
+    this.control.resume();
     this.control.fly = true;
     this.control.upDown = 1;
 

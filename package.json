@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "buffy": "0.0.2",
-    "underscore": "~1.4.2"
+    "underscore": "~1.4.2",
+    "async": "~0.1.22"
   },
   "devDependencies": {
     "utest": "0.0.6",

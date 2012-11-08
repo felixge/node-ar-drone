@@ -6,7 +6,7 @@ var createUdpNavdataStream = require(common.lib + '/navdata/udpNavdataStream');
 
 test('udpNavdataStream', {
   before: function() {
-    this.stream = createUdpNavdataStream({paused: true});
+    this.stream = createUdpNavdataStream();
     this.socket = this.stream.socket;
     this.config = this.stream.config;
     this.clock = sinon.useFakeTimers();
