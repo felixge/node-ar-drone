@@ -37,7 +37,15 @@ test('control', {
     assert.strictEqual(typeof this.control.write, 'function');
   },
 
+  'readable stream interface': function() {
+    assert.strictEqual(this.control.readable, true);
+    assert.strictEqual(typeof this.control.pipe, 'function');
+  },
+
   'sends next message to udp stream every config.timeout': function() {
+    var dataSpy = sinon.spy();
+    this.control.on('data', dataSpy);
+
     this.control.resume();
     this.control.fly = true;
     this.control.upDown = 1;
@@ -48,6 +56,9 @@ test('control', {
 
     assert.equal(this.udpMessageStream.write.callCount, 1);
     var message = this.udpMessageStream.write.lastCall.args[0];
+
+    assert.strictEqual(dataSpy.callCount, 1);
+    assert.deepEqual(dataSpy.lastCall.args[0], this.control.toJSON());
 
     // Check the commands
     assert.strictEqual(message.commands[0].type, 'REF');
