@@ -16,6 +16,7 @@ test('control', {
     this.log = this.control.log;
 
     sinon.stub(this.log, 'write');
+    sinon.stub(this.udpMessageStream, 'write');
   },
 
   after: function() {
@@ -50,8 +51,6 @@ test('control', {
     this.control.fly = true;
     this.control.upDown = 1;
 
-    sinon.stub(this.udpMessageStream, 'write');
-
     this.clock.tick(this.config.udpInterval);
 
     assert.equal(this.udpMessageStream.write.callCount, 1);
@@ -65,6 +64,20 @@ test('control', {
     assert.ok(message.commands[0].args[0]);
     assert.strictEqual(message.commands[1].type, 'PCMD');
     assert.ok(message.commands[1].args[0]);
+  },
+
+  'resume: disables emergency if there is one': function() {
+    this.control.resume();
+
+    var navdata = createNavdata();
+    navdata.status.emergencyLanding = true;
+    this.control.write(navdata);
+
+    assert.strictEqual(this.control.emergency, true);
+
+    navdata.status.emergencyLanding = false;
+    this.control.write(navdata);
+    assert.strictEqual(this.control.emergency, false);
   },
 
   'toJSON: returns a copy of just the data': function() {
