@@ -8,6 +8,10 @@ test('atFloatToString', {
     assert.strictEqual(atFloatToString(undefined), 0);
   },
 
+  'NaN returns 0': function() {
+    assert.strictEqual(atFloatToString(NaN), 0);
+  },
+
   '-0.8': function() {
     assert.equal(atFloatToString(-0.8), -1085485875);
   },

@@ -24,7 +24,7 @@ test('pcmdCommand', {
   'turns movement options into atFloatString arguments': function() {
     var val = 0.75;
     assert.equal(pcmdCommand({leftRight: val}).args[1], atFloatToString(val));
-    assert.equal(pcmdCommand({frontBack: val}).args[2], atFloatToString(val));
+    assert.equal(pcmdCommand({frontBack: val}).args[2], atFloatToString(-val));
     assert.equal(pcmdCommand({upDown: val}).args[3], atFloatToString(val));
     assert.equal(pcmdCommand({clockSpin: val}).args[4], atFloatToString(val));
   },
