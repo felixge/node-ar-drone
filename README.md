@@ -167,7 +167,7 @@ Sends a config command to the drone. You will need to download the drone
 
 For example, this command can be used to instruct the drone to send all navdata.
 
-```js`
+```js
 client.config('general:navdata_demo', 'FALSE');
 ```
 
@@ -220,6 +220,16 @@ Causes the emergency REF bit to be set to 1 until
 `navdata.droneState.emergencyLanding` is 0. This recovers a drone that has
 flipped over and is showing red lights to be flyable again and show green
 lights.  It is also done implicitly when creating a new high level client.
+
+#### Events
+
+A client will emit landed, hovering, flying, landing, batteryChange, and altitudeChange events as long as demo navdata is enabled.
+
+To enable demo navdata use
+
+```js
+client.config('general:navdata_demo', 'FALSE');
+```
 
 ## UdpControl
 
