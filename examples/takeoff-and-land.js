@@ -1,4 +1,4 @@
-var arDrone = require('ar-drone');
+var arDrone = require('..');
 var client  = arDrone.createClient();
 
 // return all navdata

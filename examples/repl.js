@@ -1,3 +1,3 @@
-var arDrone = require('ar-drone');
+var arDrone = require('..');
 var client  = arDrone.createClient();
 client.createRepl();
