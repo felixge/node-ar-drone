@@ -80,25 +80,24 @@ test('parseNavdata', {
     assert.equal(rawMeasures.accelerometers.y, 2036);
     assert.equal(rawMeasures.accelerometers.z, 2528);
 
-    assert.equal(rawMeasures.gyrometers.x, -23);
-    assert.equal(rawMeasures.gyrometers.y, 15);
-    assert.equal(rawMeasures.gyrometers.z, 0);
+    assert.equal(rawMeasures.gyroscopes.x, -23);
+    assert.equal(rawMeasures.gyroscopes.y, 15);
+    assert.equal(rawMeasures.gyroscopes.z, 0);
 
-    assert.equal(rawMeasures.gyrometers110[0], 0);
-    assert.equal(rawMeasures.gyrometers110[1], 0);
-    assert.equal(rawMeasures.gyrometers110.length, 2);
+    assert.equal(rawMeasures.gyroscopes110.x, 0);
+    assert.equal(rawMeasures.gyroscopes110.y, 0);
 
     assert.equal(rawMeasures.batteryMilliVolt, 11686);
-    assert.equal(rawMeasures.usDebutEcho, 0);
-    assert.equal(rawMeasures.usFinEcho, 0);
-    assert.equal(rawMeasures.usAssociationEcho, 3758);
-    assert.equal(rawMeasures.usDistanceEcho, 0);
-    assert.equal(rawMeasures.usCourbeTemps, 21423);
-    assert.equal(rawMeasures.usCourbeValeur, 0);
-    assert.equal(rawMeasures.usCourbeRef, 120);
-    assert.equal(rawMeasures.flagEchoIni, 1);
-    assert.equal(rawMeasures.nbEcho, 1);
-    assert.equal(rawMeasures.sumEcho, 3539193);
+    assert.equal(rawMeasures.us.echo.start, 0);
+    assert.equal(rawMeasures.us.echo.end, 0);
+    assert.equal(rawMeasures.us.echo.association, 3758);
+    assert.equal(rawMeasures.us.echo.distance, 0);
+    assert.equal(rawMeasures.us.curve.time, 21423);
+    assert.equal(rawMeasures.us.curve.value, 0);
+    assert.equal(rawMeasures.us.curve.ref, 120);
+    assert.equal(rawMeasures.echo.flagIni, 1);
+    assert.equal(rawMeasures.echo.num, 1);
+    assert.equal(rawMeasures.echo.sum, 3539193);
     assert.equal(rawMeasures.altTempRaw, 243);
   },
 
