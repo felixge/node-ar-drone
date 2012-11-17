@@ -2,34 +2,30 @@
 
 var arDrone = require('..');
 var http    = require('http');
+var server  = http.createServer(function(req, res) {
 
-console.log('Connecting png stream ...');
-var pngStream = arDrone.createPngStream();
-
-var lastPng;
-pngStream
-  .on('error', console.log)
-  .on('data', function (pngBuffer) {
-    lastPng = pngBuffer;
-  });
-
-var server  = http.createServer(function (req, res) {
-  if (!lastPng) {
-    res.writeHead(503);
-    res.end('Did not receive any png data yet.');
-    return;
+  var pngStream;
+  if (!pngStream) {
+    pngStream = arDrone.createPngStream();
+    pngStream.on('error', function (err) {
+        console.error('pngStream ERROR: ' + err);
+    });
   }
 
-  var boundary = '--boundary';
-  var chunk    =  boundary + '\n' +
-    'Content-Type: image/png\n' +
-    'Content-length: ' + buffer.length + '\n\n';
-
+  var boundary = 'boundary';
   res.writeHead(200, {
     'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary
   });
-  res.write(chunk);
-  res.write(lastPng);
+
+  pngStream.on('data', function writePart(pngBuffer) {
+    // part header
+    res.write('--' + boundary + '\n');
+    res.write('Content-Type: image/png\n');
+    res.write('Content-length: ' + pngBuffer.length + '\n');
+    res.write('\n');
+    // part body
+    res.write(pngBuffer);
+  });
 });
 
 var port = 8080;
