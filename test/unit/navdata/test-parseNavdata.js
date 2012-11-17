@@ -54,13 +54,13 @@ test('parseNavdata', {
     assert.equal(demo.flyState, 'FLYING_OK');
     assert.equal(demo.controlState, 'CTRL_LANDED');
     assert.equal(demo.batteryPercentage, 50);
-    assert.equal(demo.frontBackDegrees, 2.974);
-    assert.equal(demo.leftRightDegrees, 0.55);
-    assert.equal(demo.clockwiseDegrees, 1.933);
-    assert.equal(demo.altitudeMeters, 0);
-    assert.equal(demo.xVelocity, 0.0585307739675045);
-    assert.equal(demo.yVelocity, -0.8817979097366333);
-    assert.equal(demo.zVelocity, 0);
+    assert.equal(demo.rotation.frontBack, 2.974);
+    assert.equal(demo.rotation.leftRight, 0.55);
+    assert.equal(demo.rotation.clockwise, 1.933);
+    assert.equal(demo.altitude, 0);
+    assert.equal(demo.velocity.x, 0.0585307739675045);
+    assert.equal(demo.velocity.y, -0.8817979097366333);
+    assert.equal(demo.velocity.z, 0);
   },
 
   'parses wifi option': function() {
