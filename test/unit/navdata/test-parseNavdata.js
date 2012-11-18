@@ -98,7 +98,7 @@ test('parseNavdata', {
     assert.equal(rawMeasures.echo.flagIni, 1);
     assert.equal(rawMeasures.echo.num, 1);
     assert.equal(rawMeasures.echo.sum, 3539193);
-    assert.equal(rawMeasures.altTempRaw, 243);
+    assert.equal(rawMeasures.altTemp, 243);
   },
 
   'parses pwm option': function() {
