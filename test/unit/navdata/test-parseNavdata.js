@@ -87,7 +87,7 @@ test('parseNavdata', {
     assert.equal(rawMeasures.gyroscopes110.x, 0);
     assert.equal(rawMeasures.gyroscopes110.y, 0);
 
-    assert.equal(rawMeasures.batteryMilliVolt, 11686);
+    assert.equal(rawMeasures.battery, 11686);
     assert.equal(rawMeasures.us.echo.start, 0);
     assert.equal(rawMeasures.us.echo.end, 0);
     assert.equal(rawMeasures.us.echo.association, 3758);
