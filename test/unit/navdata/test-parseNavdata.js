@@ -54,13 +54,36 @@ test('parseNavdata', {
     assert.equal(demo.flyState, 'FLYING_OK');
     assert.equal(demo.controlState, 'CTRL_LANDED');
     assert.equal(demo.batteryPercentage, 50);
+
     assert.equal(demo.frontBackDegrees, 2.974);
     assert.equal(demo.leftRightDegrees, 0.55);
     assert.equal(demo.clockwiseDegrees, 1.933);
+
+    assert.equal(demo.rotation.frontBack, 2.974);
+    assert.equal(demo.rotation.leftRight, 0.55);
+    assert.equal(demo.rotation.clockwise, 1.933);
+
+    assert.equal(demo.rotation.pitch, 2.974);
+    assert.equal(demo.rotation.roll, 0.55);
+    assert.equal(demo.rotation.yaw, 1.933);
+
+    assert.equal(demo.rotation.theta, 2.974);
+    assert.equal(demo.rotation.phi, 0.55);
+    assert.equal(demo.rotation.psi, 1.933);
+
+    assert.equal(demo.rotation.y, 2.974);
+    assert.equal(demo.rotation.x, 0.55);
+    assert.equal(demo.rotation.z, 1.933);
+
     assert.equal(demo.altitudeMeters, 0);
+    assert.equal(demo.altitude, 0);
+
     assert.equal(demo.xVelocity, 0.0585307739675045);
     assert.equal(demo.yVelocity, -0.8817979097366333);
     assert.equal(demo.zVelocity, 0);
+    assert.equal(demo.velocity.x, 0.0585307739675045);
+    assert.equal(demo.velocity.y, -0.8817979097366333);
+    assert.equal(demo.velocity.z, 0);
   },
 
   'parses wifi option': function() {
@@ -83,23 +106,44 @@ test('parseNavdata', {
     assert.equal(rawMeasures.gyrometers.x, -23);
     assert.equal(rawMeasures.gyrometers.y, 15);
     assert.equal(rawMeasures.gyrometers.z, 0);
+    assert.equal(rawMeasures.gyroscopes.x, -23);
+    assert.equal(rawMeasures.gyroscopes.y, 15);
+    assert.equal(rawMeasures.gyroscopes.z, 0);
 
     assert.equal(rawMeasures.gyrometers110[0], 0);
     assert.equal(rawMeasures.gyrometers110[1], 0);
     assert.equal(rawMeasures.gyrometers110.length, 2);
+    assert.equal(rawMeasures.gyroscopes110.x, 0);
+    assert.equal(rawMeasures.gyroscopes110.y, 0);
 
     assert.equal(rawMeasures.batteryMilliVolt, 11686);
+
     assert.equal(rawMeasures.usDebutEcho, 0);
     assert.equal(rawMeasures.usFinEcho, 0);
     assert.equal(rawMeasures.usAssociationEcho, 3758);
     assert.equal(rawMeasures.usDistanceEcho, 0);
+    assert.equal(rawMeasures.us.echo.start, 0);
+    assert.equal(rawMeasures.us.echo.end, 0);
+    assert.equal(rawMeasures.us.echo.association, 3758);
+    assert.equal(rawMeasures.us.echo.distance, 0);
+
     assert.equal(rawMeasures.usCourbeTemps, 21423);
     assert.equal(rawMeasures.usCourbeValeur, 0);
     assert.equal(rawMeasures.usCourbeRef, 120);
+    assert.equal(rawMeasures.us.curve.time, 21423);
+    assert.equal(rawMeasures.us.curve.value, 0);
+    assert.equal(rawMeasures.us.curve.ref, 120);
+
+
     assert.equal(rawMeasures.flagEchoIni, 1);
     assert.equal(rawMeasures.nbEcho, 1);
     assert.equal(rawMeasures.sumEcho, 3539193);
+    assert.equal(rawMeasures.echo.flagIni, 1);
+    assert.equal(rawMeasures.echo.num, 1);
+    assert.equal(rawMeasures.echo.sum, 3539193);
+
     assert.equal(rawMeasures.altTempRaw, 243);
+    assert.equal(rawMeasures.altTemp, 243);
   },
 
   'parses pwm option': function() {
