@@ -86,11 +86,6 @@ test('parseNavdata', {
     assert.equal(demo.velocity.z, 0);
   },
 
-  'parses wifi option': function() {
-    var wifi = parseNavdata(fixture).wifi;
-    assert.equal(wifi.linkQuality, 1);
-  },
-
   'parses time option': function() {
     var time = parseNavdata(fixture).time;
     assert.equal(time, 362979.125);
@@ -146,6 +141,149 @@ test('parseNavdata', {
     assert.equal(rawMeasures.altTemp, 243);
   },
 
+  'parses physMeasures option': function() {
+    var actual   = parseNavdata(fixture).physMeasures;
+    var expected = {
+        temperature : {
+            accelerometer : 45.309303283691406,
+            gyroscope     : 55738
+        },
+        accelerometers : {
+            x : 80.2970962524414,
+            y : -33.318603515625,
+            z : -942.5283203125
+        },
+        gyroscopes : {
+            x : -0.11236488074064255,
+            y : 0.06872134655714035,
+            z : 0.06200997903943062
+        },
+        alim3V3   : 0,
+        vrefEpson : 0,
+        vrefIDG   : 0
+    };
+    assert.equal(actual.temperature.accelerometer, expected.temperature.accelerometer);
+    assert.equal(actual.temperature.gyroscope, expected.temperature.gyroscope);
+    assert.equal(actual.accelerometers.x, expected.accelerometers.x);
+    assert.equal(actual.accelerometers.y, expected.accelerometers.y);
+    assert.equal(actual.accelerometers.z, expected.accelerometers.z);
+    assert.equal(actual.gyroscopes.x, expected.gyroscopes.x);
+    assert.equal(actual.gyroscopes.y, expected.gyroscopes.y);
+    assert.equal(actual.gyroscopes.z, expected.gyroscopes.z);
+    assert.equal(actual.alim3V3, expected.alim3V3);
+    assert.equal(actual.vrefEpson, expected.vrefEpson);
+    assert.equal(actual.vrefIDG, expected.vrefIDG);
+  },
+
+  'parses gyrosOffsets option': function() {
+    var actual   = parseNavdata(fixture).gyrosOffsets;
+    var expected = {
+        x : -0.5329172611236572,
+        y : 0.1788240224123001,
+        z : 0
+    };
+
+    assert.equal(actual.x, expected.x);
+    assert.equal(actual.y, expected.y);
+    assert.equal(actual.z, expected.z);
+  },
+
+  'parses eulerAngles option': function() {
+    var actual   = parseNavdata(fixture).eulerAngles;
+    var expected = {
+        theta : 4866,
+        phi   : 2024
+    };
+
+    assert.equal(actual.theta, expected.theta);
+    assert.equal(actual.phi, expected.phi);
+  },
+
+  'parses references option': function() {
+    var actual   = parseNavdata(fixture).references;
+    var expected = {
+        theta    : 0,
+        phi      : 0,
+        thetaI   : 0,
+        phiI     : 0,
+        pitch    : 0,
+        roll     : 0,
+        yaw      : 0,
+        psi      : 0,
+        vx       : 0,
+        vy       : 0,
+        thetaMod : 0,
+        phiMod   : 0,
+        kVX      : 0,
+        kVY      : 0,
+        kMode    : 0,
+        ui       : {
+            time        : 0,
+            theta       : 0,
+            phi         : 0,
+            psi         : 0,
+            psiAccuracy : 0,
+            seq         : 0
+        }
+    };
+
+    assert.equal(actual.theta, expected.theta);
+    assert.equal(actual.phi, expected.phi);
+    assert.equal(actual.thetaI, expected.thetaI);
+    assert.equal(actual.phiI, expected.phiI);
+    assert.equal(actual.pitch, expected.pitch);
+    assert.equal(actual.roll, expected.roll);
+    assert.equal(actual.yaw, expected.yaw);
+    assert.equal(actual.psi, expected.psi);
+    assert.equal(actual.vx, expected.vx);
+    assert.equal(actual.vy, expected.vy);
+    assert.equal(actual.thetaMod, expected.thetaMod);
+    assert.equal(actual.phiMod, expected.phiMod);
+    assert.equal(actual.kVX, expected.kVX);
+    assert.equal(actual.kVY, expected.kVY);
+    assert.equal(actual.kMode, expected.kMode);
+    assert.equal(actual.ui.time, expected.ui.time);
+    assert.equal(actual.ui.theta, expected.ui.theta);
+    assert.equal(actual.ui.phi, expected.ui.phi);
+    assert.equal(actual.ui.psi, expected.ui.psi);
+    assert.equal(actual.ui.psiAccuracy, expected.ui.psiAccuracy);
+    assert.equal(actual.ui.seq, expected.ui.seq);
+  },
+
+  'parses trims option': function() {
+    var actual   = parseNavdata(fixture).trims;
+    var expected = {
+        angularRates : {
+            r : 0
+        },
+        eulerAngles : {
+            theta : 3028.916015625,
+            phi   : 1544.318359375
+        }
+    };
+
+    assert.equal(actual.angularRates.r, expected.angularRates.r);
+    assert.equal(actual.eulerAngles.theta, expected.eulerAngles.theta);
+    assert.equal(actual.eulerAngles.phi, expected.eulerAngles.phi);
+  },
+
+  'parses rcReferences option': function() {
+    var actual   = parseNavdata(fixture).rcReferences;
+    var expected = {
+        pitch : 0,
+        roll  : 0,
+        yaw   : 0,
+        gaz   : 0,
+        ag    : 0
+    };
+
+    assert.equal(actual.pitch, expected.pitch);
+    assert.equal(actual.roll, expected.roll);
+    assert.equal(actual.yaw, expected.yaw);
+    assert.equal(actual.gaz, expected.gaz);
+    assert.equal(actual.ag, expected.ag);
+  },
+
   'parses pwm option': function() {
     var pwm = parseNavdata(fixture).pwm;
 
@@ -168,10 +306,171 @@ test('parseNavdata', {
     assert.equal(pwm.altitudeDer, 0);
   },
 
+  'parses altitude option': function() {
+    var actual   = parseNavdata(fixture).altitude;
+    var expected = {
+        vision   : 243,
+        velocity : 0,
+        ref      : 0,
+        raw      : 243,
+        observer : {
+            acceleration: 0,
+            altitude: 0,
+            x: {
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            state: 0
+        },
+        estimated: {
+            vb: {
+                x: 0,
+                y: 0
+            },
+            state: 0
+        }
+    };
+
+    assert.equal(actual.vision, expected.vision);
+    assert.equal(actual.velocity, expected.velocity);
+    assert.equal(actual.ref, expected.ref);
+    assert.equal(actual.raw, expected.raw);
+    assert.equal(actual.observer.acceleration, expected.observer.acceleration);
+    assert.equal(actual.observer.altitude, expected.observer.altitude);
+    assert.equal(actual.observer.x.x, expected.observer.x.x);
+    assert.equal(actual.observer.x.y, expected.observer.x.y);
+    assert.equal(actual.observer.x.z, expected.observer.x.z);
+    assert.equal(actual.observer.state, expected.observer.state);
+    assert.equal(actual.estimated.vb.x, expected.estimated.vb.x);
+    assert.equal(actual.estimated.vb.y, expected.estimated.vb.y);
+    assert.equal(actual.estimated.state, expected.estimated.state);
+  },
+
+  'parses visionRaw option': function() {
+    var actual   = parseNavdata(fixture).visionRaw;
+    var expected = {
+        tx: 1.3266397714614868,
+        ty: -0.7230937480926514,
+        tz: 0
+    };
+
+    assert.equal(actual.tx, expected.tx);
+    assert.equal(actual.ty, expected.ty);
+    assert.equal(actual.tz, expected.tz);
+  },
+
+  'parses visionOf option': function() {
+    var actual   = parseNavdata(fixture).visionOf;
+    var expected = {
+        dx: [0, 0, 0, 0, 0],
+        dy: [0, 0, 0, 0, 0]
+    };
+
+    assert.deepEqual(actual.dx, expected.dx);
+    assert.deepEqual(actual.dy, expected.dy);
+  },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
   'parses watchdog option': function() {
     var watchdog = parseNavdata(fixture).watchdog;
     assert.equal(watchdog, 4822);
   },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
+
+  'parses wifi option': function() {
+    var wifi = parseNavdata(fixture).wifi;
+    assert.equal(wifi.linkQuality, 1);
+  },
+
+  // 'parses option': function() {
+  //   var actual   = parseNavdata(fixture).;
+  //   var expected = ;
+  //
+  //   assert.equal(actual)
+  // },
 
   'throws exception on invalid header': function() {
     assert.throws(function() {
