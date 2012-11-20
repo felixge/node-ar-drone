@@ -371,33 +371,203 @@ test('parseNavdata', {
     assert.deepEqual(actual.dy, expected.dy);
   },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses vision option': function() {
+    var actual   = parseNavdata(fixture).vision;
+    var expected = {
+        state: 2,
+        misc: 0,
+        phi: {
+            trim: 0,
+            refProp: 0
+        },
+        theta: {
+            trim: 0,
+            refProp: 0
+        },
+        newRawPicture: 0,
+        capture: {
+            theta: 0.05190306529402733,
+            phi: 0.009620788507163525,
+            psi: 0.033727407455444336,
+            altitude: 243,
+            time: 362.969
+        },
+        bodyV: {
+            x: 0.05845191329717636,
+            y: -0.8817280530929565,
+            z: 0.011505687609314919
+        },
+        delta: {
+            phi: 0,
+            theta: 0,
+            psi: 0
+        },
+        gold: {
+            defined: 0,
+            reset: 0,
+            x: 0,
+            y: 0
+        }
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.state, expected.state);
+    assert.equal(actual.misc, expected.misc);
+    assert.deepEqual(actual.phi, expected.phi);
+    assert.deepEqual(actual.theta, expected.theta);
+    assert.equal(actual.newRawPicture, expected.newRawPicture);
+    assert.deepEqual(actual.capture, expected.capture);
+    assert.deepEqual(actual.bodyV, expected.bodyV);
+    assert.deepEqual(actual.delta, expected.delta);
+    assert.deepEqual(actual.gold, expected.gold);
+  },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses visionPerf option': function() {
+    var actual   = parseNavdata(fixture).visionPerf;
+    var expected = {
+        szo: 0,
+        corners: 0,
+        compute: 0,
+        tracking: 0,
+        trans: 0,
+        update: 0,
+        custom: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.szo, expected.szo);
+    assert.equal(actual.corners, expected.corners);
+    assert.equal(actual.compute, expected.compute);
+    assert.equal(actual.tracking, expected.tracking);
+    assert.equal(actual.trans, expected.trans);
+    assert.equal(actual.update, expected.update);
+    assert.deepEqual(actual.custom, expected.custom);
+  },
+
+  'parses trackersSend option': function() {
+    var actual   = parseNavdata(fixture).trackersSend;
+    var expected = {
+        locked: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+        point: [
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 },
+            { x: 0, y: 0 }
+        ]
+     };
+
+    assert.deepEqual(actual.locked, expected.locked);
+    assert.deepEqual(actual.point, expected.point);
+  },
+
+  'parses visionDetect option': function() {
+    var actual   = parseNavdata(fixture).visionDetect;
+    var expected = {
+        nbDetected: 0,
+        type: [0, 0, 0, 0],
+        xc: [0, 0, 0, 0],
+        yc: [0, 0, 0, 0],
+        width: [0, 0, 0, 0],
+        height: [0, 0, 0, 0],
+        dist: [0, 0, 0, 0],
+        orientationAngle: [0, 0, 0, 0],
+        rotation: [{
+            m11: 0,
+            m12: 0,
+            m13: 0,
+            m21: 0,
+            m22: 0,
+            m23: 0,
+            m31: 0,
+            m32: 0,
+            m33: 0
+        }, {
+            m11: 0,
+            m12: 0,
+            m13: 0,
+            m21: 0,
+            m22: 0,
+            m23: 0,
+            m31: 0,
+            m32: 0,
+            m33: 0
+        }, {
+            m11: 0,
+            m12: 0,
+            m13: 0,
+            m21: 0,
+            m22: 0,
+            m23: 0,
+            m31: 0,
+            m32: 0,
+            m33: 0
+        }, {
+            m11: 0,
+            m12: 0,
+            m13: 0,
+            m21: 0,
+            m22: 0,
+            m23: 0,
+            m31: 0,
+            m32: 0,
+            m33: 0
+        }],
+        translation: [{
+            x: 0,
+            y: 0,
+            z: 0
+        }, {
+            x: 0,
+            y: 0,
+            z: 0
+        }, {
+            x: 0,
+            y: 0,
+            z: 0
+        }, {
+            x: 0,
+            y: 0,
+            z: 0
+        }],
+        cameraSource: [0, 0, 0, 0]
+    };
+
+    assert.equal(actual.nbDetected, expected.nbDetected);
+    assert.deepEqual(actual.type, expected.type);
+    assert.deepEqual(actual.xc, expected.xc);
+    assert.deepEqual(actual.yc, expected.yc);
+    assert.deepEqual(actual.width, expected.width);
+    assert.deepEqual(actual.height, expected.height);
+    assert.deepEqual(actual.dist, expected.dist);
+    assert.deepEqual(actual.orientationAngle, expected.orientationAngle);
+    assert.deepEqual(actual.rotation, expected.rotation);
+    assert.deepEqual(actual.translation, expected.translation);
+    assert.deepEqual(actual.cameraSource, expected.cameraSource);
+  },
 
   'parses watchdog option': function() {
     var watchdog = parseNavdata(fixture).watchdog;
