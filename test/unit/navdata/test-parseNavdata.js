@@ -574,73 +574,227 @@ test('parseNavdata', {
     assert.equal(watchdog, 4822);
   },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses adcDataFrame option': function() {
+    var actual   = parseNavdata(fixture).adcDataFrame;
+    var expected = {
+        version: 0,
+        dataFrame: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.version, expected.version);
+    assert.deepEqual(actual.dataFrame, expected.dataFrame);
+  },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses videoStream option': function() {
+    var actual   = parseNavdata(fixture).videoStream;
+    var expected = {
+        quant: 0,
+        frame: {
+            size: 4597,
+            number: 46105
+        },
+        atcmd: {
+            sequence: 0,
+            meanGap: 0,
+            varGap: 0,
+            quality: 0
+        },
+        bitrate: {
+            out: 0,
+            desired: 0
+        },
+        data: [0, 0, 0, 0, 0],
+        tcpQueueLevel: 0,
+        fifoQueueLevel: 0
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.quant, expected.quant);
+    assert.deepEqual(actual.frame, expected.frame);
+    assert.deepEqual(actual.atcmd, expected.atcmd);
+    assert.deepEqual(actual.bitrate, expected.bitrate);
+    assert.deepEqual(actual.data, expected.data);
+    assert.equal(actual.tcpQueueLevel, expected.tcpQueueLevel);
+    assert.equal(actual.fifoQueueLevel, expected.fifoQueueLevel);
+  },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses games option': function() {
+    var actual   = parseNavdata(fixture).games;
+    var expected = {
+        counters: {
+            doubleTap: 0,
+            finishLine: 0
+        }
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.counters.doubleTap, expected.counters.doubleTap);
+    assert.equal(actual.counters.finishLine, expected.counters.finishLine);
+  },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses pressureRaw option': function() {
+    var actual   = parseNavdata(fixture).pressureRaw;
+    var expected = {
+        up: 39148,
+        ut: 32556,
+        temperature: 435,
+        pressure: 101586
+    };
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+    assert.equal(actual.up, expected.up);
+    assert.equal(actual.ut, expected.ut);
+    assert.equal(actual.temperature, expected.temperature);
+    assert.equal(actual.pressure, expected.pressure);
+  },
+
+  'parses magneto option': function() {
+    var actual   = parseNavdata(fixture).magneto;
+    var expected = {
+        mx: 30,
+        my: -56,
+        mz: 80,
+        raw: {
+            x: 189,
+            y: -100.8984375,
+            z: -278.4375
+        },
+        rectified: {
+            x: 145.08058166503906,
+            y: -84.93736267089844,
+            z: -287.18157958984375
+        },
+        offset: {
+            x: 29.21237564086914,
+            y: -13.282999038696289,
+            z: 0
+        },
+        heading: {
+            unwrapped: 0,
+            gyroUnwrapped: 0.00041322660399600863,
+            fusionUnwrapped: 1.933355689048767
+        },
+        ok: 1,
+        state: 513,
+        radius: -20.9833984375,
+        error: {
+            mean: 1129450962944,
+            variance: -1.9905589299967167e-20
+        }
+    };
+
+    assert.equal(actual.mx, expected.mx);
+    assert.equal(actual.my, expected.my);
+    assert.deepEqual(actual.raw, expected.raw);
+    assert.deepEqual(actual.rectified, expected.rectified);
+    assert.deepEqual(actual.offset, expected.offset);
+    assert.deepEqual(actual.heading, expected.heading);
+    assert.equal(actual.mz, expected.mz);
+    assert.equal(actual.ok, expected.ok);
+    assert.equal(actual.state, expected.state);
+    assert.equal(actual.radius, expected.radius);
+    assert.deepEqual(actual.error, expected.error);
+  },
+
+  'parses windSpeed option': function() {
+    var actual   = parseNavdata(fixture).windSpeed;
+    var expected = {
+        speed: 0,
+        angle: 0,
+        compensation: {
+            theta: 0,
+            phi: 0
+        },
+        stateX: [0.05845191329717636, -0.8817280530929565, 0, 0, 305.5962829589844, -236.80516052246094],
+        debug: [0, 0, 0]
+    };
+
+    assert.equal(actual.speed, expected.speed);
+    assert.equal(actual.angle, expected.angle);
+    assert.deepEqual(actual.compensation, expected.compensation);
+    assert.deepEqual(actual.stateX, expected.stateX);
+    assert.deepEqual(actual.debug, expected.debug);
+  },
+
+  'parses kalmanPressure option': function() {
+    var actual   = parseNavdata(fixture).kalmanPressure;
+    var expected = {
+        offsetPressure: 101580,
+        estimated: {
+            altitude: 0,
+            velocity: 0,
+            angle: {
+                pwm: 0,
+                pressure: 0
+            },
+            us: {
+                offset: 0,
+                prediction: 0
+            },
+            covariance: {
+                alt: 0.0005193915567360818,
+                pwm: 0.6806257367134094,
+                velocity: 0.025059189647436142
+            },
+            groundEffect: true,
+            sum: 1.401298464324817e-45,
+            reject: false,
+            uMultisinus: 0,
+            gazAltitude: 0,
+            flagMultisinus: false,
+            flagMultisinusStart: false
+        }
+    };
+
+    assert.equal(actual.offsetPressure, expected.offsetPressure);
+    assert.equal(actual.estimated.altitude, expected.estimated.altitude);
+    assert.equal(actual.estimated.velocity, expected.estimated.velocity);
+    assert.deepEqual(actual.estimated.angle, expected.estimated.angle);
+    assert.deepEqual(actual.estimated.us, expected.estimated.us);
+    assert.deepEqual(actual.estimated.covariance, expected.estimated.covariance);
+    assert.equal(actual.estimated.groundEffect, expected.estimated.groundEffect);
+    assert.equal(actual.estimated.sum, expected.estimated.sum);
+    assert.equal(actual.estimated.reject, expected.estimated.reject);
+    assert.equal(actual.estimated.uMultisinus, expected.estimated.uMultisinus);
+    assert.equal(actual.estimated.gazAltitude, expected.estimated.gazAltitude);
+    assert.equal(actual.estimated.flagMultisinus, expected.estimated.flagMultisinus);
+    assert.equal(actual.estimated.flagMultisinusStart, expected.estimated.flagMultisinusStart);
+  },
+
+  'parses hdvideoStream option': function() {
+    var actual   = parseNavdata(fixture).hdvideoStream;
+    var expected = {
+        hdvideoState: 0,
+        storageFifo: {
+            nbPackets: 0,
+            size: 0
+        },
+        usbkey: {
+            size: 0,
+            freespace: 0,
+            remainingTime: 0
+        },
+        frameNumber: 0
+    };
+
+    assert.equal(actual.hdvideoState, expected.hdvideoState);
+    assert.deepEqual(actual.storageFifo, expected.storageFifo);
+    assert.deepEqual(actual.usbkey, expected.usbkey);
+    assert.equal(actual.frameNumber, expected.frameNumber);
+  },
 
   'parses wifi option': function() {
     var wifi = parseNavdata(fixture).wifi;
     assert.equal(wifi.linkQuality, 1);
   },
 
-  // 'parses option': function() {
-  //   var actual   = parseNavdata(fixture).;
-  //   var expected = ;
-  //
-  //   assert.equal(actual)
-  // },
+  'parses zimmu3000 option': function() {
+    var actual   = parseNavdata(fixture).zimmu3000;
+    var expected = {
+        vzimmuLSB: 0,
+        vzfind: 0
+    };
+
+    assert.equal(actual.vzimmuLSB, expected.vzimmuLSB);
+    assert.equal(actual.vzfind, expected.vzfind);
+  },
 
   'throws exception on invalid header': function() {
     assert.throws(function() {
