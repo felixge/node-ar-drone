@@ -188,7 +188,7 @@ Performs a pre-programmed flight sequence for a given `duration` (in ms).
 Example:
 
 ```js
-client.animate('flipLeft', 15);
+client.animate('flipLeft', 1500);
 ```
 
 Please note that the drone will need a good amount of altitude and headroom
