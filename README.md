@@ -382,6 +382,19 @@ Sends all enqueued commands as an UDP packet to the drone.
 
 ## Environment variables
 
-* DEFAULT_DRONE_IP 
+* DEFAULT_DRONE_IP
+
+## Camera access
+
+You can access the head camera and the bottom camera, you just have the change
+the config:
+
+```javascript
+// access the head camera
+client.config('video:video_channel', 0);
+
+// access the bottom camera
+client.config('video:video_channel', 3);
+```
 
 
