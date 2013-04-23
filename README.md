@@ -130,13 +130,15 @@ active scope. Additionally `client` resolves to the `client` instance itself.
 Returns a `PngStream` object that emits individual png image buffers as `'data'`
 events.
 
-#### client.takeoff()
+#### client.takeoff(cb)
 
-Sets the internal `fly` state to `true`.
+Sets the internal `fly` state to `true`, `cb` is invoked after the drone
+reports that it is hovering.
 
-#### client.land()
+#### client.land(cb)
 
-Sets the internal `fly` state to `false`.
+Sets the internal `fly` state to `false`, `cb` is invoked after the drone
+reports it has landed.
 
 #### client.up(speed) / client.down(speed)
 
