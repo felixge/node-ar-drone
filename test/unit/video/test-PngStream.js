@@ -82,7 +82,7 @@ test('PngStream', {
     assert.equal(this.pngEncoder.end.callCount, 1);
   },
 
-  'emits "error" events if there is a listener': function() {
+  'emits "error" events on tcpVideoStream errors, if there is a listener': function() {
     sinon.stub(this.tcpVideoStream, 'connect');
     sinon.stub(this.pngEncoder, 'end');
 
@@ -92,6 +92,21 @@ test('PngStream', {
 
     var fakeErr = new Error('bad shit');
     this.tcpVideoStream.emit('error', fakeErr);
+
+    assert.equal(errStub.callCount, 1);
+    assert.strictEqual(errStub.getCall(0).args[0], fakeErr);
+  },
+  
+  'emits "error" events on pngEncoder errors, if there is a listener': function() {
+    sinon.stub(this.tcpVideoStream, 'connect');
+    sinon.stub(this.pngEncoder, 'end');
+
+    var errStub = sinon.stub();
+    this.stream.on('error', errStub);
+    this.stream.resume();
+
+    var fakeErr = new Error('bad shit');
+    this.pngEncoder.emit('error', fakeErr);
 
     assert.equal(errStub.callCount, 1);
     assert.strictEqual(errStub.getCall(0).args[0], fakeErr);
