@@ -106,6 +106,22 @@ test('PngEncoder', {
     assert.strictEqual(dataSpy.getCall(1).args[0], this.fakeBuffer2);
   },
 
+  'handles ffmpeg spawn error': function() {
+    var errorSpy = sinon.spy();
+    this.encoder.on('error', errorSpy);
+
+    this.encoder.write(new Buffer('foo'));
+
+    // simulate ffmpeg not spawning correctly
+    var error = new Error('ENOENT');
+    error.code = 'ENOENT';
+    this.fakeFfmpeg.stdin.emit('error', new Error('EPIPE'));
+    this.fakeFfmpeg.emit('error', error);
+
+    assert.equal(errorSpy.callCount, 1);
+    assert.equal(/ffmpeg.*not found/i.test(errorSpy.getCall(0).args[0]), true);
+  },
+
   'handles ffmpeg not existing': function() {
     var errorSpy = sinon.spy();
     this.encoder.on('error', errorSpy);
