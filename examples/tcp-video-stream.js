@@ -1,14 +1,8 @@
 // Run this to receive the raw video stream from your drone as buffers.
 
-var TcpVideoStream = require('../lib/video/TcpVideoStream');
+var arDrone = require('..');
 
-var video = new TcpVideoStream();
-
-console.log('Connecting ...');
-video.connect(function(err) {
-  if (err) throw err;
-
-  console.log('Connected');
-});
+var video = arDrone.createClient().getVideoStream();
 
 video.on('data', console.log);
+video.on('error', console.log);
