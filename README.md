@@ -104,7 +104,7 @@ is a simple way to get this as PngBuffers (requires a recent ffmpeg version to
 be found in your `$PATH`):
 
 ```js
-var pngStream = client.createPngStream();
+var pngStream = client.getPngStream();
 pngStream.on('data', console.log);
 ```
 
@@ -125,10 +125,17 @@ Returns a new `Client` object. `options` include:
 Launches an interactive interface with all client methods available in the
 active scope. Additionally `client` resolves to the `client` instance itself.
 
-#### client.createPngStream()
+#### client.getPngStream()
 
-Returns a `PngStream` object that emits individual png image buffers as `'data'`
-events.
+Returns a `PngEncoder` object that emits individual png image buffers as `'data'`
+events. Multiple calls to this method returns the same object. Connection lifecycle
+(e.g. reconnect on error) is managed by the client.
+
+#### client.getVideoStream()
+
+Returns a `TcpVideoStream` object that emits raw tcp packets as `'data'`
+events. Multiple calls to this method returns the same object. Connection lifecycle
+(e.g. reconnect on error) is managed by the client.
 
 #### client.takeoff(cb)
 

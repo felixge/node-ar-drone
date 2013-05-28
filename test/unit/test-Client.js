@@ -3,7 +3,8 @@ var assert       = require('assert');
 var test         = require('utest');
 var sinon        = require('sinon');
 var Client       = require(common.lib + '/Client');
-var PngStream    = Client.PngStream;
+var PngEncoder   = Client.PngEncoder;
+var TcpVideoStream = Client.TcpVideoStream; 
 var EventEmitter = require('events').EventEmitter;
 
 test('Client', {
@@ -19,9 +20,13 @@ test('Client', {
     this.fakeUdpNavdataStream        = new EventEmitter;
     this.fakeUdpNavdataStream.resume = sinon.stub();
 
-    this.pngStream   = new PngStream();
-    Client.PngStream = sinon.stub();
-    Client.PngStream.returns(this.pngStream);
+    this.pngEncoder  = new PngEncoder();
+    Client.PngEncoder = sinon.stub();
+    Client.PngEncoder.returns(this.pngEncoder);
+    
+    this.tcpVideoStream  = new TcpVideoStream();
+    Client.TcpVideoStream = sinon.stub();
+    Client.TcpVideoStream.returns(this.tcpVideoStream);
 
     this.options = {
       udpControl       : this.fakeUdpControl,
@@ -395,16 +400,37 @@ test('Client', {
     assert.equal(args[1], 2000);
   },
 
-  'createPngStream resumes and returns internal pngStream': function() {
-    // check that the PngStream was constructed properly
-    assert.equal(Client.PngStream.callCount, 1);
-    assert.strictEqual(Client.PngStream.getCall(0).args[0], this.options);
+  'getPngStream creates and resume a single stream': function() {
+    sinon.stub(this.tcpVideoStream, 'connect');
 
-    sinon.stub(this.pngStream, 'resume');
+    var pngStream1 = this.client.getPngStream();
+    var pngStream2 = this.client.getPngStream();
 
-    var pngStream = this.client.createPngStream();
-    assert.equal(this.pngStream.resume.callCount, 1);
-    assert.strictEqual(pngStream, this.pngStream);
+    // check that the underlying TcpVideoStream and PngEncoder were constructed only once
+    assert.equal(Client.PngEncoder.callCount, 1);
+    assert.equal(Client.TcpVideoStream.callCount, 1);
+    assert.strictEqual(Client.TcpVideoStream.getCall(0).args[0], this.options);
+    assert.equal(this.tcpVideoStream.connect.callCount, 1);
+
+    // check returned streams are always the same
+    assert.strictEqual(pngStream1, this.pngEncoder);
+    assert.strictEqual(pngStream2, this.pngEncoder);
+  },
+  
+  'getTcpVideoStream creates and resume a single stream': function() {
+    sinon.stub(this.tcpVideoStream, 'connect');
+
+    var videoStream1 = this.client.getVideoStream();
+    var videoStream2 = this.client.getVideoStream();
+
+    // check that the PngStream was constructed only once
+    assert.equal(Client.TcpVideoStream.callCount, 1);
+    assert.strictEqual(Client.TcpVideoStream.getCall(0).args[0], this.options);
+    assert.equal(this.tcpVideoStream.connect.callCount, 1);
+
+    // check returned streams are always the same
+    assert.strictEqual(videoStream1, this.tcpVideoStream);
+    assert.strictEqual(videoStream2, this.tcpVideoStream);
   },
 
   'after methods are called in client context': function() {
