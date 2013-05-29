@@ -70,6 +70,17 @@ test('AtCommandCreator', {
     assert.ok(cmd.args[0] & (1 << 0));
   },
 
+  'calibrate': function() {
+    var cmd = this.creator.calibrate(0);
+    assert.equal(cmd.type, 'CALIB');
+    assert.equal(cmd.args.length, 1);
+    assert.equal(cmd.args[0], '0');
+    cmd = this.creator.calibrate(1);
+    assert.equal(cmd.type, 'CALIB');
+    assert.equal(cmd.args.length, 1);
+    assert.equal(cmd.args[0], '1');
+  },
+
   'config': function() {
     var cmd = this.creator.config('foo', 'bar');
     assert.equal(cmd.type, 'CONFIG');
