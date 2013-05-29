@@ -169,6 +169,16 @@ as a reference point.  `speed` can be a value from `0` to `1`.
 
 Sets all drone movement commands to `0`, making it effectively hover in place.
 
+#### client.calibrate(device_num)
+
+Asks the drone to calibrate a device.  Currently the AR.Drone firmware
+supports only one device that can be calibrated: the magnetometer,
+which is device number 0.
+
+The magnetometer can only be calibrated while the drone is flying, and
+the calibration routine causes the drone to yaw in place a full 360
+degrees.
+
 #### client.config(key, value)
 
 Sends a config command to the drone. You will need to download the drone
