@@ -137,14 +137,14 @@ Returns a `TcpVideoStream` object that emits raw tcp packets as `'data'`
 events. Multiple calls to this method returns the same object. Connection lifecycle
 (e.g. reconnect on error) is managed by the client.
 
-#### client.takeoff(cb)
+#### client.takeoff(callback)
 
-Sets the internal `fly` state to `true`, `cb` is invoked after the drone
+Sets the internal `fly` state to `true`, `callback` is invoked after the drone
 reports that it is hovering.
 
-#### client.land(cb)
+#### client.land(callback)
 
-Sets the internal `fly` state to `false`, `cb` is invoked after the drone
+Sets the internal `fly` state to `false`, `callback` is invoked after the drone
 reports it has landed.
 
 #### client.up(speed) / client.down(speed)
