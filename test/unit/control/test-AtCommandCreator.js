@@ -132,4 +132,10 @@ test('AtCommandCreator', {
       self.creator.animate('does not exist');
     },/animation/);
   },
+
+  'ftrim': function() {
+    var cmd = this.creator.ftrim();
+    assert.equal(cmd.type, 'FTRIM');
+    assert.equal(cmd.args.length, 0);
+  },
 });
