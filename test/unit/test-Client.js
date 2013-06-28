@@ -330,6 +330,7 @@ test('Client', {
   },
 
   'pcmd checks if argument exists': function() {
+    // check that running without commands does not modify _pcmd state
     this.client.up(0.5);
     this.client.up();
     assert.strictEqual(this.client._pcmd.up, 0.5);
