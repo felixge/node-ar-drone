@@ -329,6 +329,16 @@ test('Client', {
     assert.strictEqual(this.client._pcmd.down, -0.5);
   },
 
+  'pcmd checks if argument exists': function() {
+    this.client.up(0.5);
+    this.client.up();
+    assert.strictEqual(this.client._pcmd.up, 0.5);
+
+    this.client.down(0.5);
+    this.client.down();
+    assert.strictEqual(this.client._pcmd.down, 0.5);
+  },
+
   'stop resets pcmd commands': function() {
     this.client.up(0.5);
 
