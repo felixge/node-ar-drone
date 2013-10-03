@@ -785,6 +785,43 @@ test('parseNavdata', {
     assert.equal(wifi.linkQuality, 1);
   },
 
+  'parses gps option': function() {
+      var gps = parseNavdata(fixture).gps;
+      assert.equal(gps.latitude, 34.0903478);
+      // assert.equal(gps.longitude, 0);
+      assert.equal(gps.elevation, 130.39);
+      //assert.equal(gps.hdop, 0);
+      assert.equal(gps.lat0, 34.090359093568644);
+      assert.equal(gps.lon0, -118.276604);
+      assert.equal(gps.lat_fuse, 34.09035909403431);
+      assert.equal(gps.lon_fuse, -118.276604);
+      //assert.equal(gps.vdop, 0);
+      assert.equal(gps.pdop, 0);
+      assert.equal(gps.speed, 0.4399999976158142);
+      assert.equal(gps.last_frame_timestamp, 1816647.945);
+      assert.equal(gps.degree, 170.16000366210938);
+      assert.equal(gps.degree_mag, 0);
+      assert.deepEqual(
+          gps.channels,
+          [{sat: 22, cn0: 36},
+           {sat: 15, cn0: 17},
+           {sat: 11, cn0: 227},
+           {sat: 11, cn0: 227},
+           {sat: 18, cn0: 27},
+           {sat: 29, cn0: 16},
+           {sat: 21, cn0: 22},
+           {sat: 16, cn0: 0},
+           {sat: 27, cn0: 0},
+           {sat: 30, cn0: 0},
+           {sat: 12, cn0: 227},
+           {sat: 12, cn0: 227}]);
+      assert.equal(gps.gps_plugged, 1);
+      assert.equal(gps.gps_time, 0);
+      assert.equal(gps.week, 0);
+      assert.equal(gps.gps_fix, 0);
+      assert.equal(gps.num_satellites, 0);
+  },
+
   'throws exception on invalid header': function() {
     assert.throws(function() {
       parseNavdata(new Buffer([1, 2, 3, 4]));
