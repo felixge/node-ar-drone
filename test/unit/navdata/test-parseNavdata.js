@@ -785,17 +785,6 @@ test('parseNavdata', {
     assert.equal(wifi.linkQuality, 1);
   },
 
-  'parses zimmu3000 option': function() {
-    var actual   = parseNavdata(fixture).zimmu3000;
-    var expected = {
-        vzimmuLSB: 0,
-        vzfind: 0
-    };
-
-    assert.equal(actual.vzimmuLSB, expected.vzimmuLSB);
-    assert.equal(actual.vzfind, expected.vzfind);
-  },
-
   'throws exception on invalid header': function() {
     assert.throws(function() {
       parseNavdata(new Buffer([1, 2, 3, 4]));
