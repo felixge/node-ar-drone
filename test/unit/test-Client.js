@@ -4,18 +4,28 @@ var test         = require('utest');
 var sinon        = require('sinon');
 var Client       = require(common.lib + '/Client');
 var PngEncoder   = Client.PngEncoder;
-var TcpVideoStream = Client.TcpVideoStream; 
+var TcpVideoStream = Client.TcpVideoStream;
 var EventEmitter = require('events').EventEmitter;
+
+fakeNavdata = {
+  fake: 'navdata',
+  droneState: {
+    controlCommandAck: true
+  }
+};
 
 test('Client', {
   before: function() {
     this.fakeUdpControl             = {};
-    this.fakeUdpControl.ref         = sinon.stub();
-    this.fakeUdpControl.pcmd        = sinon.stub();
-    this.fakeUdpControl.animateLeds = sinon.stub();
+    this.fakeUdpControl.ack         = sinon.stub();
+    this.fakeUdpControl.ackReset    = sinon.stub();
     this.fakeUdpControl.animate     = sinon.stub();
+    this.fakeUdpControl.animateLeds = sinon.stub();
     this.fakeUdpControl.config      = sinon.stub();
+    this.fakeUdpControl.ctrl        = sinon.stub();
     this.fakeUdpControl.flush       = sinon.stub();
+    this.fakeUdpControl.pcmd        = sinon.stub();
+    this.fakeUdpControl.ref         = sinon.stub();
 
     this.fakeUdpNavdataStream        = new EventEmitter;
     this.fakeUdpNavdataStream.resume = sinon.stub();
@@ -23,7 +33,7 @@ test('Client', {
     this.pngEncoder  = new PngEncoder();
     Client.PngEncoder = sinon.stub();
     Client.PngEncoder.returns(this.pngEncoder);
-    
+
     this.tcpVideoStream  = new TcpVideoStream();
     Client.TcpVideoStream = sinon.stub();
     Client.TcpVideoStream.returns(this.tcpVideoStream);
@@ -58,7 +68,6 @@ test('Client', {
   },
 
   'navdata "data" events are proxied': function() {
-    var fakeNavdata = {fake: 'navdata'};
     this.client.resume();
 
     assert.equal(this.fakeUdpNavdataStream.resume.callCount, 1);
@@ -208,7 +217,6 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
     this.client.resume();
     this.client.resume();
 
@@ -223,7 +231,6 @@ test('Client', {
   },
 
   'resume() is idempotent': function() {
-    var fakeNavdata = {fake: 'navdata'};
     this.client.resume();
     this.client.resume();
 
@@ -427,7 +434,7 @@ test('Client', {
     assert.strictEqual(pngStream1, this.pngEncoder);
     assert.strictEqual(pngStream2, this.pngEncoder);
   },
-  
+
   'getTcpVideoStream creates and resume a single stream': function() {
     sinon.stub(this.tcpVideoStream, 'connect');
 

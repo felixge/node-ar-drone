@@ -34,7 +34,7 @@ test('UdpControl', {
     var ip       = sendArgs.shift();
 
     assert.equal(Buffer.isBuffer(buffer), true);
-    assert.deepEqual(buffer.toString(), ref + pcmd);
+    assert.deepEqual(buffer.toString(), ref.serialize(0) + pcmd.serialize(1));
     assert.deepEqual(offset, 0);
     assert.deepEqual(length, buffer.length);
     assert.deepEqual(port, fakePort);

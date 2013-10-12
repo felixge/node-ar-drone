@@ -13,7 +13,8 @@
     "test": "node test/run.js"
   },
   "dependencies": {
-    "buffy": "0.0.4"
+    "buffy": "0.0.4",
+    "simple-debug": "~1.1.1"
   },
   "devDependencies": {
     "utest": "0.0.6",

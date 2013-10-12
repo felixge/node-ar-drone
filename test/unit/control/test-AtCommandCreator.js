@@ -9,12 +9,6 @@ test('AtCommandCreator', {
     this.creator = new AtCommandCreator();
   },
 
-  'command.number keeps incrementing': function() {
-    assert.equal(this.creator.ref().number, 0);
-    assert.equal(this.creator.ref().number, 1);
-    assert.equal(this.creator.ref().number, 2);
-  },
-
   'raw': function() {
     var cmd = this.creator.raw('FOO', 1, 2, 3);
     assert.equal(cmd.type, 'FOO');

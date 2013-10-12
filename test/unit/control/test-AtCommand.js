@@ -5,7 +5,7 @@ var AtCommand = require(common.lib + '/control/AtCommand');
 
 test('AtCommand', {
   'converting to string': function() {
-    var cmd = new AtCommand('FOO', 1, [2, '3']);
-    assert.equal(cmd.toString(), 'AT*FOO=1,2,3\r');
+    var cmd = new AtCommand('FOO', [2, '3']);
+    assert.equal(cmd.serialize(1), 'AT*FOO=1,2,3\r');
   },
 });
