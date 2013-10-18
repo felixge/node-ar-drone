@@ -407,7 +407,7 @@ Sends all enqueued commands as an UDP packet to the drone.
 
 ## Camera access
 
-You can access the head camera and the bottom camera, you just have the change
+You can access the head camera and the bottom camera, you just have to change
 the config:
 
 ```javascript
