@@ -121,7 +121,8 @@ test('AtCommandCreator', {
     assert.equal(cmd.args[0], '"leds:leds_anim"');
     assert.equal(cmd.args[1], '"' + expected + '"');
     assert.equal(cmd.blocks, true);
-    assert.deepEqual(cmd.options, {});
+    assert(!cmd.options.callback);
+    assert(!cmd.options.timeout);
   },
 
   'animateLeds() does a red snake at 2 hz for 3s by default': function() {
@@ -129,7 +130,8 @@ test('AtCommandCreator', {
     var expected = '9,' + at.floatString(2) + ',' + 3;
     assert.equal(cmd.args[1], '"' + expected + '"');
     assert.equal(cmd.blocks, true);
-    assert.deepEqual(cmd.options, {});
+    assert(!cmd.options.callback);
+    assert(!cmd.options.timeout);
   },
 
   'animateLeds() throws an error for unknown animations': function() {

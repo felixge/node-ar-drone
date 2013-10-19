@@ -354,29 +354,6 @@ test('Client', {
     assert.deepEqual(this.client._pcmd, {});
   },
 
-  'config(): sends config command 10 times': function() {
-    return console.log('skipped - currently broken, needs investigation');
-    // Skip broken test below, see issue #47 for discussion
-    this.client.resume();
-    this.client.config('foo', 'bar');
-
-    for (var i = 1; i <= 10; i++) {
-      this.clock.tick(30);
-      assert.equal(this.fakeUdpControl.config.callCount, i);
-    }
-
-    // Stop repeating after 10 intervals
-    this.clock.tick(30);
-    assert.equal(this.fakeUdpControl.config.callCount, 10);
-
-    // Check that the arguments were right
-    var args = this.fakeUdpControl.config.getCall(0).args;
-    assert.equal(args.length, 2);
-    assert.equal(args[0], 'foo');
-    assert.equal(args[1], 'bar');
-  },
-
-
   'animateLeds(): sends config command 10 times': function() {
     this.client.resume();
     this.client.animateLeds('blinkGreen', 2, 5);
