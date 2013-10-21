@@ -66,7 +66,7 @@ test('UdpControl', {
     var callback = sinon.spy();
     var config = control.config('general:navdata_demo', 'TRUE', callback);
     control.flush();
-    this.clock.tick(100);
+    this.clock.tick(500);
     assert.equal(callback.callCount, 1);
     assert(callback.calledOn(control));
     assert.equal(callback.getCall(0).args.length, 1);
