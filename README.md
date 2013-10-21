@@ -199,8 +199,14 @@ Alternatively, you can pass an options object containing the following:
 
 * `key`: The config key to set.
 * `value`: The config value to set.
-* `callback`: The callback function.
 * `timeout`: The time, in milliseconds, to wait for an ACK from the drone.
+
+For example:
+
+```
+var callback = function(err) { if (err) console.log(err); };
+client.config({ key: 'general:navdata_demo', value: 'FALSE', timeout: 1000 }, callback);
+```
 
 #### client.animate(animation, duration)
 

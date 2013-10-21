@@ -7,16 +7,29 @@ test('AtCommand', {
   'serializing': function() {
     var cmd = new AtCommand('FOO', [2, '3']);
     assert.equal(cmd.serialize(1), 'AT*FOO=1,2,3\r');
+    assert.equal(cmd.serialize(2), 'AT*FOO=2,2,3\r');
   },
 
   'bare callback or options object': function() {
     var cmd = new AtCommand('FOO', [2, '3']);
+    assert.deepEqual(cmd.args, [2, '3']);
+    assert(!cmd.blocks);
     assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
+    assert.equal(cmd.serialize(1), 'AT*FOO=1,2,3\r');
     var callback = function() {};
-    cmd = new AtCommand('FOO', [2, '3'], false, callback);
-    assert.equal(cmd.blocks, false);
-    assert.equal(cmd.options.callback, callback);
-    cmd = new AtCommand('FOO', [2, '3'], false, { callback: callback });
-    assert.equal(cmd.options.callback, callback);
+    var options = { timeout: 1 };
+    cmd = new AtCommand('FOO', [2, '3'], false, options, callback);
+    assert.deepEqual(cmd.args, [2, '3']);
+    assert(!cmd.blocks);
+    assert.deepEqual(cmd.options, options);
+    assert.equal(cmd.callback, callback);
+    assert.equal(cmd.serialize(1), 'AT*FOO=1,2,3\r');
+    cmd = new AtCommand('FOO', [2, '3'], true);
+    assert.deepEqual(cmd.args, [2, '3']);
+    assert(cmd.blocks);
+    assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
+    assert.equal(cmd.serialize(1), 'AT*FOO=1,2,3\r');
   }
 });

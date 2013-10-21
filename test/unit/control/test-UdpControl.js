@@ -6,6 +6,14 @@ var AtCommand  = require(common.lib + '/control/AtCommand');
 var UdpControl = require(common.lib + '/control/UdpControl');
 
 test('UdpControl', {
+  before: function() {
+    this.clock = sinon.useFakeTimers();
+  },
+
+  after: function() {
+    this.clock.restore();
+  },
+
   'queues commands until flush() is invoked': function() {
     var fakeSocket = {send: sinon.spy()};
     var fakePort   = 12345;
@@ -44,6 +52,45 @@ test('UdpControl', {
     // there should be nothing to flush now
     control.flush();
     assert.equal(fakeSocket.send.callCount, 1);
+  },
+
+  'Callbacks are called with an error object for timeouts': function() {
+    var fakeSocket = {send: sinon.spy()};
+    var fakePort   = 12345;
+    var fakeIp     = '255.0.23.42';
+    var control = new UdpControl({
+      socket : fakeSocket,
+      port   : fakePort,
+      ip     : fakeIp,
+    });
+    var callback = sinon.spy();
+    var config = control.config('general:navdata_demo', 'TRUE', callback);
+    control.flush();
+    this.clock.tick(100);
+    assert.equal(callback.callCount, 1);
+    assert(callback.calledOn(control));
+    assert.equal(callback.getCall(0).args.length, 1);
+    assert.equal(typeof(callback.getCall(0).args[0]), 'object');
+  },
+
+  'Callbacks are called with a null argument for success': function() {
+    var fakeSocket = {send: sinon.spy()};
+    var fakePort   = 12345;
+    var fakeIp     = '255.0.23.42';
+    var control = new UdpControl({
+      socket : fakeSocket,
+      port   : fakePort,
+      ip     : fakeIp,
+    });
+    var callback = sinon.spy();
+    var config = control.config('general:navdata_demo', 'TRUE', callback);
+    control.flush();
+    control.ack();
+    control.ackReset();
+    assert.equal(callback.callCount, 1);
+    assert(callback.calledOn(control));
+    assert.equal(callback.getCall(0).args.length, 1);
+    assert.deepEqual(callback.getCall(0).args[0], null);
   },
 
   'Sends non-blocking, then a single blocking command until getting an ack': function() {

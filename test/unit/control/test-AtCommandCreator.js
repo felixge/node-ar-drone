@@ -15,6 +15,7 @@ test('AtCommandCreator', {
     assert.deepEqual(cmd.args, [1, 2, 3]);
     assert.equal(cmd.blocks, false);
     assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
 
     var options = { timeout: 10 };
     var cmd = this.creator.raw('FOO', [1, 2], true, options);
@@ -22,6 +23,16 @@ test('AtCommandCreator', {
     assert.deepEqual(cmd.args, [1, 2]);
     assert.equal(cmd.blocks, true);
     assert.deepEqual(cmd.options, options);
+    assert(!cmd.callback);
+
+    var options = { timeout: 10 };
+    var callback = function() {};
+    var cmd = this.creator.raw('FOO', [1, 2], true, options, callback);
+    assert.equal(cmd.type, 'FOO');
+    assert.deepEqual(cmd.args, [1, 2]);
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, options);
+    assert.equal(cmd.callback, callback);
   },
 
   'ctrl': function() {
@@ -32,6 +43,7 @@ test('AtCommandCreator', {
     assert.equal(cmd.args[1], 0);
     assert.equal(cmd.blocks, false);
     assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
   },
 
   'ref': function() {
@@ -101,12 +113,39 @@ test('AtCommandCreator', {
   },
 
   'config': function() {
-    var cmd = this.creator.config('foo', 'bar', true);
+    var cmd = this.creator.config('foo', 'bar');
     assert.equal(cmd.type, 'CONFIG');
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"foo"');
     assert.equal(cmd.args[1], '"bar"');
     assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, {});
+
+    var callback = function() {};
+    var cmd = this.creator.config('foo', 'bar', callback);
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, {});
+    assert.equal(cmd.callback, callback);
+
+    var cmd = this.creator.config({key: 'foo', value: 'bar'});
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+
+    var cmd = this.creator.config({key: 'foo', value: 'bar', timeout: 1}, callback);
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+    assert.equal(cmd.options.timeout, 1);
+    assert.equal(cmd.callback, callback);
   },
 
   'animateLeds() works as expected': function() {
