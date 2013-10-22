@@ -8,7 +8,7 @@ receiver.bind(common.UDP_PORT);
 
 var control = new UdpControl({ip: '127.0.0.1', port: common.UDP_PORT});
 
-var expectMessage = control.ref() + control.pcmd();
+var expectMessage = control.ref().serialize(0) + control.pcmd().serialize(1);
 control.flush();
 
 var receivedMessage = false;

@@ -181,7 +181,7 @@ The magnetometer can only be calibrated while the drone is flying, and
 the calibration routine causes the drone to yaw in place a full 360
 degrees.
 
-#### client.config(key, value)
+#### client.config(key, value, callback)
 
 Sends a config command to the drone. You will need to download the drone
 [SDK](https://projects.ardrone.org/projects/show/ardrone-api) to find a full list of commands in the `ARDrone_Developer_Guide.pdf`.
@@ -192,6 +192,21 @@ For example, this command can be used to instruct the drone to send all navdata.
 client.config('general:navdata_demo', 'FALSE');
 ```
 
+`callback` is invoked after the drone acknowledges the config request
+or if a timeout occurs.
+
+Alternatively, you can pass an options object containing the following:
+
+* `key`: The config key to set.
+* `value`: The config value to set.
+* `timeout`: The time, in milliseconds, to wait for an ACK from the drone.
+
+For example:
+
+```
+var callback = function(err) { if (err) console.log(err); };
+client.config({ key: 'general:navdata_demo', value: 'FALSE', timeout: 1000 }, callback);
+```
 
 #### client.animate(animation, duration)
 

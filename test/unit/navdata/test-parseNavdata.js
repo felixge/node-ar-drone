@@ -9,7 +9,8 @@ test('parseNavdata', {
   'parses main payload': function() {
     var navdata = parseNavdata(fixture);
 
-    assert.equal(navdata.header, parseNavdata.NAVDATA_HEADER);
+    assert(navdata.header === parseNavdata.NAVDATA_HEADER1 ||
+           navdata.header === parseNavdata.NAVDATA_HEADER2);
 
     var droneState = navdata.droneState;
     assert.equal(droneState.flying, 0);

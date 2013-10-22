@@ -9,21 +9,41 @@ test('AtCommandCreator', {
     this.creator = new AtCommandCreator();
   },
 
-  'command.number keeps incrementing': function() {
-    assert.equal(this.creator.ref().number, 0);
-    assert.equal(this.creator.ref().number, 1);
-    assert.equal(this.creator.ref().number, 2);
-  },
-
   'raw': function() {
-    var cmd = this.creator.raw('FOO', 1, 2, 3);
-    assert.equal(cmd.type, 'FOO');
-    assert.deepEqual(cmd.args, [1, 2, 3]);
-
-    // An array can be given as well
     var cmd = this.creator.raw('FOO', [1, 2, 3]);
     assert.equal(cmd.type, 'FOO');
     assert.deepEqual(cmd.args, [1, 2, 3]);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
+
+    var options = { timeout: 10 };
+    var cmd = this.creator.raw('FOO', [1, 2], true, options);
+    assert.equal(cmd.type, 'FOO');
+    assert.deepEqual(cmd.args, [1, 2]);
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, options);
+    assert(!cmd.callback);
+
+    var options = { timeout: 10 };
+    var callback = function() {};
+    var cmd = this.creator.raw('FOO', [1, 2], true, options, callback);
+    assert.equal(cmd.type, 'FOO');
+    assert.deepEqual(cmd.args, [1, 2]);
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, options);
+    assert.equal(cmd.callback, callback);
+  },
+
+  'ctrl': function() {
+    var cmd = this.creator.ctrl(5, 0);
+    assert.equal(cmd.type, 'CTRL');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], 5);
+    assert.equal(cmd.args[1], 0);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
+    assert(!cmd.callback);
   },
 
   'ref': function() {
@@ -31,12 +51,18 @@ test('AtCommandCreator', {
     assert.equal(cmd.type, 'REF');
     assert.equal(cmd.args.length, 1);
     assert.equal(cmd.args[0], 0);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
 
     var cmd = this.creator.ref({fly: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.takeoff);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
 
     var cmd = this.creator.ref({emergency: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.emergency);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
   },
 
   'pcmd': function() {
@@ -44,6 +70,8 @@ test('AtCommandCreator', {
     assert.equal(cmd.type, 'PCMD');
     assert.equal(cmd.args.length, 5);
     assert.deepEqual(cmd.args, [0, 0, 0, 0, 0]);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
 
     // test all the aliases mapping to pcmd args
     var val = 0.75;
@@ -75,10 +103,13 @@ test('AtCommandCreator', {
     assert.equal(cmd.type, 'CALIB');
     assert.equal(cmd.args.length, 1);
     assert.equal(cmd.args[0], '0');
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
     cmd = this.creator.calibrate(1);
     assert.equal(cmd.type, 'CALIB');
     assert.equal(cmd.args.length, 1);
     assert.equal(cmd.args[0], '1');
+    assert.equal(cmd.blocks, false);
   },
 
   'config': function() {
@@ -87,6 +118,34 @@ test('AtCommandCreator', {
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"foo"');
     assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, {});
+
+    var callback = function() {};
+    var cmd = this.creator.config('foo', 'bar', callback);
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+    assert.deepEqual(cmd.options, {});
+    assert.equal(cmd.callback, callback);
+
+    var cmd = this.creator.config({key: 'foo', value: 'bar'});
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+
+    var cmd = this.creator.config({key: 'foo', value: 'bar', timeout: 1}, callback);
+    assert.equal(cmd.type, 'CONFIG');
+    assert.equal(cmd.args.length, 2);
+    assert.equal(cmd.args[0], '"foo"');
+    assert.equal(cmd.args[1], '"bar"');
+    assert.equal(cmd.blocks, true);
+    assert.equal(cmd.options.timeout, 1);
+    assert.equal(cmd.callback, callback);
   },
 
   'animateLeds() works as expected': function() {
@@ -100,12 +159,18 @@ test('AtCommandCreator', {
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"leds:leds_anim"');
     assert.equal(cmd.args[1], '"' + expected + '"');
+    assert.equal(cmd.blocks, true);
+    assert(!cmd.options.callback);
+    assert(!cmd.options.timeout);
   },
 
   'animateLeds() does a red snake at 2 hz for 3s by default': function() {
     var cmd      = this.creator.animateLeds();
     var expected = '9,' + at.floatString(2) + ',' + 3;
     assert.equal(cmd.args[1], '"' + expected + '"');
+    assert.equal(cmd.blocks, true);
+    assert(!cmd.options.callback);
+    assert(!cmd.options.timeout);
   },
 
   'animateLeds() throws an error for unknown animations': function() {
@@ -137,5 +202,7 @@ test('AtCommandCreator', {
     var cmd = this.creator.ftrim();
     assert.equal(cmd.type, 'FTRIM');
     assert.equal(cmd.args.length, 0);
+    assert.equal(cmd.blocks, false);
+    assert.deepEqual(cmd.options, {});
   },
 });
