@@ -1,5 +1,6 @@
 {
   "laxbreak": true,
   "indent": 2,
-  "curly": true
+  "curly": true,
+  "trailing": true
 }
