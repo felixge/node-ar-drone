@@ -13,7 +13,7 @@ server.listen(common.TCP_PORT, function() {
   var video = new TcpVideoStream({ip: 'localhost', port: common.TCP_PORT});
 
   video.connect(function(err) {
-    if (err) throw err;
+    if (err) { throw err; }
 
     events.push('connectCb');
   });

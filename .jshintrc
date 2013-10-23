@@ -1,4 +1,5 @@
 {
   "laxbreak": true,
-  "indent": 2
+  "indent": 2,
+  "curly": true
 }
