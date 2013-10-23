@@ -230,20 +230,6 @@ test('Client', {
     assert.strictEqual(eventCount, 1);
   },
 
-  'resume() is idempotent': function() {
-    this.client.resume();
-    this.client.resume();
-
-    var eventCount = 0;
-    this.client.on('navdata', function(navdata) {
-      eventCount++;
-    });
-
-    this.fakeUdpNavdataStream.emit('data', fakeNavdata);
-
-    assert.strictEqual(eventCount, 1);
-  },
-
   'options are passed to internal UdpControl': function() {
     var options = {fake: 'options'};
 
