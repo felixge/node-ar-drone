@@ -27,7 +27,7 @@ test('Client', {
     this.fakeUdpControl.pcmd        = sinon.stub();
     this.fakeUdpControl.ref         = sinon.stub();
 
-    this.fakeUdpNavdataStream        = new EventEmitter;
+    this.fakeUdpNavdataStream        = new EventEmitter();
     this.fakeUdpNavdataStream.resume = sinon.stub();
 
     this.pngEncoder  = new PngEncoder();

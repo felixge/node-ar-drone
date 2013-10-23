@@ -10,6 +10,7 @@
   },
   "main": "./index",
   "scripts": {
+    "pretest": "node_modules/jshint/bin/jshint -c .jshintrc lib/ test/ index.js",
     "test": "node test/run.js"
   },
   "dependencies": {
@@ -19,7 +20,8 @@
   "devDependencies": {
     "utest": "0.0.6",
     "urun": "0.0.6",
-    "sinon": "1.4.2"
+    "sinon": "1.4.2",
+    "jshint": "2.3.0"
   },
   "optionalDependencies": {},
   "engines": {

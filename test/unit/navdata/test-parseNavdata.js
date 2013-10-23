@@ -837,7 +837,7 @@ test('parseNavdata', {
     fixtureCopy[23] = fixtureCopy[23] + 1;
 
     assert.throws(function() {
-      parseNavdata(fixtureCopy)
+      parseNavdata(fixtureCopy);
     }, /checksum/i);
   },
 
@@ -848,7 +848,7 @@ test('parseNavdata', {
     ]);
 
     assert.throws(function() {
-      parseNavdata(incompleteFixture)
+      parseNavdata(incompleteFixture);
     }, /beyond/i);
   },
 });
