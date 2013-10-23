@@ -10,7 +10,7 @@
   },
   "main": "./index",
   "scripts": {
-    "pretest": "node_modules/jshint/bin/jshint -c .jshintrc lib/ test/ index.js",
+    "pretest": "node_modules/jshint/bin/jshint -c .jshintrc examples/ lib/ test/ index.js",
     "test": "node test/run.js"
   },
   "dependencies": {
