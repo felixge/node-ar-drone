@@ -145,23 +145,23 @@ test('parseNavdata', {
   'parses physMeasures option': function() {
     var actual   = parseNavdata(fixture).physMeasures;
     var expected = {
-        temperature : {
-            accelerometer : 45.309303283691406,
-            gyroscope     : 55738
-        },
-        accelerometers : {
-            x : 80.2970962524414,
-            y : -33.318603515625,
-            z : -942.5283203125
-        },
-        gyroscopes : {
-            x : -0.11236488074064255,
-            y : 0.06872134655714035,
-            z : 0.06200997903943062
-        },
-        alim3V3   : 0,
-        vrefEpson : 0,
-        vrefIDG   : 0
+      temperature : {
+        accelerometer : 45.309303283691406,
+        gyroscope     : 55738
+      },
+      accelerometers : {
+        x : 80.2970962524414,
+        y : -33.318603515625,
+        z : -942.5283203125
+      },
+      gyroscopes : {
+        x : -0.11236488074064255,
+        y : 0.06872134655714035,
+        z : 0.06200997903943062
+      },
+      alim3V3   : 0,
+      vrefEpson : 0,
+      vrefIDG   : 0
     };
     assert.equal(actual.temperature.accelerometer, expected.temperature.accelerometer);
     assert.equal(actual.temperature.gyroscope, expected.temperature.gyroscope);
@@ -179,9 +179,9 @@ test('parseNavdata', {
   'parses gyrosOffsets option': function() {
     var actual   = parseNavdata(fixture).gyrosOffsets;
     var expected = {
-        x : -0.5329172611236572,
-        y : 0.1788240224123001,
-        z : 0
+      x : -0.5329172611236572,
+      y : 0.1788240224123001,
+      z : 0
     };
 
     assert.equal(actual.x, expected.x);
@@ -192,8 +192,8 @@ test('parseNavdata', {
   'parses eulerAngles option': function() {
     var actual   = parseNavdata(fixture).eulerAngles;
     var expected = {
-        theta : 4866,
-        phi   : 2024
+      theta : 4866,
+      phi   : 2024
     };
 
     assert.equal(actual.theta, expected.theta);
@@ -203,29 +203,29 @@ test('parseNavdata', {
   'parses references option': function() {
     var actual   = parseNavdata(fixture).references;
     var expected = {
-        theta    : 0,
-        phi      : 0,
-        thetaI   : 0,
-        phiI     : 0,
-        pitch    : 0,
-        roll     : 0,
-        yaw      : 0,
-        psi      : 0,
-        vx       : 0,
-        vy       : 0,
-        thetaMod : 0,
-        phiMod   : 0,
-        kVX      : 0,
-        kVY      : 0,
-        kMode    : 0,
-        ui       : {
-            time        : 0,
-            theta       : 0,
-            phi         : 0,
-            psi         : 0,
-            psiAccuracy : 0,
-            seq         : 0
-        }
+      theta    : 0,
+      phi      : 0,
+      thetaI   : 0,
+      phiI     : 0,
+      pitch    : 0,
+      roll     : 0,
+      yaw      : 0,
+      psi      : 0,
+      vx       : 0,
+      vy       : 0,
+      thetaMod : 0,
+      phiMod   : 0,
+      kVX      : 0,
+      kVY      : 0,
+      kMode    : 0,
+      ui       : {
+        time        : 0,
+        theta       : 0,
+        phi         : 0,
+        psi         : 0,
+        psiAccuracy : 0,
+        seq         : 0
+      }
     };
 
     assert.equal(actual.theta, expected.theta);
@@ -254,13 +254,13 @@ test('parseNavdata', {
   'parses trims option': function() {
     var actual   = parseNavdata(fixture).trims;
     var expected = {
-        angularRates : {
-            r : 0
-        },
-        eulerAngles : {
-            theta : 3028.916015625,
-            phi   : 1544.318359375
-        }
+      angularRates : {
+        r : 0
+      },
+      eulerAngles : {
+        theta : 3028.916015625,
+        phi   : 1544.318359375
+      }
     };
 
     assert.equal(actual.angularRates.r, expected.angularRates.r);
@@ -271,11 +271,11 @@ test('parseNavdata', {
   'parses rcReferences option': function() {
     var actual   = parseNavdata(fixture).rcReferences;
     var expected = {
-        pitch : 0,
-        roll  : 0,
-        yaw   : 0,
-        gaz   : 0,
-        ag    : 0
+      pitch : 0,
+      roll  : 0,
+      yaw   : 0,
+      gaz   : 0,
+      ag    : 0
     };
 
     assert.equal(actual.pitch, expected.pitch);
@@ -310,27 +310,27 @@ test('parseNavdata', {
   'parses altitude option': function() {
     var actual   = parseNavdata(fixture).altitude;
     var expected = {
-        vision   : 243,
-        velocity : 0,
-        ref      : 0,
-        raw      : 243,
-        observer : {
-            acceleration: 0,
-            altitude: 0,
-            x: {
-                x: 0,
-                y: 0,
-                z: 0
-            },
-            state: 0
+      vision   : 243,
+      velocity : 0,
+      ref      : 0,
+      raw      : 243,
+      observer : {
+        acceleration: 0,
+        altitude: 0,
+        x: {
+          x: 0,
+          y: 0,
+          z: 0
         },
-        estimated: {
-            vb: {
-                x: 0,
-                y: 0
-            },
-            state: 0
-        }
+        state: 0
+      },
+      estimated: {
+        vb: {
+          x: 0,
+          y: 0
+        },
+        state: 0
+      }
     };
 
     assert.equal(actual.vision, expected.vision);
@@ -351,9 +351,9 @@ test('parseNavdata', {
   'parses visionRaw option': function() {
     var actual   = parseNavdata(fixture).visionRaw;
     var expected = {
-        tx: 1.3266397714614868,
-        ty: -0.7230937480926514,
-        tz: 0
+      tx: 1.3266397714614868,
+      ty: -0.7230937480926514,
+      tz: 0
     };
 
     assert.equal(actual.tx, expected.tx);
@@ -364,8 +364,8 @@ test('parseNavdata', {
   'parses visionOf option': function() {
     var actual   = parseNavdata(fixture).visionOf;
     var expected = {
-        dx: [0, 0, 0, 0, 0],
-        dy: [0, 0, 0, 0, 0]
+      dx: [0, 0, 0, 0, 0],
+      dy: [0, 0, 0, 0, 0]
     };
 
     assert.deepEqual(actual.dx, expected.dx);
@@ -375,40 +375,40 @@ test('parseNavdata', {
   'parses vision option': function() {
     var actual   = parseNavdata(fixture).vision;
     var expected = {
-        state: 2,
-        misc: 0,
-        phi: {
-            trim: 0,
-            refProp: 0
-        },
-        theta: {
-            trim: 0,
-            refProp: 0
-        },
-        newRawPicture: 0,
-        capture: {
-            theta: 0.05190306529402733,
-            phi: 0.009620788507163525,
-            psi: 0.033727407455444336,
-            altitude: 243,
-            time: 362.969
-        },
-        bodyV: {
-            x: 0.05845191329717636,
-            y: -0.8817280530929565,
-            z: 0.011505687609314919
-        },
-        delta: {
-            phi: 0,
-            theta: 0,
-            psi: 0
-        },
-        gold: {
-            defined: 0,
-            reset: 0,
-            x: 0,
-            y: 0
-        }
+      state: 2,
+      misc: 0,
+      phi: {
+        trim: 0,
+        refProp: 0
+      },
+      theta: {
+        trim: 0,
+        refProp: 0
+      },
+      newRawPicture: 0,
+      capture: {
+        theta: 0.05190306529402733,
+        phi: 0.009620788507163525,
+        psi: 0.033727407455444336,
+        altitude: 243,
+        time: 362.969
+      },
+      bodyV: {
+        x: 0.05845191329717636,
+        y: -0.8817280530929565,
+        z: 0.011505687609314919
+      },
+      delta: {
+        phi: 0,
+        theta: 0,
+        psi: 0
+      },
+      gold: {
+        defined: 0,
+        reset: 0,
+        x: 0,
+        y: 0
+      }
     };
 
     assert.equal(actual.state, expected.state);
@@ -425,13 +425,13 @@ test('parseNavdata', {
   'parses visionPerf option': function() {
     var actual   = parseNavdata(fixture).visionPerf;
     var expected = {
-        szo: 0,
-        corners: 0,
-        compute: 0,
-        tracking: 0,
-        trans: 0,
-        update: 0,
-        custom: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      szo: 0,
+      corners: 0,
+      compute: 0,
+      tracking: 0,
+      trans: 0,
+      update: 0,
+      custom: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     };
 
     assert.equal(actual.szo, expected.szo);
@@ -446,40 +446,40 @@ test('parseNavdata', {
   'parses trackersSend option': function() {
     var actual   = parseNavdata(fixture).trackersSend;
     var expected = {
-        locked: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-        point: [
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 },
-            { x: 0, y: 0 }
-        ]
-     };
+      locked: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      point: [
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 }
+      ]
+    };
 
     assert.deepEqual(actual.locked, expected.locked);
     assert.deepEqual(actual.point, expected.point);
@@ -488,73 +488,73 @@ test('parseNavdata', {
   'parses visionDetect option': function() {
     var actual   = parseNavdata(fixture).visionDetect;
     var expected = {
-        nbDetected: 0,
-        type: [0, 0, 0, 0],
-        xc: [0, 0, 0, 0],
-        yc: [0, 0, 0, 0],
-        width: [0, 0, 0, 0],
-        height: [0, 0, 0, 0],
-        dist: [0, 0, 0, 0],
-        orientationAngle: [0, 0, 0, 0],
-        rotation: [{
-            m11: 0,
-            m12: 0,
-            m13: 0,
-            m21: 0,
-            m22: 0,
-            m23: 0,
-            m31: 0,
-            m32: 0,
-            m33: 0
-        }, {
-            m11: 0,
-            m12: 0,
-            m13: 0,
-            m21: 0,
-            m22: 0,
-            m23: 0,
-            m31: 0,
-            m32: 0,
-            m33: 0
-        }, {
-            m11: 0,
-            m12: 0,
-            m13: 0,
-            m21: 0,
-            m22: 0,
-            m23: 0,
-            m31: 0,
-            m32: 0,
-            m33: 0
-        }, {
-            m11: 0,
-            m12: 0,
-            m13: 0,
-            m21: 0,
-            m22: 0,
-            m23: 0,
-            m31: 0,
-            m32: 0,
-            m33: 0
-        }],
-        translation: [{
-            x: 0,
-            y: 0,
-            z: 0
-        }, {
-            x: 0,
-            y: 0,
-            z: 0
-        }, {
-            x: 0,
-            y: 0,
-            z: 0
-        }, {
-            x: 0,
-            y: 0,
-            z: 0
-        }],
-        cameraSource: [0, 0, 0, 0]
+      nbDetected: 0,
+      type: [0, 0, 0, 0],
+      xc: [0, 0, 0, 0],
+      yc: [0, 0, 0, 0],
+      width: [0, 0, 0, 0],
+      height: [0, 0, 0, 0],
+      dist: [0, 0, 0, 0],
+      orientationAngle: [0, 0, 0, 0],
+      rotation: [{
+        m11: 0,
+        m12: 0,
+        m13: 0,
+        m21: 0,
+        m22: 0,
+        m23: 0,
+        m31: 0,
+        m32: 0,
+        m33: 0
+      }, {
+        m11: 0,
+        m12: 0,
+        m13: 0,
+        m21: 0,
+        m22: 0,
+        m23: 0,
+        m31: 0,
+        m32: 0,
+        m33: 0
+      }, {
+        m11: 0,
+        m12: 0,
+        m13: 0,
+        m21: 0,
+        m22: 0,
+        m23: 0,
+        m31: 0,
+        m32: 0,
+        m33: 0
+      }, {
+        m11: 0,
+        m12: 0,
+        m13: 0,
+        m21: 0,
+        m22: 0,
+        m23: 0,
+        m31: 0,
+        m32: 0,
+        m33: 0
+      }],
+      translation: [{
+        x: 0,
+        y: 0,
+        z: 0
+      }, {
+        x: 0,
+        y: 0,
+        z: 0
+      }, {
+        x: 0,
+        y: 0,
+        z: 0
+      }, {
+        x: 0,
+        y: 0,
+        z: 0
+      }],
+      cameraSource: [0, 0, 0, 0]
     };
 
     assert.equal(actual.nbDetected, expected.nbDetected);
@@ -578,8 +578,8 @@ test('parseNavdata', {
   'parses adcDataFrame option': function() {
     var actual   = parseNavdata(fixture).adcDataFrame;
     var expected = {
-        version: 0,
-        dataFrame: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+      version: 0,
+      dataFrame: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
     };
 
     assert.equal(actual.version, expected.version);
@@ -589,24 +589,24 @@ test('parseNavdata', {
   'parses videoStream option': function() {
     var actual   = parseNavdata(fixture).videoStream;
     var expected = {
-        quant: 0,
-        frame: {
-            size: 4597,
-            number: 46105
-        },
-        atcmd: {
-            sequence: 0,
-            meanGap: 0,
-            varGap: 0,
-            quality: 0
-        },
-        bitrate: {
-            out: 0,
-            desired: 0
-        },
-        data: [0, 0, 0, 0, 0],
-        tcpQueueLevel: 0,
-        fifoQueueLevel: 0
+      quant: 0,
+      frame: {
+        size: 4597,
+        number: 46105
+      },
+      atcmd: {
+        sequence: 0,
+        meanGap: 0,
+        varGap: 0,
+        quality: 0
+      },
+      bitrate: {
+        out: 0,
+        desired: 0
+      },
+      data: [0, 0, 0, 0, 0],
+      tcpQueueLevel: 0,
+      fifoQueueLevel: 0
     };
 
     assert.equal(actual.quant, expected.quant);
@@ -621,10 +621,10 @@ test('parseNavdata', {
   'parses games option': function() {
     var actual   = parseNavdata(fixture).games;
     var expected = {
-        counters: {
-            doubleTap: 0,
-            finishLine: 0
-        }
+      counters: {
+        doubleTap: 0,
+        finishLine: 0
+      }
     };
 
     assert.equal(actual.counters.doubleTap, expected.counters.doubleTap);
@@ -634,10 +634,10 @@ test('parseNavdata', {
   'parses pressureRaw option': function() {
     var actual   = parseNavdata(fixture).pressureRaw;
     var expected = {
-        up: 39148,
-        ut: 32556,
-        temperature: 435,
-        pressure: 101586
+      up: 39148,
+      ut: 32556,
+      temperature: 435,
+      pressure: 101586
     };
 
     assert.equal(actual.up, expected.up);
@@ -649,36 +649,36 @@ test('parseNavdata', {
   'parses magneto option': function() {
     var actual   = parseNavdata(fixture).magneto;
     var expected = {
-        mx: 30,
-        my: -56,
-        mz: 80,
-        raw: {
-            x: 189,
-            y: -100.8984375,
-            z: -278.4375
-        },
-        rectified: {
-            x: 145.08058166503906,
-            y: -84.93736267089844,
-            z: -287.18157958984375
-        },
-        offset: {
-            x: 29.21237564086914,
-            y: -13.282999038696289,
-            z: 0
-        },
-        heading: {
-            unwrapped: 0,
-            gyroUnwrapped: 0.00041322660399600863,
-            fusionUnwrapped: 1.933355689048767
-        },
-        ok: 1,
-        state: 513,
-        radius: -20.9833984375,
-        error: {
-            mean: 1129450962944,
-            variance: -1.9905589299967167e-20
-        }
+      mx: 30,
+      my: -56,
+      mz: 80,
+      raw: {
+        x: 189,
+        y: -100.8984375,
+        z: -278.4375
+      },
+      rectified: {
+        x: 145.08058166503906,
+        y: -84.93736267089844,
+        z: -287.18157958984375
+      },
+      offset: {
+        x: 29.21237564086914,
+        y: -13.282999038696289,
+        z: 0
+      },
+      heading: {
+        unwrapped: 0,
+        gyroUnwrapped: 0.00041322660399600863,
+        fusionUnwrapped: 1.933355689048767
+      },
+      ok: 1,
+      state: 513,
+      radius: -20.9833984375,
+      error: {
+        mean: 1129450962944,
+        variance: -1.9905589299967167e-20
+      }
     };
 
     assert.equal(actual.mx, expected.mx);
@@ -697,14 +697,14 @@ test('parseNavdata', {
   'parses windSpeed option': function() {
     var actual   = parseNavdata(fixture).windSpeed;
     var expected = {
-        speed: 0,
-        angle: 0,
-        compensation: {
-            theta: 0,
-            phi: 0
-        },
-        stateX: [0.05845191329717636, -0.8817280530929565, 0, 0, 305.5962829589844, -236.80516052246094],
-        debug: [0, 0, 0]
+      speed: 0,
+      angle: 0,
+      compensation: {
+        theta: 0,
+        phi: 0
+      },
+      stateX: [0.05845191329717636, -0.8817280530929565, 0, 0, 305.5962829589844, -236.80516052246094],
+      debug: [0, 0, 0]
     };
 
     assert.equal(actual.speed, expected.speed);
@@ -717,31 +717,31 @@ test('parseNavdata', {
   'parses kalmanPressure option': function() {
     var actual   = parseNavdata(fixture).kalmanPressure;
     var expected = {
-        offsetPressure: 101580,
-        estimated: {
-            altitude: 0,
-            velocity: 0,
-            angle: {
-                pwm: 0,
-                pressure: 0
-            },
-            us: {
-                offset: 0,
-                prediction: 0
-            },
-            covariance: {
-                alt: 0.0005193915567360818,
-                pwm: 0.6806257367134094,
-                velocity: 0.025059189647436142
-            },
-            groundEffect: true,
-            sum: 1.401298464324817e-45,
-            reject: false,
-            uMultisinus: 0,
-            gazAltitude: 0,
-            flagMultisinus: false,
-            flagMultisinusStart: false
-        }
+      offsetPressure: 101580,
+      estimated: {
+        altitude: 0,
+        velocity: 0,
+        angle: {
+          pwm: 0,
+          pressure: 0
+        },
+        us: {
+          offset: 0,
+          prediction: 0
+        },
+        covariance: {
+          alt: 0.0005193915567360818,
+          pwm: 0.6806257367134094,
+          velocity: 0.025059189647436142
+        },
+        groundEffect: true,
+        sum: 1.401298464324817e-45,
+        reject: false,
+        uMultisinus: 0,
+        gazAltitude: 0,
+        flagMultisinus: false,
+        flagMultisinusStart: false
+      }
     };
 
     assert.equal(actual.offsetPressure, expected.offsetPressure);
@@ -762,17 +762,17 @@ test('parseNavdata', {
   'parses hdvideoStream option': function() {
     var actual   = parseNavdata(fixture).hdvideoStream;
     var expected = {
-        hdvideoState: 0,
-        storageFifo: {
-            nbPackets: 0,
-            size: 0
-        },
-        usbkey: {
-            size: 0,
-            freespace: 0,
-            remainingTime: 0
-        },
-        frameNumber: 0
+      hdvideoState: 0,
+      storageFifo: {
+        nbPackets: 0,
+        size: 0
+      },
+      usbkey: {
+        size: 0,
+        freespace: 0,
+        remainingTime: 0
+      },
+      frameNumber: 0
     };
 
     assert.equal(actual.hdvideoState, expected.hdvideoState);
@@ -787,40 +787,40 @@ test('parseNavdata', {
   },
 
   'parses gps option': function() {
-      var gps = parseNavdata(fixture).gps;
-      assert.equal(gps.latitude, 34.0903478);
-      // assert.equal(gps.longitude, 0);
-      assert.equal(gps.elevation, 130.39);
-      //assert.equal(gps.hdop, 0);
-      assert.equal(gps.lat0, 34.090359093568644);
-      assert.equal(gps.lon0, -118.276604);
-      assert.equal(gps.lat_fuse, 34.09035909403431);
-      assert.equal(gps.lon_fuse, -118.276604);
-      //assert.equal(gps.vdop, 0);
-      assert.equal(gps.pdop, 0);
-      assert.equal(gps.speed, 0.4399999976158142);
-      assert.equal(gps.last_frame_timestamp, 1816647.945);
-      assert.equal(gps.degree, 170.16000366210938);
-      assert.equal(gps.degree_mag, 0);
-      assert.deepEqual(
-          gps.channels,
-          [{sat: 22, cn0: 36},
-           {sat: 15, cn0: 17},
-           {sat: 11, cn0: 227},
-           {sat: 11, cn0: 227},
-           {sat: 18, cn0: 27},
-           {sat: 29, cn0: 16},
-           {sat: 21, cn0: 22},
-           {sat: 16, cn0: 0},
-           {sat: 27, cn0: 0},
-           {sat: 30, cn0: 0},
-           {sat: 12, cn0: 227},
-           {sat: 12, cn0: 227}]);
-      assert.equal(gps.gps_plugged, 1);
-      assert.equal(gps.gps_time, 0);
-      assert.equal(gps.week, 0);
-      assert.equal(gps.gps_fix, 0);
-      assert.equal(gps.num_satellites, 0);
+    var gps = parseNavdata(fixture).gps;
+    assert.equal(gps.latitude, 34.0903478);
+    // assert.equal(gps.longitude, 0);
+    assert.equal(gps.elevation, 130.39);
+    //assert.equal(gps.hdop, 0);
+    assert.equal(gps.lat0, 34.090359093568644);
+    assert.equal(gps.lon0, -118.276604);
+    assert.equal(gps.lat_fuse, 34.09035909403431);
+    assert.equal(gps.lon_fuse, -118.276604);
+    //assert.equal(gps.vdop, 0);
+    assert.equal(gps.pdop, 0);
+    assert.equal(gps.speed, 0.4399999976158142);
+    assert.equal(gps.last_frame_timestamp, 1816647.945);
+    assert.equal(gps.degree, 170.16000366210938);
+    assert.equal(gps.degree_mag, 0);
+    assert.deepEqual(
+      gps.channels,
+      [{sat: 22, cn0: 36},
+       {sat: 15, cn0: 17},
+       {sat: 11, cn0: 227},
+       {sat: 11, cn0: 227},
+       {sat: 18, cn0: 27},
+       {sat: 29, cn0: 16},
+       {sat: 21, cn0: 22},
+       {sat: 16, cn0: 0},
+       {sat: 27, cn0: 0},
+       {sat: 30, cn0: 0},
+       {sat: 12, cn0: 227},
+       {sat: 12, cn0: 227}]);
+    assert.equal(gps.gps_plugged, 1);
+    assert.equal(gps.gps_time, 0);
+    assert.equal(gps.week, 0);
+    assert.equal(gps.gps_fix, 0);
+    assert.equal(gps.num_satellites, 0);
   },
 
   'throws exception on invalid header': function() {
