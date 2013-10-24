@@ -158,7 +158,7 @@ test('UdpControl', {
     control.ack();
     control.flush();
 
-    ctrl     = new AtCommand('CTRL', [5, 0]);
+    var ctrl = new AtCommand('CTRL', [5, 0]);
     sendArgs = fakeSocket.send.getCall(2).args;
     buffer   = sendArgs.shift();
     offset   = sendArgs.shift();

@@ -7,7 +7,7 @@ var PngEncoder   = Client.PngEncoder;
 var TcpVideoStream = Client.TcpVideoStream;
 var EventEmitter = require('events').EventEmitter;
 
-fakeNavdata = {
+var fakeNavdata = {
   fake: 'navdata',
   droneState: {
     controlCommandAck: true
