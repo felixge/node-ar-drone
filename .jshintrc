@@ -4,5 +4,6 @@
   "indent": 2,
   "curly": true,
   "trailing": true,
-  "undef": true
+  "undef": true,
+  "unused": true
 }

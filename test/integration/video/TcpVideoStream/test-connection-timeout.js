@@ -3,8 +3,7 @@ var net            = require('net');
 var assert         = require('assert');
 var TcpVideoStream = require(common.lib + '/video/TcpVideoStream');
 
-var server = net.createServer(function(connection) {
-});
+var server = net.createServer(function() {});
 
 var events = [];
 server.listen(common.TCP_PORT, function() {

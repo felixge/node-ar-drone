@@ -64,7 +64,7 @@ test('UdpControl', {
       ip     : fakeIp,
     });
     var callback = sinon.spy();
-    var config = control.config('general:navdata_demo', 'TRUE', callback);
+    control.config('general:navdata_demo', 'TRUE', callback);
     control.flush();
     this.clock.tick(500);
     assert.equal(callback.callCount, 1);
@@ -83,7 +83,7 @@ test('UdpControl', {
       ip     : fakeIp,
     });
     var callback = sinon.spy();
-    var config = control.config('general:navdata_demo', 'TRUE', callback);
+    control.config('general:navdata_demo', 'TRUE', callback);
     control.flush();
     control.ack();
     control.ackReset();
