@@ -3,7 +3,7 @@
 // or streaming to a ffserver
 
 var arDrone = require('..');
-var PaVEParser = require('../lib/video/PaVEParser'); 
+var PaVEParser = require('../lib/video/PaVEParser');
 var output = require('fs').createWriteStream('./vid.h264');
 
 var video = arDrone.createClient().getVideoStream();

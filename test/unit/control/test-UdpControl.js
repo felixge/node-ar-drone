@@ -134,12 +134,12 @@ test('UdpControl', {
 
 
     // Should have sent a single non-blocking command second.
-    var sendArgs = fakeSocket.send.getCall(1).args;
-    var buffer   = sendArgs.shift();
-    var offset   = sendArgs.shift();
-    var length   = sendArgs.shift();
-    var port     = sendArgs.shift();
-    var ip       = sendArgs.shift();
+    sendArgs = fakeSocket.send.getCall(1).args;
+    buffer   = sendArgs.shift();
+    offset   = sendArgs.shift();
+    length   = sendArgs.shift();
+    port     = sendArgs.shift();
+    ip       = sendArgs.shift();
 
     assert.equal(Buffer.isBuffer(buffer), true);
     assert.deepEqual(buffer.toString(), config1.serialize(2));
@@ -158,13 +158,13 @@ test('UdpControl', {
     control.ack();
     control.flush();
 
-    var ctrl     = new AtCommand('CTRL', [5, 0]);
-    var sendArgs = fakeSocket.send.getCall(2).args;
-    var buffer   = sendArgs.shift();
-    var offset   = sendArgs.shift();
-    var length   = sendArgs.shift();
-    var port     = sendArgs.shift();
-    var ip       = sendArgs.shift();
+    ctrl     = new AtCommand('CTRL', [5, 0]);
+    sendArgs = fakeSocket.send.getCall(2).args;
+    buffer   = sendArgs.shift();
+    offset   = sendArgs.shift();
+    length   = sendArgs.shift();
+    port     = sendArgs.shift();
+    ip       = sendArgs.shift();
 
     assert.equal(Buffer.isBuffer(buffer), true);
     assert.deepEqual(buffer.toString(), ctrl.serialize(3));
@@ -178,12 +178,12 @@ test('UdpControl', {
     control.ackReset();
     control.flush();
 
-    var sendArgs = fakeSocket.send.getCall(3).args;
-    var buffer   = sendArgs.shift();
-    var offset   = sendArgs.shift();
-    var length   = sendArgs.shift();
-    var port     = sendArgs.shift();
-    var ip       = sendArgs.shift();
+    sendArgs = fakeSocket.send.getCall(3).args;
+    buffer   = sendArgs.shift();
+    offset   = sendArgs.shift();
+    length   = sendArgs.shift();
+    port     = sendArgs.shift();
+    ip       = sendArgs.shift();
 
     assert.equal(Buffer.isBuffer(buffer), true);
     assert.deepEqual(buffer.toString(), config2.serialize(4));
@@ -208,5 +208,5 @@ test('UdpControl', {
 
     control.close();
     assert.equal(fakeSocket.close.callCount, 1);
-  },
+  }
 });

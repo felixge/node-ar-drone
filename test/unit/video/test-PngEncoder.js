@@ -194,7 +194,7 @@ test('PngEncoder', {
 
     var drainCalled = false;
     this.encoder.on('drain', function () {
-        drainCalled = true;
+      drainCalled = true;
     });
     this.fakeFfmpeg.stdin.emit('drain');
     assert.ok(drainCalled);

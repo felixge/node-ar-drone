@@ -18,16 +18,16 @@ test('AtCommandCreator', {
     assert(!cmd.callback);
 
     var options = { timeout: 10 };
-    var cmd = this.creator.raw('FOO', [1, 2], true, options);
+    cmd = this.creator.raw('FOO', [1, 2], true, options);
     assert.equal(cmd.type, 'FOO');
     assert.deepEqual(cmd.args, [1, 2]);
     assert.equal(cmd.blocks, true);
     assert.deepEqual(cmd.options, options);
     assert(!cmd.callback);
 
-    var options = { timeout: 10 };
+    options = { timeout: 10 };
     var callback = function() {};
-    var cmd = this.creator.raw('FOO', [1, 2], true, options, callback);
+    cmd = this.creator.raw('FOO', [1, 2], true, options, callback);
     assert.equal(cmd.type, 'FOO');
     assert.deepEqual(cmd.args, [1, 2]);
     assert.equal(cmd.blocks, true);
@@ -54,12 +54,12 @@ test('AtCommandCreator', {
     assert.equal(cmd.blocks, false);
     assert.deepEqual(cmd.options, {});
 
-    var cmd = this.creator.ref({fly: true});
+    cmd = this.creator.ref({fly: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.takeoff);
     assert.equal(cmd.blocks, false);
     assert.deepEqual(cmd.options, {});
 
-    var cmd = this.creator.ref({emergency: true});
+    cmd = this.creator.ref({emergency: true});
     assert.ok(cmd.args[0] & AtCommandCreator.REF_FLAGS.emergency);
     assert.equal(cmd.blocks, false);
     assert.deepEqual(cmd.options, {});
@@ -85,16 +85,16 @@ test('AtCommandCreator', {
     assert.equal(this.creator.pcmd({counterClockwise: val}).args[4], at.floatString(-val));
 
     // test multiple aliases togeter
-    var cmd = this.creator.pcmd({left: 0.1, clockwise: 0.3});
+    cmd = this.creator.pcmd({left: 0.1, clockwise: 0.3});
     assert.equal(cmd.args[1], at.floatString(-0.1));
     assert.equal(cmd.args[4], at.floatString(0.3));
 
     // test progressive bit being unset when no aliases are provided
-    var cmd = this.creator.pcmd();
+    cmd = this.creator.pcmd();
     assert.equal(cmd.args[0] & AtCommandCreator.PCMD_FLAGS.progressive, false);
 
     // test progressive bit being set automatically
-    var cmd = this.creator.pcmd({left: 0.1});
+    cmd = this.creator.pcmd({left: 0.1});
     assert.ok(cmd.args[0] & (1 << 0));
   },
 
@@ -122,7 +122,7 @@ test('AtCommandCreator', {
     assert.deepEqual(cmd.options, {});
 
     var callback = function() {};
-    var cmd = this.creator.config('foo', 'bar', callback);
+    cmd = this.creator.config('foo', 'bar', callback);
     assert.equal(cmd.type, 'CONFIG');
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"foo"');
@@ -131,14 +131,14 @@ test('AtCommandCreator', {
     assert.deepEqual(cmd.options, {});
     assert.equal(cmd.callback, callback);
 
-    var cmd = this.creator.config({key: 'foo', value: 'bar'});
+    cmd = this.creator.config({key: 'foo', value: 'bar'});
     assert.equal(cmd.type, 'CONFIG');
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"foo"');
     assert.equal(cmd.args[1], '"bar"');
     assert.equal(cmd.blocks, true);
 
-    var cmd = this.creator.config({key: 'foo', value: 'bar', timeout: 1}, callback);
+    cmd = this.creator.config({key: 'foo', value: 'bar', timeout: 1}, callback);
     assert.equal(cmd.type, 'CONFIG');
     assert.equal(cmd.args.length, 2);
     assert.equal(cmd.args[0], '"foo"');
