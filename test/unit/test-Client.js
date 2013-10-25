@@ -7,7 +7,7 @@ var PngEncoder   = Client.PngEncoder;
 var TcpVideoStream = Client.TcpVideoStream;
 var EventEmitter = require('events').EventEmitter;
 
-fakeNavdata = {
+var fakeNavdata = {
   fake: 'navdata',
   droneState: {
     controlCommandAck: true
@@ -221,7 +221,7 @@ test('Client', {
     this.client.resume();
 
     var eventCount = 0;
-    this.client.on('navdata', function(navdata) {
+    this.client.on('navdata', function() {
       eventCount++;
     });
 
@@ -238,7 +238,7 @@ test('Client', {
       gotOptions = options;
     };
 
-    var client = new Client(options);
+    new Client(options);
     assert.strictEqual(gotOptions, options);
   },
 

@@ -3,5 +3,7 @@
   "laxbreak": true,
   "indent": 2,
   "curly": true,
-  "trailing": true
+  "trailing": true,
+  "undef": true,
+  "unused": true
 }
