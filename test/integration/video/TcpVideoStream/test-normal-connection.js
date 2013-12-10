@@ -25,6 +25,8 @@ server.listen(common.TCP_PORT, function() {
 
       events.push('data');
     })
+    // Attach a listener so we can have timeout errors without throwing them
+    .on('error', function() { })
     .on('close', function() {
       events.push('close');
       server.close();
