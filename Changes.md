@@ -3,6 +3,16 @@
 This file is a manually maintained list of changes for each release. Feel free
 to send corrections if you spot any mistakes.
 
+## v0.3.1 (2013-12-10)
+
+* Fix for TCPVideoStream video reconnect
+
+## v0.3.0 (2013-10-22)
+
+* Added callback for `Client.config`
+* Upped default timeout of UdpControls
+* Fixed global var leak
+
 ## v0.2.0 (2013-08-28)
 
 * Added client.ftrim() command to reset drone horizontal reference
