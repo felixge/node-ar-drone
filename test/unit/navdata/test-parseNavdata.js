@@ -673,11 +673,11 @@ test('parseNavdata', {
         fusionUnwrapped: 1.933355689048767
       },
       ok: 1,
-      state: 513,
-      radius: -20.9833984375,
+      state: 2,
+      radius: 387.31146240234375,
       error: {
-        mean: 1129450962944,
-        variance: -1.9905589299967167e-20
+        mean: -211.51361083984375,
+        variance: 79.3671875
       }
     };
 
@@ -735,7 +735,7 @@ test('parseNavdata', {
           velocity: 0.025059189647436142
         },
         groundEffect: true,
-        sum: 1.401298464324817e-45,
+        sum: 0,
         reject: false,
         uMultisinus: 0,
         gazAltitude: 0,
