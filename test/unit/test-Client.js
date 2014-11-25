@@ -314,7 +314,7 @@ test('Client', {
     assert.equal(this.client._pcmd.clockwise, undefined);
   },
 
-  'pcmd methods conver strings to floats': function() {
+  'pcmd methods convert strings to floats': function() {
     this.client.up('-0.5');
     assert.strictEqual(this.client._pcmd.up, -0.5);
 
