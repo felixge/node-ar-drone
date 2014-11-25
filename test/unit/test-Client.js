@@ -314,12 +314,46 @@ test('Client', {
     assert.equal(this.client._pcmd.clockwise, undefined);
   },
 
-  'pcmd methods conver strings to floats': function() {
+  'pcmd methods convert strings to floats': function() {
     this.client.up('-0.5');
     assert.strictEqual(this.client._pcmd.up, -0.5);
 
     this.client.down('-0.5');
     assert.strictEqual(this.client._pcmd.down, -0.5);
+  },
+
+  'pcmd methods accept 0 as speed': function() {
+    this.client.up(0);
+    assert.equal(this.client._pcmd.up, 0);
+    assert.equal(this.client._pcmd.down, undefined);
+
+    this.client.down(0);
+    assert.equal(this.client._pcmd.down, 0);
+    assert.equal(this.client._pcmd.up, undefined);
+
+    this.client.left(0);
+    assert.equal(this.client._pcmd.left, 0);
+    assert.equal(this.client._pcmd.right, undefined);
+
+    this.client.right(0);
+    assert.equal(this.client._pcmd.right, 0);
+    assert.equal(this.client._pcmd.left, undefined);
+
+    this.client.front(0);
+    assert.equal(this.client._pcmd.front, 0);
+    assert.equal(this.client._pcmd.back, undefined);
+
+    this.client.back(0);
+    assert.equal(this.client._pcmd.back, 0);
+    assert.equal(this.client._pcmd.front, undefined);
+
+    this.client.clockwise(0);
+    assert.equal(this.client._pcmd.clockwise, 0);
+    assert.equal(this.client._pcmd.counterClockwise, undefined);
+
+    this.client.counterClockwise(0);
+    assert.equal(this.client._pcmd.counterClockwise, 0);
+    assert.equal(this.client._pcmd.clockwise, undefined);
   },
 
   'pcmd checks if argument exists': function() {
