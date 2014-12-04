@@ -34,7 +34,7 @@ developers to write autonomous programs for the upcoming robot revolution.
 
 ## Status
 
-This module is still under [heavy development](CONTRIBUTING.md), so please don't be suprised if
+This module is still under [heavy development](CONTRIBUTING.md), so please don't be surprised if
 you find some functionality missing or undocumented.
 
 However, the documented parts are tested and should work well for most parts.
@@ -99,7 +99,7 @@ very least be able to receive `droneState` and `demo` data.
 A good initial challenge might be to try flying to a certain altitude based
 on the `navdata.demo.altitudeMeters` property.
 
-Once you have manged this, you may want to try looking at the camera image. Here
+Once you have managed this, you may want to try looking at the camera image. Here
 is a simple way to get this as PngBuffers (requires a recent ffmpeg version to
 be found in your `$PATH`):
 
