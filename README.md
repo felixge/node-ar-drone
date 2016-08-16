@@ -142,7 +142,7 @@ events. Multiple calls to this method returns the same object. Connection lifecy
 #### client.takeoff(callback)
 
 Sets the internal `fly` state to `true`, `callback` is invoked after the drone
-reports that it is hovering.
+reports that it is hovering or after seven seconds since, in some cases, the drone takes off but fails to report it is hovering.
 
 #### client.land(callback)
 
