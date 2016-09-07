@@ -34,16 +34,9 @@
   "bugs": {
     "url": "https://github.com/felixge/node-ar-drone/issues"
   },
-  "_id": "ar-drone@0.3.3",
   "dist": {
     "shasum": "d7b956e23f3f12d94a4e8b7a8f575b25cd69f69b",
     "tarball": "https://registry.npmjs.org/ar-drone/-/ar-drone-0.3.3.tgz"
-  },
-  "_from": "ar-drone@0.3.3",
-  "_npmVersion": "1.4.3",
-  "_npmUser": {
-    "name": "felixge",
-    "email": "felix@debuggable.com"
   },
   "maintainers": [
     {
@@ -80,6 +73,4 @@
     }
   ],
   "directories": {},
-  "_shasum": "d7b956e23f3f12d94a4e8b7a8f575b25cd69f69b",
-  "_resolved": "https://registry.npmjs.org/ar-drone/-/ar-drone-0.3.3.tgz"
 }
