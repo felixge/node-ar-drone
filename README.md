@@ -34,7 +34,7 @@ developers to write autonomous programs for the upcoming robot revolution.
 
 ## Status
 
-This module is still under [heavy development](CONTRIBUTING.md), so please don't be suprised if
+This module is still under [heavy development](CONTRIBUTING.md), so please don't be surprised if
 you find some functionality missing or undocumented.
 
 However, the documented parts are tested and should work well for most parts.
