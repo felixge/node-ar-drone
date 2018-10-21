@@ -267,6 +267,8 @@ To enable demo navdata use
 client.config('general:navdata_demo', 'FALSE');
 ```
 
+See [documentation](docs/NavData.md) for ```navadata``` object
+
 ## UdpControl
 
 This is a low level API. If you prefer something simpler, check out the Client
