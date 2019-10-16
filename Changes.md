@@ -3,6 +3,9 @@
 This file is a manually maintained list of changes for each release. Feel free
 to send corrections if you spot any mistakes.
 
+## v0.3.2 (YYYY-MM-DD)
+* Moved FTRIM to Calibrate Function
+
 ## v0.3.1 (2013-12-10)
 
 * Fix for TCPVideoStream video reconnect
