@@ -171,15 +171,25 @@ as a reference point.  `speed` can be a value from `0` to `1`.
 
 Sets all drone movement commands to `0`, making it effectively hover in place.
 
-#### client.calibrate(device_num)
+#### client.calibrate(device)
 
-Asks the drone to calibrate a device.  Currently the AR.Drone firmware
-supports only one device that can be calibrated: the magnetometer,
-which is device number 0.
+Asks the drone to calibrate a device. Although the AR.Drone firmware
+only supports one device that can be calibrated. This function also includes ftrim.
+
+**The Magnetometer**
+
+Device: 0
 
 The magnetometer can only be calibrated while the drone is flying, and
 the calibration routine causes the drone to yaw in place a full 360
 degrees.
+
+**FTRIM**
+
+Device: 1
+
+FTRIM essentially resets the Yaw, Pitch, and Roll to 0. Be very cautious of using
+this function and only calibrate while on flat surface. Never use while flying.
 
 #### client.config(key, value, callback)
 
