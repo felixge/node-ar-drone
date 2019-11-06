@@ -1,5 +1,9 @@
 {
-  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "author": {
+    "name": "Felix Geisendörfer",
+    "email": "felix@debuggable.com",
+    "url": "http://debuggable.com/"
+  },
   "name": "ar-drone",
   "description": "A node.js client for controlling Parrot AR Drone 2.0 quad-copters.",
   "version": "0.3.3",
@@ -26,5 +30,47 @@
   "optionalDependencies": {},
   "engines": {
     "node": "*"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/felixge/node-ar-drone/issues"
+  },
+  "dist": {
+    "shasum": "d7b956e23f3f12d94a4e8b7a8f575b25cd69f69b",
+    "tarball": "https://registry.npmjs.org/ar-drone/-/ar-drone-0.3.3.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "felixge",
+      "email": "felix@debuggable.com"
+    },
+    {
+      "name": "bkw",
+      "email": "bkw@codingforce.com"
+    },
+    {
+      "name": "jfsiii",
+      "email": "npmjs.org@JFSIII.org"
+    },
+    {
+      "name": "fractal",
+      "email": "contact@wearefractal.com"
+    },
+    {
+      "name": "eschnou",
+      "email": "laurent@eschenauer.be"
+    },
+    {
+      "name": "andrewnez",
+      "email": "andrewnez@gmail.com"
+    },
+    {
+      "name": "wiseman",
+      "email": "jjwiseman@gmail.com"
+    },
+    {
+      "name": "rschmukler",
+      "email": "ryan@slingingcode.com"
+    }
+  ],
+  "directories": {},
 }
